@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ProfileCard from "../widget/ProfileCard";
+import ProfileCard from "../profile/ProfileCard";
 
 const Navbar = () => {
   return <nav className="flex justify-between h-32 w-full px-16 items-center">
