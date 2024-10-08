@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1 align="center" style="font-weight: bold; font-family: Lato; ">Factsplat AI Assistant</h1>
 
-## Getting Started
+<p align="center">
+ <a href="#pre">Technologies</a> •
+ <a href="#started">Getting Started</a> •
+ <a href="#structure">Structure</a> •
+ <a href="#colab">Collaborators</a> •
+</p>
 
-First, run the development server:
+<p align="center">
+    <b>The Factsplat AI Assistant is a RAG model specializing in getting you started with Factsplat</b>
+</p>
+
+<h2 id="pre">Prerequisites</h2>
+<h3>App</h3>
+
+ <a href="https://nextjs.org/">NextJS</a><br/>
+ <a href="https://tailwindcss.com/">TailwindCSS</a><br/>
+
+<h2 id="started">🚀 Getting started</h2>
+
+<h3>Cloning</h3>
+
+How to clone this project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone git@github.com:Metaito/fs-ai-assistant-frontend.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<h3>Starting</h3>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd fs-ai-assistant-frontend
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Now the application should be running at localhost:3000
 
-## Learn More
+<h3>Building</h3>
 
-To learn more about Next.js, take a look at the following resources:
+Before pushing changes, make sure to run the following commands:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+npm run prettier
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This will ensure that the code is properly formatted and that the build is successful.
 
-## Deploy on Vercel
+<h2 id="structure">Structure</h2>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The structure of the project is as follows:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- src - Contains all the source code
+  - components - Contains all the components
+  - pages - Contains all the pages
+  - styles - Contains all the styles
+  - utils - Contains all the utility functions
+
+<h2 id="colab">🤝 Collaborators</h2>
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="#">
+        <img src="https://avatars.githubusercontent.com/u/74411800?v=4" width="100px;" alt="Simon Sandvik Lee"/><br>
+        <sub>
+          <b>Simon Sandvik Lee</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
