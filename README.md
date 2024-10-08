@@ -14,8 +14,8 @@
 <h2 id="pre">Prerequisites</h2>
 <h3>App</h3>
 
- <a href="https://nextjs.org/">NextJS</a><br/>
- <a href="https://tailwindcss.com/">TailwindCSS</a><br/>
+<a href="https://nextjs.org/">NextJS</a><br/>
+<a href="https://tailwindcss.com/">TailwindCSS</a><br/>
 
 <h2 id="started">🚀 Getting started</h2>
 
@@ -54,10 +54,11 @@ This will ensure that the code is properly formatted and that the build is succe
 The structure of the project is as follows:
 
 - src - Contains all the source
-    - app - Contains the main app
-    - components - Contains all the components
-    - pages - Contains all the pages
-    - styles - Contains all the styles
+
+  - app - Contains the main app
+  - components - Contains all the components
+  - pages - Contains all the pages
+  - styles - Contains all the styles
 
 - public - Contains all the public files (fonts, etc...)
 
