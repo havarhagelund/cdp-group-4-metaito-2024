@@ -53,11 +53,13 @@ This will ensure that the code is properly formatted and that the build is succe
 
 The structure of the project is as follows:
 
-- src - Contains all the source code
-  - components - Contains all the components
-  - pages - Contains all the pages
-  - styles - Contains all the styles
-  - utils - Contains all the utility functions
+- src - Contains all the source
+    - app - Contains the main app
+    - components - Contains all the components
+    - pages - Contains all the pages
+    - styles - Contains all the styles
+
+- public - Contains all the public files (fonts, etc...)
 
 <h2 id="colab">🤝 Collaborators</h2>
 
