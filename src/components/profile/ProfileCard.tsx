@@ -15,6 +15,7 @@ const ProfileCard: FC<ProfileCardProps> = ({ name, title, image }) => {
           alt={name + " image"}
           width={100}
           height={100}
+          draggable={false}
           className="object-cover w-full h-full rounded-2xl"
         />
       </div>

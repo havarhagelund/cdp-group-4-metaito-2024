@@ -10,6 +10,7 @@ const Navbar = () => {
           alt="fs logo"
           height={100}
           width={100}
+          draggable={false}
           className="object-cover w-full h-full"
         />
       </div>
