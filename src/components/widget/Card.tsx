@@ -1,22 +1,24 @@
-import React, { useState, useRef, useEffect, FC } from 'react';
-import {size, position} from '@/types/layout';
+import React, { useState, useRef, useEffect, FC } from "react";
+import { size, position } from "@/types/layout";
 
 interface CardProps {
   children?: React.ReactNode;
   maxSize: size;
   minSize: size;
 }
-const Card: FC<CardProps> = ({children, maxSize, minSize}) => {
+const Card: FC<CardProps> = ({ children, maxSize, minSize }) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
-  const [resizeDirection, setResizeDirection] = useState<'bottom' | 'right' | null>(null);
+  const [resizeDirection, setResizeDirection] = useState<
+    "bottom" | "right" | null
+  >(null);
   const [size, setSize] = useState<size>(minSize);
   const cardRef = useRef<HTMLDivElement>(null);
   const startPos = useRef<position>({ x: 0, y: 0 });
   const startSize = useRef<size>(size);
 
   enum BorderPos {
-    Bottom = 'bottom',
-    Right = 'right',
+    Bottom = "bottom",
+    Right = "right",
   }
 
   const getBorderPosition = (x: number, y: number): BorderPos | null => {
@@ -25,8 +27,8 @@ const Card: FC<CardProps> = ({children, maxSize, minSize}) => {
     const rect = card.getBoundingClientRect();
     const borderWidth = 10;
 
-    const isOnRight = x >= (rect.right - borderWidth) && x <= rect.right;
-    const isOnBottom = y >= (rect.bottom - borderWidth) && y <= rect.bottom;
+    const isOnRight = x >= rect.right - borderWidth && x <= rect.right;
+    const isOnBottom = y >= rect.bottom - borderWidth && y <= rect.bottom;
 
     if (isOnRight) return BorderPos.Right;
     if (isOnBottom) return BorderPos.Bottom;
@@ -54,12 +56,11 @@ const Card: FC<CardProps> = ({children, maxSize, minSize}) => {
       let newWidth = prevSize.width;
       let newHeight = prevSize.height;
 
-
-      if (resizeDirection === 'right') {
+      if (resizeDirection === "right") {
         newWidth = Math.max(startSize.current.width + dx, 50);
       }
 
-      if (resizeDirection === 'bottom') {
+      if (resizeDirection === "bottom") {
         newHeight = Math.max(startSize.current.height + dy, 50);
       }
 
@@ -76,18 +77,18 @@ const Card: FC<CardProps> = ({children, maxSize, minSize}) => {
 
   useEffect(() => {
     if (isResizing) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-      window.addEventListener('mouseleave', handleMouseUp);
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+      window.addEventListener("mouseleave", handleMouseUp);
     } else {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mouseleave', handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mouseleave", handleMouseUp);
     }
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mouseleave', handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mouseleave", handleMouseUp);
     };
   }, [isResizing, resizeDirection]);
 
@@ -95,11 +96,11 @@ const Card: FC<CardProps> = ({children, maxSize, minSize}) => {
     const border = getBorderPosition(e.clientX, e.clientY);
 
     if (border === BorderPos.Right) {
-      cardRef.current!.style.cursor = 'ew-resize';
+      cardRef.current!.style.cursor = "ew-resize";
     } else if (border === BorderPos.Bottom) {
-      cardRef.current!.style.cursor = 'ns-resize';
+      cardRef.current!.style.cursor = "ns-resize";
     } else {
-      cardRef.current!.style.cursor = 'default';
+      cardRef.current!.style.cursor = "default";
     }
   };
 
@@ -112,13 +113,13 @@ const Card: FC<CardProps> = ({children, maxSize, minSize}) => {
       style={{
         width: `${size.width}px`,
         height: `${size.height}px`,
-        position: 'relative',
-        userSelect: isResizing ? 'none' : 'auto',
+        position: "relative",
+        userSelect: isResizing ? "none" : "auto",
       }}
     >
       <p>Width: {size.width}px</p>
       <p>Height: {size.height}px</p>
-      <p>Resizing: {isResizing ? 'Yes' : 'No'}</p>
+      <p>Resizing: {isResizing ? "Yes" : "No"}</p>
       {children}
     </main>
   );

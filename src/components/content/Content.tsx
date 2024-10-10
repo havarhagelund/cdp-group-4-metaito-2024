@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useRef } from "react";
 import Card from "../widget/Card";
 
 // Need to find a smart way to resize each of the children in the Content frame.
@@ -11,28 +11,22 @@ import Card from "../widget/Card";
 // then the resizing should be blocked.
 // The chuldren should have a max height of the whole container, but should be
 // divided into three normally.
-interface ContentProps {
-  children?: React.ReactNode;
-}
-const Content: FC<ContentProps> = ({ children }) => {
+interface ContentProps {}
+const Content: FC<ContentProps> = () => {
   const section = useRef<HTMLDivElement>(null);
   const maxSize = { width: 400, height: 350 };
   const minSize = { width: 200, height: 175 };
 
-  useEffect(() => {
-    const width = section.current?.clientWidth;
-    const height = section.current?.clientHeight;
-
-
-
-  }, []);
-
+  // useEffect(() => {
+  //   const width = section.current?.clientWidth;
+  //   const height = section.current?.clientHeight;
+  // }, []);
 
   return (
     <section ref={section} className="px-16 pt-6 h-[75vh] flex">
-      <Card maxSize={maxSize} minSize={minSize}/>
+      <Card maxSize={maxSize} minSize={minSize} />
     </section>
   );
-}
+};
 
 export default Content;
