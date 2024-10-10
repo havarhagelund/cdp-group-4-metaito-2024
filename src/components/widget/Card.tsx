@@ -1,25 +1,35 @@
 import React, { useState, useRef, useEffect, FC } from "react";
-import { size, position } from "@/types/layout";
+import { Size, Position } from "@/types/layout";
 
 interface CardProps {
   children?: React.ReactNode;
-  maxSize: size;
-  minSize: size;
+  containerSize: Size;
+  minSize: Size;
+  id: number;
+  insert: (id: number) => void;
+  remove: (id: number) => void;
+  getCurrentMaxSize: (id: number) => Size;
 }
-const Card: FC<CardProps> = ({ children, maxSize, minSize }) => {
+// TODO: Needs refactoring...
+const Card: FC<CardProps> = ({ children, containerSize, minSize, id, insert, remove, getCurrentMaxSize }) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [resizeDirection, setResizeDirection] = useState<
     "bottom" | "right" | null
   >(null);
-  const [size, setSize] = useState<size>(minSize);
+  const [size, setSize] = useState<Size>(minSize);
   const cardRef = useRef<HTMLDivElement>(null);
-  const startPos = useRef<position>({ x: 0, y: 0 });
-  const startSize = useRef<size>(size);
+  const startPos = useRef<Position>({ x: 0, y: 0 });
+  const startSize = useRef<Size>(size);
 
   enum BorderPos {
     Bottom = "bottom",
     Right = "right",
   }
+
+  useEffect(() => {
+    if (minSize.width == 0 || minSize.height == 0) return;
+    setSize(minSize);
+  }, [minSize]);
 
   const getBorderPosition = (x: number, y: number): BorderPos | null => {
     const card = cardRef.current;
@@ -48,22 +58,32 @@ const Card: FC<CardProps> = ({ children, maxSize, minSize }) => {
 
   const handleMouseMove = (e: MouseEvent) => {
     if (!isResizing || !resizeDirection) return;
-
-    const dx = e.clientX - startPos.current.x;
-    const dy = e.clientY - startPos.current.y;
+    const dx = ((e.clientX - startPos.current.x) / containerSize.width) * 100;
+    const dy = ((e.clientY - startPos.current.y) / containerSize.height) * 100;
 
     setSize((prevSize) => {
-      let newWidth = prevSize.width;
+      let newWidth = 0;
       let newHeight = prevSize.height;
-
+      const space = getCurrentMaxSize(id);
       if (resizeDirection === "right") {
-        newWidth = Math.max(startSize.current.width + dx, 50);
+        const dragWidth = Math.min(Math.max(startSize.current.width + dx, minSize.width), space.width);
+        newWidth = dragWidth - (dragWidth % minSize.width);
+        if (newWidth !== prevSize.width) {
+          if (newWidth > prevSize.width) {
+            console.log("insert");
+            insert(id);
+          } else {
+            console.log("remove");
+            remove(id);
+          }
+        }
+        prevSize.width = newWidth;
       }
 
       if (resizeDirection === "bottom") {
-        newHeight = Math.max(startSize.current.height + dy, 50);
+        const dragHeight = Math.min(Math.max(startSize.current.height + dy, minSize.height), 100);
+        newHeight = dragHeight - (dragHeight % minSize.height);
       }
-
       return { width: newWidth, height: newHeight };
     });
   };
@@ -111,14 +131,14 @@ const Card: FC<CardProps> = ({ children, maxSize, minSize }) => {
       onMouseMove={handleMouseMoveOnCard}
       className="border-lines-default border-2 rounded-3xl resize overflow-auto"
       style={{
-        width: `${size.width}px`,
-        height: `${size.height}px`,
+        width: `${size.width}%`,
+        height: `${size.height}%`,
         position: "relative",
         userSelect: isResizing ? "none" : "auto",
       }}
     >
-      <p>Width: {size.width}px</p>
-      <p>Height: {size.height}px</p>
+      <p>Width: {size.width}%</p>
+      <p>Height: {size.height}%</p>
       <p>Resizing: {isResizing ? "Yes" : "No"}</p>
       {children}
     </main>
