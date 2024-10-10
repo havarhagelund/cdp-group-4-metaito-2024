@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { FC } from "react";
 
 interface ProfileCardProps {
   name: string;
   title: string;
   image: string;
 }
-const ProfileCard = ({ name, title, image }: ProfileCardProps) => {
+const ProfileCard: FC<ProfileCardProps> = ({ name, title, image }) => {
   return (
     <main className="border-lines-default border-[1px] border-solid w-fit h-22 rounded-2xl flex">
       <div className="w-16 h-full">
