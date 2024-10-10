@@ -20,6 +20,7 @@ const config: Config = {
         background: {
           default: "#F9FAFB",
           widget: "#F3F7FB",
+          toolbar: "#EDEFF3",
         },
         text: {
           default: "#262626",
