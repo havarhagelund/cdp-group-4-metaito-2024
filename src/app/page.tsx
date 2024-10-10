@@ -3,14 +3,9 @@ import Navbar from "@/components/navbar/Navbar";
 import Content from "@/components/content/Content";
 import Card from "@/components/widget/Card";
 import Image from "next/image";
-import { MousePosition } from "@/types/mouse";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-  const [mousePosition, setMousePosition] = useState<MousePosition>({ x: undefined, y: undefined });
-  const getMousePosition = (ev: any) => {
-    setMousePosition({ x: ev.clientX, y: ev.clientY });
-  };
   return (
     <>
       <Navbar />
