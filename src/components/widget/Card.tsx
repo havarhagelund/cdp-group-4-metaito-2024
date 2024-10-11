@@ -6,12 +6,12 @@ interface CardProps {
   containerSize: Size;
   minSize: Size;
   id: number;
-  insert: (id: number) => void;
-  remove: (id: number) => void;
+  extend: (id: number) => void;
+  shorten: (id: number) => void;
   getCurrentMaxSize: (id: number) => Size;
 }
 // TODO: Needs refactoring...
-const Card: FC<CardProps> = ({ children, containerSize, minSize, id, insert, remove, getCurrentMaxSize }) => {
+const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, shorten, getCurrentMaxSize }) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [resizeDirection, setResizeDirection] = useState<
     "bottom" | "right" | null
@@ -70,21 +70,19 @@ const Card: FC<CardProps> = ({ children, containerSize, minSize, id, insert, rem
         newWidth = dragWidth - (dragWidth % minSize.width);
         if (newWidth !== prevSize.width) {
           if (newWidth > prevSize.width) {
-            console.log("insert");
-            insert(id);
+            extend(id);
           } else {
-            console.log("remove");
-            remove(id);
+            shorten(id);
           }
         }
         prevSize.width = newWidth;
+        return { width: newWidth, height: prevSize.height };
       }
-
-      if (resizeDirection === "bottom") {
+      else {
         const dragHeight = Math.min(Math.max(startSize.current.height + dy, minSize.height), 100);
         newHeight = dragHeight - (dragHeight % minSize.height);
+        return { width: prevSize.width, height: newHeight };
       }
-      return { width: newWidth, height: newHeight };
     });
   };
 
