@@ -1,34 +1,28 @@
 import React, { useState, useRef, useEffect, FC } from "react";
-import { Size, Position, Direction } from "@/types/layout";
+import { size, position, direction } from "@/types/layout";
 
 interface CardProps {
   children?: React.ReactNode;
-  containerSize: Size;
-  minSize: Size;
+  minSize: size;
+  startSize: size;
   id: number;
-  extend: (id: number, resizeDirection: Direction) => void;
-  shorten: (id: number, resizeDirection: Direction) => void;
-  getCurrentMaxSize: (id: number) => Size;
+  extend: (id: number, resizeDirection: direction) => void;
+  shorten: (id: number, resizeDirection: direction) => void;
+  getCurrentMaxSize: (id: number) => size;
 }
 
 // TODO: Needs refactoring...
-const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, shorten, getCurrentMaxSize }) => {
+const Card: FC<CardProps> = ({ children, minSize, startSize, id, extend, shorten, getCurrentMaxSize }) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
-  const [resizeDirection, setResizeDirection] = useState<Direction>(null);
-  const [size, setSize] = useState<Size>(minSize);
+  const [resizeDirection, setResizeDirection] = useState<direction>(null);
+  const [size, setSize] = useState<size>(startSize);
   const cardRef = useRef<HTMLDivElement>(null);
-  const startPos = useRef<Position>({ x: 0, y: 0 });
-  const startSize = useRef<Size>(size);
+  const startPos = useRef<position>({ x: 0, y: 0 });
 
   enum BorderPos {
     Bottom = "bottom",
     Right = "right",
   }
-
-  useEffect(() => {
-    if (minSize.width == 0 || minSize.height == 0) return;
-    setSize(minSize);
-  }, [minSize]);
 
   function getBorderPosition(x: number, y: number): BorderPos | null {
     const card = cardRef.current;
@@ -50,47 +44,45 @@ const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, sho
       setIsResizing(true);
       setResizeDirection(border);
       startPos.current = { x: e.clientX, y: e.clientY };
-      startSize.current = { width: size.width, height: size.height };
       e.preventDefault();
     }
   };
 
-  function handleResize(newNumb: number, prevNumb: number, resizeDirection: Direction) {
-    if (newNumb !== prevNumb) {
-      if (newNumb > prevNumb) {
-        extend(id, resizeDirection);
-      } else {
-        shorten(id, resizeDirection);
-      }
+  function handleResize(d: number) {
+    if (d > 0) {
+      extend(id, resizeDirection);
+    } else {
+      shorten(id, resizeDirection);
     }
   }
 
   function handleMouseMove(e: MouseEvent) {
     if (!isResizing || !resizeDirection) return;
-    const dx = ((e.clientX - startPos.current.x) / containerSize.width) * 100;
-    const dy = ((e.clientY - startPos.current.y) / containerSize.height) * 100;
+    let dx = e.clientX - startPos.current.x;
+    let dy = e.clientY - startPos.current.y;
 
     setSize((prevSize) => {
-      let newWidth = 0;
-      let newHeight = 0;
-      const space = getCurrentMaxSize(id);
-
-      if (resizeDirection === "right") {
-        newHeight = prevSize.height;
-        const dragWidth = Math.min(Math.max(startSize.current.width + dx, minSize.width), space.width);
-        newWidth = dragWidth - (dragWidth % minSize.width);
-        handleResize(newWidth, prevSize.width, resizeDirection);
-        prevSize.width = newWidth;
+      if (resizeDirection == "right") {
+        const width = Math.max(Math.min((Math.sign(dx) * Math.floor(Math.abs(dx) / minSize.width) + prevSize.width),
+          getCurrentMaxSize(id).width), 1);
+        if (prevSize.width !== width) {
+          handleResize(dx);
+          dx = 0;
+          startPos.current = { x: e.clientX, y: e.clientY };
+        }
+        prevSize.width = width;
+      } else {
+        const height = Math.max(Math.min((Math.sign(dy) * Math.floor(Math.abs(dy) / minSize.height) + prevSize.height),
+          getCurrentMaxSize(id).height), 1);
+        if (prevSize.height !== height) {
+          handleResize(dy);
+          dy = 0;
+          startPos.current = { x: e.clientX, y: e.clientY };
+        }
+        prevSize.height = height;
       }
-      else {
-        newWidth = prevSize.width;
-        const dragHeight = Math.min(Math.max(startSize.current.height + dy, minSize.height), 100);
-        handleResize(newHeight, prevSize.height, resizeDirection);
-        newHeight = dragHeight - (dragHeight % minSize.height);
-      }
-
-      return { width: newWidth, height: newHeight };
-    });
+      return { width: prevSize.width, height: prevSize.height };
+    })
   };
 
   function handleMouseUp() {
@@ -119,7 +111,6 @@ const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, sho
 
   function handleMouseMoveOnCard(e: React.MouseEvent) {
     const border = getBorderPosition(e.clientX, e.clientY);
-
     if (border === BorderPos.Right) {
       cardRef.current!.style.cursor = "ew-resize";
     } else if (border === BorderPos.Bottom) {
@@ -132,19 +123,18 @@ const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, sho
   return (
     <main
       ref={cardRef}
+      id={id.toString()}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMoveOnCard}
-      className="border-lines-default border-2 rounded-3xl resize overflow-auto"
+      className="border-lines-default w-full h-full border-2 rounded-3xl  overflow-auto"
       style={{
-        width: `${size.width}%`,
-        height: `${size.height}%`,
-        position: "relative",
-        userSelect: isResizing ? "none" : "auto",
+        gridColumn: `span ${size.width}`,
+        gridRow: `span ${size.height}`
       }}
     >
-      <p>Width: {size.width}%</p>
-      <p>Height: {size.height}%</p>
+      <p>span: {size.width}, {size.height}</p>
       <p>Resizing: {isResizing ? "Yes" : "No"}</p>
+      <p>ID: {id}</p>
       {children}
     </main>
   );
