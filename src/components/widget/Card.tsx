@@ -12,7 +12,15 @@ interface CardProps {
 }
 
 // TODO: Needs refactoring...
-const Card: FC<CardProps> = ({ children, minSize, startSize, id, extend, shorten, getCurrentMaxSize }) => {
+const Card: FC<CardProps> = ({
+  children,
+  minSize,
+  startSize,
+  id,
+  extend,
+  shorten,
+  getCurrentMaxSize,
+}) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [resizeDirection, setResizeDirection] = useState<direction>(null);
   const [size, setSize] = useState<size>(startSize);
@@ -36,7 +44,7 @@ const Card: FC<CardProps> = ({ children, minSize, startSize, id, extend, shorten
     if (isOnRight) return BorderPos.Right;
     if (isOnBottom) return BorderPos.Bottom;
     return null;
-  };
+  }
 
   function handleMouseDown(e: React.MouseEvent) {
     const border = getBorderPosition(e.clientX, e.clientY);
@@ -46,7 +54,7 @@ const Card: FC<CardProps> = ({ children, minSize, startSize, id, extend, shorten
       startPos.current = { x: e.clientX, y: e.clientY };
       e.preventDefault();
     }
-  };
+  }
 
   function handleResize(d: number) {
     if (d > 0) {
@@ -63,8 +71,14 @@ const Card: FC<CardProps> = ({ children, minSize, startSize, id, extend, shorten
 
     setSize((prevSize) => {
       if (resizeDirection == "right") {
-        const width = Math.max(Math.min((Math.sign(dx) * Math.floor(Math.abs(dx) / minSize.width) + prevSize.width),
-          getCurrentMaxSize(id).width), 1);
+        const width = Math.max(
+          Math.min(
+            Math.sign(dx) * Math.floor(Math.abs(dx) / minSize.width) +
+              prevSize.width,
+            getCurrentMaxSize(id).width,
+          ),
+          1,
+        );
         if (prevSize.width !== width) {
           handleResize(dx);
           dx = 0;
@@ -72,8 +86,14 @@ const Card: FC<CardProps> = ({ children, minSize, startSize, id, extend, shorten
         }
         prevSize.width = width;
       } else {
-        const height = Math.max(Math.min((Math.sign(dy) * Math.floor(Math.abs(dy) / minSize.height) + prevSize.height),
-          getCurrentMaxSize(id).height), 1);
+        const height = Math.max(
+          Math.min(
+            Math.sign(dy) * Math.floor(Math.abs(dy) / minSize.height) +
+              prevSize.height,
+            getCurrentMaxSize(id).height,
+          ),
+          1,
+        );
         if (prevSize.height !== height) {
           handleResize(dy);
           dy = 0;
@@ -82,15 +102,15 @@ const Card: FC<CardProps> = ({ children, minSize, startSize, id, extend, shorten
         prevSize.height = height;
       }
       return { width: prevSize.width, height: prevSize.height };
-    })
-  };
+    });
+  }
 
   function handleMouseUp() {
     if (isResizing) {
       setIsResizing(false);
       setResizeDirection(null);
     }
-  };
+  }
 
   useEffect(() => {
     if (isResizing) {
@@ -118,7 +138,7 @@ const Card: FC<CardProps> = ({ children, minSize, startSize, id, extend, shorten
     } else {
       cardRef.current!.style.cursor = "default";
     }
-  };
+  }
 
   return (
     <main
@@ -129,10 +149,12 @@ const Card: FC<CardProps> = ({ children, minSize, startSize, id, extend, shorten
       className="border-lines-default w-full h-full border-2 rounded-3xl  overflow-auto"
       style={{
         gridColumn: `span ${size.width}`,
-        gridRow: `span ${size.height}`
+        gridRow: `span ${size.height}`,
       }}
     >
-      <p>span: {size.width}, {size.height}</p>
+      <p>
+        span: {size.width}, {size.height}
+      </p>
       <p>Resizing: {isResizing ? "Yes" : "No"}</p>
       <p>ID: {id}</p>
       {children}
