@@ -1,21 +1,20 @@
 import React, { useState, useRef, useEffect, FC } from "react";
-import { Size, Position } from "@/types/layout";
+import { Size, Position, Direction } from "@/types/layout";
 
 interface CardProps {
   children?: React.ReactNode;
   containerSize: Size;
   minSize: Size;
   id: number;
-  extend: (id: number) => void;
-  shorten: (id: number) => void;
+  extend: (id: number, resizeDirection: Direction) => void;
+  shorten: (id: number, resizeDirection: Direction) => void;
   getCurrentMaxSize: (id: number) => Size;
 }
+
 // TODO: Needs refactoring...
 const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, shorten, getCurrentMaxSize }) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
-  const [resizeDirection, setResizeDirection] = useState<
-    "bottom" | "right" | null
-  >(null);
+  const [resizeDirection, setResizeDirection] = useState<Direction>(null);
   const [size, setSize] = useState<Size>(minSize);
   const cardRef = useRef<HTMLDivElement>(null);
   const startPos = useRef<Position>({ x: 0, y: 0 });
@@ -31,7 +30,7 @@ const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, sho
     setSize(minSize);
   }, [minSize]);
 
-  const getBorderPosition = (x: number, y: number): BorderPos | null => {
+  function getBorderPosition(x: number, y: number): BorderPos | null {
     const card = cardRef.current;
     if (!card) return null;
     const rect = card.getBoundingClientRect();
@@ -45,7 +44,7 @@ const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, sho
     return null;
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  function handleMouseDown(e: React.MouseEvent) {
     const border = getBorderPosition(e.clientX, e.clientY);
     if (border) {
       setIsResizing(true);
@@ -56,37 +55,45 @@ const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, sho
     }
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  function handleResize(newNumb: number, prevNumb: number, resizeDirection: Direction) {
+    if (newNumb !== prevNumb) {
+      if (newNumb > prevNumb) {
+        extend(id, resizeDirection);
+      } else {
+        shorten(id, resizeDirection);
+      }
+    }
+  }
+
+  function handleMouseMove(e: MouseEvent) {
     if (!isResizing || !resizeDirection) return;
     const dx = ((e.clientX - startPos.current.x) / containerSize.width) * 100;
     const dy = ((e.clientY - startPos.current.y) / containerSize.height) * 100;
 
     setSize((prevSize) => {
       let newWidth = 0;
-      let newHeight = prevSize.height;
+      let newHeight = 0;
       const space = getCurrentMaxSize(id);
+
       if (resizeDirection === "right") {
+        newHeight = prevSize.height;
         const dragWidth = Math.min(Math.max(startSize.current.width + dx, minSize.width), space.width);
         newWidth = dragWidth - (dragWidth % minSize.width);
-        if (newWidth !== prevSize.width) {
-          if (newWidth > prevSize.width) {
-            extend(id);
-          } else {
-            shorten(id);
-          }
-        }
+        handleResize(newWidth, prevSize.width, resizeDirection);
         prevSize.width = newWidth;
-        return { width: newWidth, height: prevSize.height };
       }
       else {
+        newWidth = prevSize.width;
         const dragHeight = Math.min(Math.max(startSize.current.height + dy, minSize.height), 100);
+        handleResize(newHeight, prevSize.height, resizeDirection);
         newHeight = dragHeight - (dragHeight % minSize.height);
-        return { width: prevSize.width, height: newHeight };
       }
+
+      return { width: newWidth, height: newHeight };
     });
   };
 
-  const handleMouseUp = () => {
+  function handleMouseUp() {
     if (isResizing) {
       setIsResizing(false);
       setResizeDirection(null);
@@ -110,7 +117,7 @@ const Card: FC<CardProps> = ({ children, containerSize, minSize, id, extend, sho
     };
   }, [isResizing, resizeDirection]);
 
-  const handleMouseMoveOnCard = (e: React.MouseEvent) => {
+  function handleMouseMoveOnCard(e: React.MouseEvent) {
     const border = getBorderPosition(e.clientX, e.clientY);
 
     if (border === BorderPos.Right) {
