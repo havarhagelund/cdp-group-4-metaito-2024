@@ -8,9 +8,11 @@ export type position = {
   y: number;
 };
 
-export type index2D = {
-  index: number;
-  row: number;
+export type card = {
+  size: size;
+  position: position;
 };
+
+export type grid = number[][];
 
 export type direction = "bottom" | "right" | null;
