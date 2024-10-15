@@ -1,25 +1,27 @@
-import React, { useState, useRef, useEffect, FC } from "react";
+import { useState, useRef, useEffect, FC, RefObject } from "react";
 import { size, position, direction } from "@/types/layout";
+
+export type CardRef = { id: number; ref: RefObject<HTMLDivElement> };
 
 interface CardProps {
   children?: React.ReactNode;
-  minSize: size;
   startSize: size;
   id: number;
-  extend: (id: number, resizeDirection: direction) => void;
-  shorten: (id: number, resizeDirection: direction) => void;
-  getCurrentMaxSize: (id: number) => size;
+  update: () => void;
+  getMinSize: () => size;
+  getCurrentPossibleSize: (id: number) => size;
+  setRefs: (ref: CardRef) => void;
 }
 
 // TODO: Needs refactoring...
 const Card: FC<CardProps> = ({
   children,
-  minSize,
   startSize,
   id,
-  extend,
-  shorten,
-  getCurrentMaxSize,
+  update,
+  getMinSize,
+  getCurrentPossibleSize,
+  setRefs,
 }) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [resizeDirection, setResizeDirection] = useState<direction>(null);
@@ -32,15 +34,18 @@ const Card: FC<CardProps> = ({
     Right = "right",
   }
 
+  useEffect(() => {
+    if (!cardRef.current) return;
+    setRefs({ id, ref: cardRef });
+  }, [cardRef]);
+
   function getBorderPosition(x: number, y: number): BorderPos | null {
     const card = cardRef.current;
     if (!card) return null;
     const rect = card.getBoundingClientRect();
     const borderWidth = 10;
-
     const isOnRight = x >= rect.right - borderWidth && x <= rect.right;
     const isOnBottom = y >= rect.bottom - borderWidth && y <= rect.bottom;
-
     if (isOnRight) return BorderPos.Right;
     if (isOnBottom) return BorderPos.Bottom;
     return null;
@@ -56,53 +61,53 @@ const Card: FC<CardProps> = ({
     }
   }
 
-  function handleResize(d: number) {
-    if (d > 0) {
-      extend(id, resizeDirection);
-    } else {
-      shorten(id, resizeDirection);
-    }
-  }
-
   function handleMouseMove(e: MouseEvent) {
     if (!isResizing || !resizeDirection) return;
     let dx = e.clientX - startPos.current.x;
     let dy = e.clientY - startPos.current.y;
+    const minSize = getMinSize();
+    const min = 1;
 
     setSize((prevSize) => {
-      if (resizeDirection == "right") {
-        const width = Math.max(
-          Math.min(
-            Math.sign(dx) * Math.floor(Math.abs(dx) / minSize.width) +
-              prevSize.width,
-            getCurrentMaxSize(id).width,
-          ),
-          1,
-        );
-        if (prevSize.width !== width) {
-          handleResize(dx);
-          dx = 0;
-          startPos.current = { x: e.clientX, y: e.clientY };
+      switch (resizeDirection) {
+        case "right": {
+          const width = Math.max(
+            Math.min(
+              Math.sign(dx) * Math.floor(Math.abs(dx) / minSize.width) +
+                prevSize.width,
+              getCurrentPossibleSize(id).width,
+            ),
+            min,
+          );
+          if (prevSize.width !== width) {
+            dx = 0;
+            startPos.current = { x: e.clientX, y: e.clientY };
+          }
+          prevSize.width = width;
+
+          break;
         }
-        prevSize.width = width;
-      } else {
-        const height = Math.max(
-          Math.min(
-            Math.sign(dy) * Math.floor(Math.abs(dy) / minSize.height) +
-              prevSize.height,
-            getCurrentMaxSize(id).height,
-          ),
-          1,
-        );
-        if (prevSize.height !== height) {
-          handleResize(dy);
-          dy = 0;
-          startPos.current = { x: e.clientX, y: e.clientY };
+        case "bottom": {
+          const height = Math.max(
+            Math.min(
+              Math.sign(dy) * Math.floor(Math.abs(dy) / minSize.height) +
+                prevSize.height,
+              getCurrentPossibleSize(id).height,
+            ),
+            min,
+          );
+          if (prevSize.height !== height) {
+            dy = 0;
+            startPos.current = { x: e.clientX, y: e.clientY };
+          }
+          prevSize.height = height;
+          break;
         }
-        prevSize.height = height;
       }
       return { width: prevSize.width, height: prevSize.height };
     });
+
+    update();
   }
 
   function handleMouseUp() {
@@ -117,10 +122,6 @@ const Card: FC<CardProps> = ({
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
       window.addEventListener("mouseleave", handleMouseUp);
-    } else {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("mouseleave", handleMouseUp);
     }
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -143,7 +144,6 @@ const Card: FC<CardProps> = ({
   return (
     <main
       ref={cardRef}
-      id={id.toString()}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMoveOnCard}
       className="border-lines-default w-full h-full border-2 rounded-3xl  overflow-auto"
