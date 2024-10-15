@@ -1,3 +1,3 @@
 export default function PageTest() {
-    return <h1>Form page</h1>
+  return <h1>Form page</h1>;
 }
