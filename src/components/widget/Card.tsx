@@ -1,12 +1,13 @@
-import { useState, useRef, useEffect, FC, RefObject } from "react";
+import { useState, useRef, useEffect, RefObject } from "react";
 import { size, position, direction } from "@/types/layout";
 
 export type CardRef = { id: number; ref: RefObject<HTMLDivElement> };
 
 interface CardProps {
   children?: React.ReactNode;
-  startSize: size;
   id: number;
+  title: string;
+  startSize: size;
   update: () => void;
   getMinSize: () => size;
   getCurrentPossibleSize: (id: number) => size;
@@ -14,20 +15,22 @@ interface CardProps {
 }
 
 // TODO: Needs refactoring...
-const Card: FC<CardProps> = ({
+const Card = ({
   children,
-  startSize,
   id,
+  title,
+  startSize,
   update,
   getMinSize,
   getCurrentPossibleSize,
   setRefs,
-}) => {
+}: CardProps) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [resizeDirection, setResizeDirection] = useState<direction>(null);
   const [size, setSize] = useState<size>(startSize);
   const cardRef = useRef<HTMLDivElement>(null);
   const startPos = useRef<position>({ x: 0, y: 0 });
+  const debug = false;
 
   enum BorderPos {
     Bottom = "bottom",
@@ -74,7 +77,7 @@ const Card: FC<CardProps> = ({
           const width = Math.max(
             Math.min(
               Math.sign(dx) * Math.floor(Math.abs(dx) / minSize.width) +
-              prevSize.width,
+                prevSize.width,
               getCurrentPossibleSize(id).width,
             ),
             min,
@@ -85,14 +88,13 @@ const Card: FC<CardProps> = ({
           }
           prevSize.width = width;
 
-          update();
           break;
         }
         case "bottom": {
           const height = Math.max(
             Math.min(
               Math.sign(dy) * Math.floor(Math.abs(dy) / minSize.height) +
-              prevSize.height,
+                prevSize.height,
               getCurrentPossibleSize(id).height,
             ),
             min,
@@ -103,13 +105,12 @@ const Card: FC<CardProps> = ({
           }
           prevSize.height = height;
 
-          update();
           break;
         }
       }
       return { width: prevSize.width, height: prevSize.height };
     });
-
+    update();
   }
 
   function handleMouseUp() {
@@ -148,18 +149,26 @@ const Card: FC<CardProps> = ({
       ref={cardRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMoveOnCard}
-      className="border-lines-default w-full h-full border-2 rounded-3xl  overflow-auto"
+      className="border-lines-default w-full h-full border-[1px] rounded-3xl  overflow-auto bg-background-widget px-7 py-6"
       style={{
         gridColumn: `span ${size.width}`,
         gridRow: `span ${size.height}`,
       }}
     >
-      <p>
-        span: {size.width}, {size.height}
-      </p>
-      <p>Resizing: {isResizing ? "Yes" : "No"}</p>
-      <p>ID: {id}</p>
-      {children}
+      {debug && (
+        <div className="absolute text-red-50">
+          <p>
+            span: {size.width}, {size.height}
+          </p>
+          <p>Resizing: {isResizing ? "Yes" : "No"}</p>
+          <p>ID: {id}</p>
+        </div>
+      )}
+      <section className="h-fit w-full space-y-3">
+        <p className="font-medium text-2xl tracking-wide">{title}</p>
+        <div className="h-[2px] w-full bg-lines-default" />
+        {children}
+      </section>
     </main>
   );
 };
