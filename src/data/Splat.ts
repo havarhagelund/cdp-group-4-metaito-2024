@@ -2,7 +2,7 @@ import { splat } from "@/types/splat";
 
 export const splatData: splat = {
   id: "0c9af6dc-3ec6-4634-b88d-c389734a6ef0",
-  title: "Ai structure Assistan",
+  title: "AI structure Assistant",
   subtitle: "Customer driven Project",
   grid: [
     [1, 1, 0, 0],
