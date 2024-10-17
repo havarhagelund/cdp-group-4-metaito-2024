@@ -35,7 +35,6 @@ export function gridRemove(
   yCap: number,
 ) {
   const { x, y } = indexOf2D(id, grid, yCap);
-  if (x === -1 || y === -1) throw new Error("Id not found in grid");
   for (let i = y; i <= size.height; i++) {
     for (let j = x; j <= size.width; j++) {
       grid[i][j] = 0;
@@ -107,5 +106,8 @@ export function indexOf2D(
     y = i;
     break;
   }
+  console.log(grid);
+  console.log(id);
+  if (x === -1 || y === -1) throw new Error("Id not found in grid");
   return { x, y };
 }

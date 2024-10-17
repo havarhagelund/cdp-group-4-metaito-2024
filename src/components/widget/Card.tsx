@@ -74,7 +74,7 @@ const Card: FC<CardProps> = ({
           const width = Math.max(
             Math.min(
               Math.sign(dx) * Math.floor(Math.abs(dx) / minSize.width) +
-                prevSize.width,
+              prevSize.width,
               getCurrentPossibleSize(id).width,
             ),
             min,
@@ -85,13 +85,14 @@ const Card: FC<CardProps> = ({
           }
           prevSize.width = width;
 
+          update();
           break;
         }
         case "bottom": {
           const height = Math.max(
             Math.min(
               Math.sign(dy) * Math.floor(Math.abs(dy) / minSize.height) +
-                prevSize.height,
+              prevSize.height,
               getCurrentPossibleSize(id).height,
             ),
             min,
@@ -101,13 +102,14 @@ const Card: FC<CardProps> = ({
             startPos.current = { x: e.clientX, y: e.clientY };
           }
           prevSize.height = height;
+
+          update();
           break;
         }
       }
       return { width: prevSize.width, height: prevSize.height };
     });
 
-    update();
   }
 
   function handleMouseUp() {
