@@ -1,6 +1,21 @@
-// rm -rf .next/cache    -if not updating
 import FormCard from "@/components/form/FormCard";
 import { Button } from "@/components/ui/button";
+
+const mockCardData = [
+  { title: "Helse og omsorg" },
+  { title: "Utdanning og forskning" },
+  { title: "Teknologi og IT" },
+  { title: "Salg og service" },
+  { title: "Bygg og anlegg" },
+  { title: "Kunst og kultur" },
+  { title: "Ideell organisasjon / frivillig arbeid" },
+  { title: "Offentlig sektor" },
+  { title: "Konsulentvirksomhet" },
+  { title: "Transport og logistikk" },
+  { title: "Landbruk og naturforvaltning" },
+  { title: "Finans og forsikring" },
+  { title: "Produksjon og industri" },
+];
 
 const Page = () => {
   return (
@@ -13,147 +28,10 @@ const Page = () => {
           </p>
         </section>
         <div className="grid grid-cols-5 grid-rows-5 bg-red-100 p-10 w-fit gap-4">
-          {/* random data */}
-          <FormCard
-            card={{
-              title: "Maritime",
-              icon: (
-                <span role="img" aria-label="ship">
-                  🚢
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Health",
-              icon: (
-                <span role="img" aria-label="hospital">
-                  🏥
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Economy",
-              icon: (
-                <span role="img" aria-label="money">
-                  💰
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Technology",
-              icon: (
-                <span role="img" aria-label="robot">
-                  🤖
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Home",
-              icon: (
-                <span role="img" aria-label="house">
-                  🏠
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Maritime",
-              icon: (
-                <span role="img" aria-label="ship">
-                  🚢
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Health",
-              icon: (
-                <span role="img" aria-label="hospital">
-                  🏥
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Economy",
-              icon: (
-                <span role="img" aria-label="money">
-                  💰
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Technology",
-              icon: (
-                <span role="img" aria-label="robot">
-                  🤖
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Home",
-              icon: (
-                <span role="img" aria-label="house">
-                  🏠
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Maritime",
-              icon: (
-                <span role="img" aria-label="ship">
-                  🚢
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Health",
-              icon: (
-                <span role="img" aria-label="hospital">
-                  🏥
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Economy",
-              icon: (
-                <span role="img" aria-label="money">
-                  💰
-                </span>
-              ),
-            }}
-          />
-          <FormCard
-            card={{
-              title: "Technology",
-              icon: (
-                <span role="img" aria-label="robot">
-                  🤖
-                </span>
-              ),
-            }}
-          />
+          {mockCardData.map((data, index) => (
+            <FormCard key={index} card={{ title: data.title, icon: <></> }} />
+          ))}
+
           <div className="col-start-1 row-start-auto col-span-full m-2">
             <Button className="bg-primary-default text-white">Neste</Button>
           </div>
@@ -162,4 +40,5 @@ const Page = () => {
     </>
   );
 };
+
 export default Page;
