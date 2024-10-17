@@ -1,29 +1,33 @@
 "use client";
-import { FC, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Card, { CardRef } from "../widget/Card";
 import { size, card, grid, position } from "@/types/layout";
+import { member, widget } from "@/types/splat";
 import {
   getSizeFromGrid,
   amountIdColumn,
   amountZeroColumn,
   indexOf2D,
   gridPlace,
+  amountColumns,
+  amountRows,
+  getUniqueIds,
 } from "@/utils/grid";
+import Member from "../widget/Member";
 
-const GridContainer: FC = () => {
+interface GridContainerProps {
+  content: widget[];
+  grid: grid;
+}
+const GridContainer = ({ content, grid }: GridContainerProps) => {
   const gridRef = useRef<HTMLDivElement>(null);
-  const [grid, setGrid] = useState<grid | null>(null);
-  const [cardIds] = useState<number[]>([1, 2, 3, 4, 5, 6]);
+  const [currentGrid, setCurrentGrid] = useState<grid | null>(null);
+  const [cardIds, setCardIds] = useState<number[]>();
   const cardRefs = useRef<CardRef[]>([]);
-  const columnCap = 4;
-  const rowCap = 3;
 
   useEffect(() => {
-    setGrid([
-      [1, 2, 3, 4],
-      [1, 2, 5, 4],
-      [6, 6, 6, 6],
-    ]);
+    setCurrentGrid(grid);
+    setCardIds(getUniqueIds(grid));
   }, []);
 
   function setRefs(ref: CardRef) {
@@ -68,17 +72,22 @@ const GridContainer: FC = () => {
   }
 
   function placeCard(id: number, card: card, grid: number[][]) {
+    if (!grid) throw new Error("Grid is not set");
     gridPlace(id, card.size, card.position, grid);
   }
 
   function updateGrid() {
-    const newGrid: number[][] = Array.from({ length: rowCap }, () =>
+    if (!currentGrid || !cardIds) throw new Error("Grid is not set");
+    const rowCap = amountRows(currentGrid);
+    const columnCap = amountColumns(currentGrid);
+    const newGrid: grid = Array.from({ length: rowCap }, () =>
       Array(columnCap).fill(0),
     );
     cardIds.forEach((id) => {
       placeCard(id, getCard(id), newGrid);
     });
-    setGrid(newGrid);
+    setCurrentGrid(newGrid);
+    console.log(newGrid);
   }
 
   function getContainerSize(): size {
@@ -88,15 +97,20 @@ const GridContainer: FC = () => {
   }
 
   function getCurrPossibleCardSize(id: number): size {
-    if (!grid) throw new Error("Grid is not set");
-    const { y } = indexOf2D(id, grid, rowCap);
-    const possibleWidth = grid[y].filter((el) => el == 0 || el == id).length;
+    if (!currentGrid) throw new Error("Grid is not set");
+    const { y } = indexOf2D(id, currentGrid);
+    const possibleWidth = currentGrid[y].filter(
+      (el) => el == 0 || el == id,
+    ).length;
     const possibleHeight =
-      amountZeroColumn(id, grid, rowCap) + amountIdColumn(id, grid, rowCap);
+      amountZeroColumn(id, currentGrid) + amountIdColumn(id, currentGrid);
     return { width: possibleWidth, height: possibleHeight };
   }
 
   function getMinSize(): size {
+    if (!currentGrid) throw new Error("Grid is not set");
+    const rowCap = amountRows(currentGrid);
+    const columnCap = amountColumns(currentGrid);
     const maxSize = getContainerSize();
     const { width, height } = maxSize;
     const cardWidth = width / columnCap;
@@ -104,7 +118,7 @@ const GridContainer: FC = () => {
     return { width: cardWidth, height: cardHeight };
   }
 
-  if (!grid) {
+  if (!currentGrid || !cardIds) {
     return (
       <>
         <p className="w-full text-center flex justify-center items-center">
@@ -119,17 +133,25 @@ const GridContainer: FC = () => {
       ref={gridRef}
       className="px-16 pt-6 h-[75vh] w-[96vw] grid gap-2 grid-cols-4 grid-rows-3 justify-start content-start"
     >
-      {cardIds.map((id) => {
+      {content.map((widget: widget) => {
         return (
           <Card
-            id={id}
-            key={id}
+            id={widget.id}
+            key={widget.id}
+            title={widget.title}
             getMinSize={getMinSize}
-            startSize={getSizeFromGrid(id, grid, rowCap, columnCap)}
+            startSize={getSizeFromGrid(widget.id, currentGrid)}
             update={updateGrid}
             getCurrentPossibleSize={getCurrPossibleCardSize}
             setRefs={setRefs}
-          />
+          >
+            {widget.type == "member" && (
+              <Member
+                currentSize={getSizeFromGrid(widget.id, currentGrid)}
+                members={widget.content as member[]}
+              />
+            )}
+          </Card>
         );
       })}
     </section>
