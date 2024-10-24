@@ -5,10 +5,18 @@ interface ProfileCardProps {
   name: string;
   title: string;
   image: string;
+  border?: boolean;
 }
-const ProfileCard: FC<ProfileCardProps> = ({ name, title, image }) => {
+const ProfileCard: FC<ProfileCardProps> = ({
+  name,
+  title,
+  image,
+  border = true,
+}) => {
   return (
-    <main className="border-lines-default border-[1px] border-solid w-fit h-22 rounded-2xl flex">
+    <main
+      className={` ${border && "border-solid border-lines-default border-[1px]"} w-fit h-22 rounded-2xl flex`}
+    >
       <div className="w-16 h-full">
         <Image
           src={image}

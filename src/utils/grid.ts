@@ -1,22 +1,23 @@
-import { index2D, size } from "@/types/layout";
+import { grid, position, size } from "@/types/layout";
 
-export function getSizeFromGrid(
-  id: number,
-  grid: number[][],
-  rowCap: number,
-  columnCap: number,
-): size {
-  const { index, row } = indexOf2D(id, grid, rowCap);
+/* Grid functions
+ * All functions are used to manipulate the grid in the GridContainer component
+ */
+
+export function getSizeFromGrid(id: number, grid: grid): size {
+  const { x, y } = indexOf2D(id, grid);
   let width = 0;
   let height = 0;
-  for (let i = index; i < columnCap; i++) {
-    if (grid[row][i] !== id) {
+  const columnCap = amountColumns(grid);
+  const rowCap = amountRows(grid);
+  for (let i = x; i < columnCap; i++) {
+    if (grid[y][i] !== id) {
       break;
     }
     width++;
   }
-  for (let i = row; i < rowCap; i++) {
-    if (grid[i][index] !== id) {
+  for (let i = y; i < rowCap; i++) {
+    if (grid[i][x] !== id) {
       break;
     }
     height++;
@@ -24,59 +25,22 @@ export function getSizeFromGrid(
   return { width: width, height: height };
 }
 
-export function shufflePlace(
-  id: number,
-  grid: number[][],
-  rowCap: number,
-  columnCap: number,
-) {
-  const size = getSizeFromGrid(id, grid, rowCap, columnCap);
-  const firstPlace = gridFindFirst(size, grid, rowCap, columnCap);
-  gridRemove(id, size, grid, rowCap);
-  gridPlace(id, size, firstPlace, grid);
-}
-
-/**
- * Greedy find first algorithm, find the first place in grid
- * for given size to emulate CSS Grid Algorithm
- * Returns the found index2D.
- */
-export function gridFindFirst(
-  size: size,
-  grid: number[][],
-  rowCap: number,
-  columnCap: number,
-): index2D {
-  let index = -1;
-  let row = -1;
+export function getUniqueIds(grid: grid): number[] {
+  const ids: number[] = [];
+  const rowCap = amountRows(grid);
   for (let i = 0; i < rowCap; i++) {
-    for (let j = 0; j < columnCap; j++) {
-      if (grid[i][j] !== 0) continue;
-      if (j - 1 + size.width >= columnCap || i - 1 + size.height >= rowCap)
-        continue;
-      for (let y = i; y < size.height + i; y++) {
-        for (let x = j; x < size.width + j; x++) {
-          if (grid[y][x] !== 0) break;
-          index = j;
-          row = i;
-          return { index: index, row: row };
-        }
-      }
+    for (let j = 0; j < grid[i].length; j++) {
+      if (ids.includes(grid[i][j]) || grid[i][j] === 0) continue;
+      ids.push(grid[i][j]);
     }
   }
-  return { index: index, row: row };
+  return ids;
 }
 
-export function gridRemove(
-  id: number,
-  size: size,
-  grid: number[][],
-  rowCap: number,
-) {
-  const { index, row } = indexOf2D(id, grid, rowCap);
-  if (index === -1 || row === -1) return false;
-  for (let i = row; i <= size.height; i++) {
-    for (let j = index; j <= size.width; j++) {
+export function gridRemove(id: number, size: size, grid: grid) {
+  const { x, y } = indexOf2D(id, grid);
+  for (let i = y; i <= size.height; i++) {
+    for (let j = x; j <= size.width; j++) {
       grid[i][j] = 0;
     }
   }
@@ -85,29 +49,26 @@ export function gridRemove(
 export function gridPlace(
   id: number,
   size: size,
-  index: index2D,
-  grid: number[][],
+  position: position,
+  grid: grid,
 ) {
-  for (let i = index.row; i < size.height + index.row; i++) {
-    for (let j = index.index; j < size.width + index.index; j++) {
+  for (let i = position.y; i < size.height + position.y; i++) {
+    for (let j = position.x; j < size.width + position.x; j++) {
       grid[i][j] = id;
     }
   }
 }
 
-export function remainInRow(row: number, grid: number[][]): number {
+export function amountIdRow(row: number, grid: grid): number {
   return grid[row].filter((value) => value === 0).length;
 }
 
-export function remainInColumn(
-  id: number,
-  grid: number[][],
-  rowCap: number,
-): number {
-  const { index, row } = indexOf2D(id, grid, rowCap);
+export function amountZeroColumn(id: number, grid: grid): number {
+  const rowCap = amountRows(grid);
+  const { x, y } = indexOf2D(id, grid);
   let zeros = 0;
-  for (let i = row + 1; i < rowCap; i++) {
-    if (grid[i][index] !== 0) {
+  for (let i = y + 1; i < rowCap; i++) {
+    if (grid[i][x] !== 0) {
       continue;
     }
     zeros++;
@@ -115,15 +76,12 @@ export function remainInColumn(
   return zeros;
 }
 
-export function idRowSpanLen(
-  id: number,
-  grid: number[][],
-  rowCap: number,
-): number {
-  const { index, row } = indexOf2D(id, grid, rowCap);
+export function amountIdColumn(id: number, grid: grid): number {
+  const { x, y } = indexOf2D(id, grid);
+  const rowCap = amountRows(grid);
   let ids = 1;
-  for (let i = row + 1; i < rowCap; i++) {
-    if (grid[i][index] !== id) {
+  for (let i = y + 1; i < rowCap; i++) {
+    if (grid[i][x] !== id) {
       continue;
     }
     ids++;
@@ -131,33 +89,26 @@ export function idRowSpanLen(
   return ids;
 }
 
-export function indexOf2D(
-  id: number,
-  grid: number[][],
-  rowCap: number,
-): index2D {
-  let index = -1;
-  let row = -1;
-  for (let i = 0; i < rowCap; i++) {
-    index = grid[i].indexOf(id);
-    if (index === -1) {
-      continue;
-    }
-    row = i;
-    break;
-  }
-  return { index: index, row: row };
+export function amountRows(grid: grid): number {
+  return grid.length;
 }
 
-export function findLastRow(
-  id: number,
-  grid: number[][],
-  rowCap: number,
-): number {
-  let row = -1;
+export function amountColumns(grid: grid): number {
+  return grid[0].length;
+}
+
+export function indexOf2D(id: number, grid: grid): position {
+  let x = -1;
+  let y = -1;
+  const rowCap = amountRows(grid);
   for (let i = 0; i < rowCap; i++) {
-    if (grid[i].indexOf(id) == -1) continue;
-    row = i;
+    x = grid[i].indexOf(id);
+    if (x === -1) {
+      continue;
+    }
+    y = i;
+    break;
   }
-  return row;
+  if (x === -1 || y === -1) throw new Error("Id not found in grid");
+  return { x, y };
 }
