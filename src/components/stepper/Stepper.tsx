@@ -8,7 +8,7 @@ interface StepperProps {
 
 const Stepper: React.FC<StepperProps> = ({ currentStep, numberOfSteps, labels }) => {
     const activeStyles = (index: number) =>
-        currentStep === index ? "bg-black border-black" : "bg-transparent border-gray-300";
+        currentStep === index ? "bg-black border-black" : currentStep > index ? "bg-black border-black" : "bg-transparent border-gray";
     const activeLines = (index: number) =>
         currentStep > index ? "bg-black" : "bg-gray-300";
     const activeLabels = (index: number) =>
