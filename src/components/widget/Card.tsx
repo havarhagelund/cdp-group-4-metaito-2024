@@ -149,7 +149,7 @@ const Card = ({
       ref={cardRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMoveOnCard}
-      className="border-lines-default w-full h-full border-[1px] rounded-3xl  overflow-auto bg-background-widget px-7 py-6"
+      className="border-lines-default w-full h-full border-[1px] rounded-3xl overflow-hidden bg-background-widget px-7 py-6"
       style={{
         gridColumn: `span ${size.width}`,
         gridRow: `span ${size.height}`,
@@ -164,7 +164,7 @@ const Card = ({
           <p>ID: {id}</p>
         </div>
       )}
-      <section className="h-fit w-full space-y-3">
+      <section className="h-fit w-full space-y-3 overflow-hidden">
         <p className="font-medium text-2xl tracking-wide">{title}</p>
         <div className="h-[2px] w-full bg-lines-default" />
         {children}
