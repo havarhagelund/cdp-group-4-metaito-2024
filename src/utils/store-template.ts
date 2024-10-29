@@ -1,6 +1,6 @@
 import { createClient } from "./supabase/server";
 
-export async function StoreTemplate(title: string, embedding: string) {
+export async function storeTemplate(title: string, embedding: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase

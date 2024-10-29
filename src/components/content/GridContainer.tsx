@@ -87,7 +87,6 @@ const GridContainer = ({ content, grid }: GridContainerProps) => {
       placeCard(id, getCard(id), newGrid);
     });
     setCurrentGrid(newGrid);
-    console.log(newGrid);
   }
 
   function getContainerSize(): size {
