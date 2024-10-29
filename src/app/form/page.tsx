@@ -1,3 +1,10 @@
-export default function PageTest() {
-  return <h1>Form page</h1>;
+import FormPage from "@/components/form/FormPage";
+
+const Page = () => {
+  return (
+    <>
+      <FormPage />
+    </>
+  );
 }
+export default Page;
