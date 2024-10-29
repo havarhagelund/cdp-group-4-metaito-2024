@@ -1,5 +1,4 @@
 import FormCard from "@/components/form/FormCard";
-import { Button } from "@/components/ui/button";
 
 const mockCardData = [
   { title: "Helse og omsorg" },
@@ -32,9 +31,7 @@ const Page = () => {
             <FormCard key={index} card={{ title: data.title, icon: <></> }} />
           ))}
 
-          <div className="col-start-1 row-start-auto col-span-full m-2">
-            <Button className="bg-primary-default text-white">Neste</Button>
-          </div>
+          <div className="col-start-1 row-start-auto col-span-full m-2"></div>
         </div>
       </div>
     </>
