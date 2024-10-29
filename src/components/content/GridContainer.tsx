@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Card, { CardRef } from "../widget/Card";
 import { size, card, grid, position } from "@/types/layout";
-import { member, widget } from "@/types/splat";
+import { member, text, widget } from "@/types/splat";
 import {
   getSizeFromGrid,
   amountIdColumn,
@@ -14,6 +14,7 @@ import {
   getUniqueIds,
 } from "@/utils/grid";
 import Member from "../widget/Member";
+import Text from "../widget/Text";
 
 interface GridContainerProps {
   content: widget[];
@@ -150,6 +151,9 @@ const GridContainer = ({ content, grid }: GridContainerProps) => {
                 currentSize={getSizeFromGrid(widget.id, currentGrid)}
                 members={widget.content as member[]}
               />
+            )}
+            {widget.type == "text" && (
+              <Text currentSize={getSizeFromGrid(widget.id, currentGrid)} text={widget.content as text[]} />
             )}
           </Card>
         );
