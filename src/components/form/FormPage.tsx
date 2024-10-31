@@ -24,7 +24,7 @@ const FormPage = () => {
 
 
     return (
-        <div className="grid grid-cols-[220px_1fr] grid-rows-[auto_1fr] min-h-screen">
+        <div className="grid grid-cols-[220px_1fr] grid-rows-[auto_1fr] min-h-screen bg-background-default">
             <div className="row-span-full bg-white pt-40">
                 <Stepper currentStep={currentStep} numberOfSteps={numOfSteps} labels={formData.labels} />
             </div>
