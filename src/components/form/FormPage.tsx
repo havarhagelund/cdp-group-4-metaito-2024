@@ -41,9 +41,8 @@ const FormPage = () => {
             </section>
             <div className="grid grid-cols-5 auto-rows-min-1 p-10 w-fit gap-4">
                 {formContent.answers.map((answer, index) => (
-                    <FormCard key={index} card={{ title: answer, icon: <span role="img" aria-label="heart-eyes"> 😍 </span> }} />
+                    <FormCard key={index} card={{ title: answer, icon: <span></span> }} />
                 ))}
-                {/* Need to add the implementation of adding icons that fits description */}
                 <div className="col-start-1 row-start-auto col-span-full m-2">
                     <div className="flex items-center justify-center h-12 w-28 rounded-md bg-primary-default text-white cursor-pointer hover:bg-primary-second transition-colors duration-300"
                         onClick={goToNextStep}>Neste</div>
