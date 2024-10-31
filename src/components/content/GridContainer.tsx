@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Card, { CardRef } from "../widget/Card";
 import { size, card, grid, position } from "@/types/layout";
-import { member, widget } from "@/types/splat";
+import { member, widget, checkItem } from "@/types/splat";
 import {
   getSizeFromGrid,
   amountIdColumn,
@@ -14,6 +14,7 @@ import {
   getUniqueIds,
 } from "@/utils/grid";
 import Member from "../widget/Member";
+import CheckItem from "../widget/CheckItem";
 
 interface GridContainerProps {
   content: widget[];
@@ -149,6 +150,12 @@ const GridContainer = ({ content, grid }: GridContainerProps) => {
               <Member
                 currentSize={getSizeFromGrid(widget.id, currentGrid)}
                 members={widget.content as member[]}
+              />
+            )}
+            {widget.type == "checklist" && (
+              <CheckItem
+                currentSize={getSizeFromGrid(widget.id, currentGrid)}
+                items={widget.content as checkItem[]}
               />
             )}
           </Card>
