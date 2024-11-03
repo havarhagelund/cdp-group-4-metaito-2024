@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Card, { CardRef } from "../widget/Card";
-import { size, card, grid, position } from "@/types/layout";
-import { member, text, widget } from "@/types/splat";
+import { size, card, grid, position } from "@/types/layout"
+import { member, text, widget, checkItem } from "@/types/splat";
 import {
   getSizeFromGrid,
   amountIdColumn,
@@ -15,6 +15,7 @@ import {
 } from "@/utils/grid";
 import Member from "../widget/Member";
 import Text from "../widget/Text";
+import CheckItem from "../widget/CheckItem";
 
 interface GridContainerProps {
   content: widget[];
@@ -155,6 +156,10 @@ const GridContainer = ({ content, grid }: GridContainerProps) => {
             {widget.type == "text" && (
               <Text
                 text={widget.content as text[]}
+            {widget.type == "checklist" && (
+              <CheckItem
+                currentSize={getSizeFromGrid(widget.id, currentGrid)}
+                items={widget.content as checkItem[]}
               />
             )}
           </Card>
