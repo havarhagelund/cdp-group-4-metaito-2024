@@ -15,7 +15,7 @@ const ProfileCard: FC<ProfileCardProps> = ({
 }) => {
   return (
     <main
-      className={` ${border && "border-solid border-lines-default border-[1px]"} w-fit h-22 rounded-2xl flex`}
+      className={` ${border && "border-solid border-lines-default border-[1px]"} w-fit h-16 rounded-2xl flex`}
     >
       <div className="w-16 h-full">
         <Image
