@@ -7,7 +7,6 @@ import { FiAlignLeft, FiMail, FiPhone } from "react-icons/fi";
 
 interface TextProps {
   text: text[];
-  currentSize: size;
 }
 
 interface BlurbProps {
