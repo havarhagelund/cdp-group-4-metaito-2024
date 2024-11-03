@@ -2,7 +2,6 @@
 import { text } from "@/types/splat";
 import { size } from "@/types/layout";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FiAlignLeft, FiMail, FiPhone } from "react-icons/fi";
 
@@ -25,11 +24,14 @@ interface ButtonProps {
 
 const Button = ({ className, text, onClick }: ButtonProps) => {
   return (
-    <button onClick={onClick} className={`${className} bg-primary-default hover:bg-primary-second text-white py-3 w-full rounded-3xl text-lg tracking-wide`}>
+    <button
+      onClick={onClick}
+      className={`${className} bg-primary-default hover:bg-primary-second text-white py-3 w-full rounded-3xl text-lg tracking-wide`}
+    >
       {text}
     </button>
   );
-}
+};
 
 const Blurb = ({ url, title, type }: BlurbProps) => {
   let nUrl;
@@ -37,34 +39,112 @@ const Blurb = ({ url, title, type }: BlurbProps) => {
     nUrl = new URL(url);
   }
   return (
-    <Link href={nUrl ? nUrl : url} className="flex w-full h-full gap-4 tracking-wide items-center">
-      <div className="flex h-auto w-12 justify-center">
-        {type === "email" && <FiMail className="object-cover w-8 h-auto" />}
-        {type === "link" && <img loading="eager" src={`https://icon.horse/icon/${nUrl!.hostname}`} alt={title} className="block h-full w-full" />}
-        {type === "phone" && <FiPhone className="object-cover w-8 h-auto" />}
-        {type === "text" && <FiAlignLeft className="object-cover w-8 h-auto" />}
-      </div>
-      <div className="w-full truncate flex flex-col">
-        <p className="w-full text-lg truncate ...">{title !== "" ? title : url}</p>
-        {type === "text" && <p className="w-full text-lg">{url}</p>}
-      </div>
-    </Link>
-  )
+    <>
+      {type !== "text" ? (
+        <Link
+          href={nUrl ? nUrl : url}
+          className="flex w-full h-full gap-4 tracking-wide items-center"
+        >
+          <div className="flex h-auto w-12 justify-center">
+            {type === "email" && <FiMail className="object-cover w-8 h-auto" />}
+            {type === "link" && (
+              <img
+                loading="eager"
+                src={`https://icon.horse/icon/${nUrl!.hostname}`}
+                alt={"img"}
+                className="block h-full w-full"
+              />
+            )}
+            {type === "phone" && (
+              <FiPhone className="object-cover w-8 h-auto" />
+            )}
+          </div>
+          <div className="w-full truncate flex flex-col">
+            <p className="w-full text-lg truncate ...">
+              {title !== "" ? title : url}
+            </p>
+          </div>
+        </Link>
+      ) : (
+        <div className="flex w-full h-full gap-4 tracking-wide items-center">
+          <div className="flex h-auto w-12 justify-center">
+            <FiAlignLeft className="object-cover w-8 h-auto" />
+          </div>
+          <div className="w-full truncate flex flex-col">
+            <p className="w-full text-lg truncate ...">
+              {title !== "" ? title : url}
+            </p>
+            <p className="w-full text-lg">{url}</p>
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
-const Text = ({ text, currentSize }: TextProps) => {
+type blurbs = {
+  links: number;
+  emails: number;
+};
+
+const Text = ({ text }: TextProps) => {
+  const [blurbCount, setBlurbCount] = useState<blurbs>({ links: 0, emails: 0 });
+
+  useEffect(() => {
+    let links = 0;
+    let emails = 0;
+    text.forEach((content: text) => {
+      if (content.type === "link") links++;
+      if (content.type === "email") emails++;
+    });
+    setBlurbCount({ links, emails });
+  }, []);
+
+  function largestInstance(): "link" | "email" | "none" {
+    const { links, emails } = blurbCount;
+    if (links < 2 && emails < 2) {
+      return "none";
+    }
+    return links > emails ? "link" : "email";
+  }
+
+  function openLinks(links: string[]) {
+    for (const link of links) {
+      window.open(link, "_blank");
+    }
+  }
+
+  if (!blurbCount) return <></>;
+
   return (
-    <main style={{height: 100/3 * currentSize.height + "%"}} className={`h-[}vh]`} >
-      <div className="w-full h-full gap-x-4 pt-4 space-y-7 items-center"
-      >
+    <main className="h-full">
+      <div className="w-full h-full gap-x-4 pt-4 space-y-6 items-center">
         {text?.map((content: text, index: number) => (
-          <div className="text-xl">
-            <Blurb key={content.url} url={content.url} title={content.title} type={content.type} />
+          <div
+            key={index}
+            className="text-xl">
+            <Blurb
+              url={content.url}
+              title={content.title}
+              type={content.type}
+            />
           </div>
         ))}
-        <div className="w-full">
-          <Button text="Open all links" />
-        </div>
+      </div>
+      <div className="relative w-full bottom-32 bg-background-widget">
+        {largestInstance() === "link" && (
+          <Button
+            text="Open all links"
+            onClick={() =>
+              openLinks(
+                text
+                  .filter((blurb) => blurb.type === "link")
+                  .map((blurb) => blurb.url),
+              )
+            }
+          />
+        )}
+        {largestInstance() === "email" && <Button text="Send all emails" />}
       </div>
     </main>
   );
