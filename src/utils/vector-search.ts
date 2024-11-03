@@ -1,6 +1,6 @@
 import { createClient } from "./supabase/server";
 
-export async function VectorSearch(embedding: string) {
+export async function vectorSearch(embedding: string) {
   const supabase = createClient();
 
   const { error, data } = await supabase.rpc("match_documents", {
@@ -11,7 +11,7 @@ export async function VectorSearch(embedding: string) {
 
   if (error) {
     console.error(error);
-    return false;
+    return error;
   }
 
   console.log(data);
