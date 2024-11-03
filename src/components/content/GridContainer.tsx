@@ -155,7 +155,8 @@ const GridContainer = ({ content, grid }: GridContainerProps) => {
             )}
             {widget.type == "text" && (
               <Text
-                text={widget.content as text[]}
+                text={widget.content as text[]} />)
+            }
             {widget.type == "checklist" && (
               <CheckItem
                 currentSize={getSizeFromGrid(widget.id, currentGrid)}

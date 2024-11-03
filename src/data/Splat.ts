@@ -5,11 +5,43 @@ export const splatData: splat = {
   title: "AI structure Assistant",
   subtitle: "Customer driven Project",
   grid: [
-    [1, 1, 2, 0],
-    [0, 0, 0, 0],
+    [2, 1, 1, 3],
+    [2, 0, 0, 0],
     [0, 0, 0, 0],
   ],
   content: [
+    {
+      id: 2,
+      title: "Customer",
+      type: "text",
+      content: [
+        {
+          title: "Svenn Helge Vatne på linkedin: Skjønner dere greia?",
+          url: "https://www.linkedin.com/in/sandviklee/",
+          type: "link",
+        },
+        {
+          title: "Sticos om Factsplat",
+          url: "https://www.youtube.com/watch?v=yBpGR4K-1Xo",
+          type: "link",
+        },
+        {
+          title: "vatne@metaito.com",
+          url: "mailto:vatne@metaito.com",
+          type: "email",
+        },
+        {
+          title: "+47 472 85 528",
+          url: "",
+          type: "phone",
+        },
+        {
+          title: "SSID: Brygga",
+          url: "K59@TrondheimNO",
+          type: "text",
+        },
+      ],
+    },
     {
       id: 1,
       title: "Team Members",
@@ -25,10 +57,15 @@ export const splatData: splat = {
           name: "Håvar Hagelund",
           role: "Developer",
         },
+        {
+          image: "/assets/props/sandviklee.jpg",
+          name: "Kari Nordmann",
+          role: "Designer",
+        },
       ],
     },
     {
-      id: 2,
+      id: 3,
       title: "Todo's",
       type: "checklist",
       content: [
