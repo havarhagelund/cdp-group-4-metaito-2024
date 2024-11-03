@@ -14,7 +14,7 @@ const Member = ({ members, currentSize }: MemberProps) => {
         gridTemplateColumns: `repeat(${currentSize.width}, minmax(0, 1fr))`,
         gridTemplateRows: `repeat(${currentSize.height}, minmax(0, 1fr))`,
       }}
-      className="w-full h-full grid gap-4"
+      className="w-full h-fit grid gap-4"
     >
       {members.map((member: member, index: number) => (
         <ProfileCard

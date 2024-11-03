@@ -153,7 +153,10 @@ const GridContainer = ({ content, grid }: GridContainerProps) => {
               />
             )}
             {widget.type == "text" && (
-              <Text currentSize={getSizeFromGrid(widget.id, currentGrid)} text={widget.content as text[]} />
+              <Text
+                currentSize={getSizeFromGrid(widget.id, currentGrid)}
+                text={widget.content as text[]}
+              />
             )}
           </Card>
         );

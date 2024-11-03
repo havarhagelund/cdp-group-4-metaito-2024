@@ -164,7 +164,7 @@ const Card = ({
           <p>ID: {id}</p>
         </div>
       )}
-      <section className="h-fit w-full space-y-3 overflow-hidden">
+      <section className="h-full w-full space-y-3 overflow-hidden">
         <p className="font-medium text-2xl tracking-wide">{title}</p>
         <div className="h-[2px] w-full bg-lines-default" />
         {children}
