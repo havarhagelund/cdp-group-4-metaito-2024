@@ -8,6 +8,7 @@ import {
   FiPackage,
   FiTrendingUp,
   FiTruck,
+  FiUser,
 } from "react-icons/fi";
 
 const iconMapping: { [key: string]: JSX.Element } = {
@@ -19,6 +20,7 @@ const iconMapping: { [key: string]: JSX.Element } = {
   Transport: <FiTruck />,
   School: <FiBookOpen />,
   Industry: <FiPackage />,
+  User: <FiUser />,
   "": <FiActivity />,
 };
 
@@ -72,6 +74,11 @@ export const getIconForTitle = (title: string): JSX.Element => {
     lowerTitle.includes("forskning")
   ) {
     return iconMapping["School"];
+  }
+  if (
+    lowerTitle.includes("personer")
+  ) {
+    return iconMapping["User"];
   }
   if (
     lowerTitle.includes("industri") ||
