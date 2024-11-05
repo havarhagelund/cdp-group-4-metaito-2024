@@ -35,8 +35,7 @@ const FormPage = () => {
                 {currentStep > 0 && (
                     <button className="flex items-center text-primary-default font-medium hover:text-primary-second transition-colors duration-300"
                         onClick={goToPreviousStep}>
-                        <span className="mr-2">←</span>
-                        <span>Tilbake</span>
+                        <p>← {" "} Tilbake</p>
                     </button>)}
             </section>
             <div className="grid grid-cols-5 auto-rows-min-1 p-10 w-fit gap-4">
@@ -44,8 +43,8 @@ const FormPage = () => {
                     <FormCard key={index} card={{ title: answer, icon: <span></span> }} />
                 ))}
                 <div className="col-start-1 row-start-auto col-span-full m-2">
-                    <div className="flex items-center justify-center h-12 w-28 rounded-md bg-primary-default text-white cursor-pointer hover:bg-primary-second transition-colors duration-300"
-                        onClick={goToNextStep}>Neste</div>
+                    <button className="flex items-center justify-center h-12 w-28 rounded-md bg-primary-default text-white cursor-pointer hover:bg-primary-second transition-colors duration-300"
+                        onClick={goToNextStep}>Neste</button>
                 </div>
             </div>
         </div>

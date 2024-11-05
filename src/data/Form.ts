@@ -3,31 +3,23 @@ export const formData: form = {
   content: [
     {
       id: 1,
-      question: "Hvilken bransje er organisasjonen din iiii?",
-      answers: [
-        "Helse og omsorg",
-        "Utdanning og forskning",
-        "Tekonlogi og IT",
-        "Tekonlogi og IT",
-        "Tekonlogi og IT",
-        "Tekonlogi og IT",
-        "Tekonlogi og IT",
-        "Tekonlogi og IT",
-        "Tekonlogi og IT",
-      ],
+      question: "Hva er din bedrift?",
+      answers: ["Teknologi"],
     },
     {
       id: 2,
-      question: "Hva er teamets hovedansvarsområder?",
+      question: "Hva mange er dere?",
       answers: [
-        "Utvikling og teknologi",
-        "Produktutvikling",
-        "Prosjektledelse",
+        "1-5 personer",
+        "6-10 personer",
+        "11-20 personer",
+        "21-50 personer",
+        "Mer enn 50 personer",
       ],
     },
     {
       id: 3,
-      question: "Test3?",
+      question: "Hvem er du?",
       answers: [
         "Utvikling og teknologi",
         "Produktutvikling",
@@ -44,5 +36,11 @@ export const formData: form = {
       ],
     },
   ],
-  labels: ["Bransje", "Ansvarsområder", "Test3", "Test4"],
+  labels: [
+    "Bedrift",
+    "Størrelse",
+    "Deg og dine mål",
+    "Utfordringer",
+    "Verktøy",
+  ],
 };
