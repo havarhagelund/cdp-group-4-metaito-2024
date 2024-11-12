@@ -1,8 +1,7 @@
-import { UUID } from "crypto";
 import { grid } from "./layout";
 
 export type splat = {
-  id: UUID;
+  id: number;
   title: string;
   subtitle: string;
   content: widget[];

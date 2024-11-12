@@ -1,4 +1,3 @@
-import { equal } from "assert";
 import { createClient } from "./supabase/server";
 import type { splat } from "@/types/splat";
 

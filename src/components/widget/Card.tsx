@@ -1,5 +1,8 @@
 import { useState, useRef, useEffect, RefObject } from "react";
 import { size, position, direction } from "@/types/layout";
+import { XIcon, PlusIcon} from "lucide-react"
+import { useSplatStore } from "@/store/Splat";
+import { updateSplat } from "@/utils/update-splat";
 
 export type CardRef = { id: number; ref: RefObject<HTMLDivElement> };
 
@@ -14,7 +17,6 @@ interface CardProps {
   setRefs: (ref: CardRef) => void;
 }
 
-// TODO: Needs refactoring...
 const Card = ({
   children,
   id,
@@ -27,6 +29,7 @@ const Card = ({
 }: CardProps) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [resizeDirection, setResizeDirection] = useState<direction>(null);
+  const { grid, content, removeStoreContent } = useSplatStore();
   const [size, setSize] = useState<size>(startSize);
   const cardRef = useRef<HTMLDivElement>(null);
   const startPos = useRef<position>({ x: 0, y: 0 });
@@ -77,7 +80,7 @@ const Card = ({
           const width = Math.max(
             Math.min(
               Math.sign(dx) * Math.floor(Math.abs(dx) / minSize.width) +
-                prevSize.width,
+              prevSize.width,
               getCurrentPossibleSize(id).width,
             ),
             min,
@@ -94,7 +97,7 @@ const Card = ({
           const height = Math.max(
             Math.min(
               Math.sign(dy) * Math.floor(Math.abs(dy) / minSize.height) +
-                prevSize.height,
+              prevSize.height,
               getCurrentPossibleSize(id).height,
             ),
             min,
@@ -144,12 +147,19 @@ const Card = ({
     }
   }
 
+  function deleteCard() {
+    if (!grid || !content) throw new Error("Grid or content is not defined");
+    removeStoreContent(id);
+    console.log(grid)
+    // updateSplat(useSplatStore.getState().id, {grid: grid, content: content});
+  }
+
   return (
     <main
       ref={cardRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMoveOnCard}
-      className="border-lines-default w-full h-full border-[1px] rounded-3xl overflow-hidden bg-background-widget px-7 py-6"
+      className="group border-lines-default w-full h-full border-[1px] rounded-3xl overflow-hidden bg-background-widget px-7 py-6"
       style={{
         gridColumn: `span ${size.width}`,
         gridRow: `span ${size.height}`,
@@ -165,7 +175,13 @@ const Card = ({
         </div>
       )}
       <section className="h-full w-full space-y-3 overflow-hidden">
-        <p className="font-medium text-2xl tracking-wide">{title}</p>
+        <div className="flex w-full justify-between">
+          <p className="font-medium text-2xl tracking-wide w-52 truncate ...">{title}</p>
+          <div className="group-hover:flex hidden gap-2">
+            <PlusIcon className="w-8 h-8 text-black hover:scale-110 transition-transform cursor-pointer" />
+            <XIcon className="w-8 h-8 text-black hover:scale-110 transition-transform cursor-pointer" onClick={() => deleteCard()} />
+          </div>
+        </div>
         <div className="h-[2px] w-full bg-lines-default" />
         {children}
       </section>

@@ -37,10 +37,24 @@ export function getUniqueIds(grid: grid): number[] {
   return ids;
 }
 
-export function gridRemove(id: number, size: size, grid: grid) {
+export function gridAdd(id: number, grid: grid) {
+  const size = gridSize(grid);
+  for (let i = 0; i < size.height; i++) {
+    for (let j = 0; j < size.width; j++) {
+      if (grid[i][j] !== 0) {
+        continue;
+      }
+      grid[i][j] = id;
+      return;
+    }
+  }
+}
+
+export function gridRemove(id: number, grid: grid) {
+  const size = gridSize(grid);
   const { x, y } = indexOf2D(id, grid);
-  for (let i = y; i <= size.height; i++) {
-    for (let j = x; j <= size.width; j++) {
+  for (let i = y; i < size.height; i++) {
+    for (let j = x; j < size.width; j++) {
       grid[i][j] = 0;
     }
   }
@@ -87,6 +101,10 @@ export function amountIdColumn(id: number, grid: grid): number {
     ids++;
   }
   return ids;
+}
+
+export function gridSize(grid: grid): size {
+  return { width: amountColumns(grid), height: amountRows(grid) };
 }
 
 export function amountRows(grid: grid): number {
