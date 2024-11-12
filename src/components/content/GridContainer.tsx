@@ -17,9 +17,11 @@ import Member from "../widget/Member";
 import Text from "../widget/Text";
 import CheckItem from "../widget/CheckItem";
 import { useSplatStore } from "@/store/Splat";
+import { updateSplat } from "@/utils/update-splat";
 
 const GridContainer = () => {
-  const { content, grid, updateStoreGrid } = useSplatStore();
+  const { id, content, grid, updateStoreGrid } = useSplatStore();
+  const [oldGrid, setOldGrid] = useState<grid | null>(grid);
   const gridRef = useRef<HTMLDivElement>(null);
   const [cardIds, setCardIds] = useState<number[]>();
   const cardRefs = useRef<CardRef[]>([]);
@@ -28,7 +30,15 @@ const GridContainer = () => {
     if (!grid) return;
     setCardIds(getUniqueIds(grid));
     console.log(grid)
+    if (grid !== oldGrid) {
+      setOldGrid(grid);
+    }
   }, [grid]);
+
+  useEffect(() => {
+    if (!grid || !content || !oldGrid) throw new Error("Grid or content is not set");
+    updateSplat(id, { grid, content });
+  }, [oldGrid])
 
 
   function setRefs(ref: CardRef) {
