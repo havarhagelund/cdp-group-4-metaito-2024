@@ -1,5 +1,5 @@
 import { grid } from "@/types/layout";
-import { widget } from "@/types/splat";
+import { droplet, widget } from "@/types/splat";
 import { gridAdd, gridRemove } from "@/utils/grid";
 import { create } from "zustand";
 
@@ -19,6 +19,9 @@ type SplatActions = {
   updateStoreContent: (content: widget[]) => void;
   addStoreContent: (widget: widget) => void;
   removeStoreContent: (id: number) => void;
+  updateStoreDroplet: (widgetId: number, id: number, droplet: droplet) => void;
+  addStoreDroplet: (widgetId: number, id: number, droplet: droplet) => void;
+  removeStoreDroplet: (widgetId: number, id: number) => void;
 };
 
 function pushContent(content: widget[] | null, widget: widget): widget[] {
@@ -43,7 +46,6 @@ function pushGrid(id: number, grid: grid | null): grid {
 
 function popGrid(id: number, grid: grid | null): grid {
   if (!grid) throw new Error("Grid is not defined");
-  console.log(grid);
   gridRemove(id, grid);
   return [...grid];
 }
@@ -69,5 +71,32 @@ export const useSplatStore = create<SplatState & SplatActions>((set) => ({
     set((state) => ({
       content: popContent(id, state.content),
       grid: popGrid(id, state.grid),
+    })),
+  updateStoreDroplet: (widgetId: number, id: number, droplet: droplet) =>
+    set((state) => ({
+      content: state.content?.map((widget) =>
+        widget.id === widgetId
+          ? {
+              ...widget,
+              content: widget.content.map((d) => (d.id === id ? droplet : d)),
+            }
+          : widget,
+      ),
+    })),
+  addStoreDroplet: (widgetId: number, id: number, droplet: droplet) =>
+    set((state) => ({
+      content: state.content?.map((widget) =>
+        widget.id === widgetId
+          ? { ...widget, content: [...widget.content, droplet] }
+          : widget,
+      ),
+    })),
+  removeStoreDroplet: (widgetId: number, id: number) =>
+    set((state) => ({
+      content: state.content?.map((widget) =>
+        widget.id === widgetId
+          ? { ...widget, content: widget.content.filter((d) => d.id !== id) }
+          : widget,
+      ),
     })),
 }));
