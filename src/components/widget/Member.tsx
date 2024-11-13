@@ -18,10 +18,17 @@ const Member = ({ id, members, currentSize }: MemberProps) => {
       }}
       className="w-full h-fit grid gap-4"
     >
-      {members.map((member: member, index: number) => (
+      {members.map((member: member, index: number) =>
         member.placeholder ? (
           <EditMemberPopup key={index} widgetId={id} dropletId={member.id}>
-            <ProfileCard key={index} name={"Name"} title={"Title"} image="/assets/props/placeholder.jpg" placeholder border={true} />
+            <ProfileCard
+              key={index}
+              name={"Name"}
+              title={"Title"}
+              image="/assets/props/placeholder.jpg"
+              placeholder
+              border={true}
+            />
           </EditMemberPopup>
         ) : (
           <ProfileCard
@@ -31,8 +38,8 @@ const Member = ({ id, members, currentSize }: MemberProps) => {
             image={member.image}
             border={false}
           />
-        )
-      ))}
+        ),
+      )}
     </main>
   );
 };

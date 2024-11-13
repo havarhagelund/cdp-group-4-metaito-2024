@@ -1,12 +1,9 @@
 "use client";
 import { text } from "@/types/splat";
-import { size } from "@/types/layout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FiAlignLeft, FiMail, FiPhone } from "react-icons/fi";
 import EditTextPopup from "./EditTextPopup";
-
-
 
 interface ButtonProps {
   className?: string;
@@ -122,31 +119,26 @@ const Text = ({ id, text }: TextProps) => {
   return (
     <main className="h-full">
       <div className="w-full h-full gap-x-4 pt-4 space-y-6 items-center">
-        {text?.map((content: text, index: number) => (
+        {text?.map((content: text, index: number) =>
           content.placeholder ? (
             <EditTextPopup widgetId={id} dropletId={content.id}>
               <button
                 key={index}
-                className="w-full text-start h-14 text-xl border-[1px] border-error-default rounded-md text-error-default">
-                <Blurb
-                  url={""}
-                  title={"Add a new blurb"}
-                  type={"text"}
-                />
+                className="w-full text-start h-14 text-xl border-[1px] border-error-default rounded-md text-error-default"
+              >
+                <Blurb url={""} title={"Add a new blurb"} type={"text"} />
               </button>
             </EditTextPopup>
           ) : (
-            <div
-              key={index}
-              className="text-xl">
+            <div key={index} className="text-xl">
               <Blurb
                 url={content.url}
                 title={content.title}
                 type={content.type}
               />
             </div>
-          )
-        ))}
+          ),
+        )}
       </div>
       <div className="relative w-full bottom-32 bg-background-widget">
         {largestInstance() === "link" && (
@@ -163,7 +155,7 @@ const Text = ({ id, text }: TextProps) => {
         )}
         {largestInstance() === "email" && <Button text="Send all emails" />}
       </div>
-    </main >
+    </main>
   );
 };
 

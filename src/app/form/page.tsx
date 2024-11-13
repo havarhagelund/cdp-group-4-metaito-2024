@@ -1,8 +1,6 @@
 import FormPage from "@/components/form/FormPage";
 
 const Page = () => {
-  return (
-    <FormPage />
-  );
-}
+  return <FormPage />;
+};
 export default Page;

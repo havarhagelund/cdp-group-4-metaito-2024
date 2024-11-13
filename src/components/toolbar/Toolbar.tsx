@@ -1,12 +1,9 @@
 "use client";
-import { useSplatStore } from "@/store/Splat";
 import classNames from "classnames";
-import { useEffect } from "react";
 import { FiPlus, FiUsers, FiShare2, FiShare, FiSettings } from "react-icons/fi";
 import ContentSeletor from "./ContentSelector";
 
 const Toolbar = () => {
-  const { grid, addStoreContent } = useSplatStore();
   const btnClass = classNames(
     "flex items-center justify-center h-14 w-14 rounded-2xl bg-primary-default cursor-pointer hover:bg-primary-second transition-colors duration-300 z-40",
   );

@@ -1,6 +1,3 @@
-import Image from "next/image";
-import { FC } from "react";
-
 interface ProfileCardProps {
   name: string;
   title: string;
@@ -8,13 +5,13 @@ interface ProfileCardProps {
   placeholder?: boolean;
   border?: boolean;
 }
-const ProfileCard: FC<ProfileCardProps> = ({
+const ProfileCard = ({
   name,
   title,
   image,
   placeholder = false,
   border = true,
-}) => {
+}: ProfileCardProps) => {
   return (
     <main
       className={` ${placeholder ? "border-solid border-red-400 border-[1px] cursor-pointer" : border && "border-solid border-lines-default border-[1px] cursor-default"} w-60 h-16 rounded-2xl flex`}
@@ -29,9 +26,15 @@ const ProfileCard: FC<ProfileCardProps> = ({
           className="object-cover w-full h-full rounded-2xl"
         />
       </div>
-      <div className={`${placeholder ? "text-error-default font-semibold" : "text-text-header font-medium"} text-md text-start  px-4 flex flex-col h-22 justify-center`}>
+      <div
+        className={`${placeholder ? "text-error-default font-semibold" : "text-text-header font-medium"} text-md text-start  px-4 flex flex-col h-22 justify-center`}
+      >
         <p>{name}</p>
-        <p className={`${placeholder ? "text-error-default" : "text-text-subheader"}`}>{title}</p>
+        <p
+          className={`${placeholder ? "text-error-default" : "text-text-subheader"}`}
+        >
+          {title}
+        </p>
       </div>
     </main>
   );

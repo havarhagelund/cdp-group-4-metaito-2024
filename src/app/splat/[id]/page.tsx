@@ -6,7 +6,5 @@ export default async function Splat({ params }: { params: { id: string } }) {
   if (typeof splat === "string") {
     return <div>Ups. An error occured. {splat}</div>;
   }
-  return (
-    <SplatPage splat={splat} />
-  );
+  return <SplatPage splat={splat} />;
 }

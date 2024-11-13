@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Card, { CardRef } from "../widget/Card";
-import { size, card, grid, position } from "@/types/layout"
+import { size, card, grid, position } from "@/types/layout";
 import { member, text, widget, checkItem } from "@/types/splat";
 import {
   getSizeFromGrid,
@@ -29,7 +29,7 @@ const GridContainer = () => {
     if (!grid || !content) return;
     setCardIds(getUniqueIds(grid));
     updateSplat(id, { grid, content });
-    console.log(grid)
+    console.log(grid);
   }, [grid]);
 
   function setRefs(ref: CardRef) {
@@ -100,9 +100,7 @@ const GridContainer = () => {
   function getCurrPossibleCardSize(id: number): size {
     if (!grid) throw new Error("Grid is not set");
     const { y } = indexOf2D(id, grid);
-    const possibleWidth = grid[y].filter(
-      (el) => el == 0 || el == id,
-    ).length;
+    const possibleWidth = grid[y].filter((el) => el == 0 || el == id).length;
     const possibleHeight =
       amountZeroColumn(id, grid) + amountIdColumn(id, grid);
     return { width: possibleWidth, height: possibleHeight };
@@ -144,10 +142,8 @@ const GridContainer = () => {
               />
             )}
             {widget.type == "text" && (
-              <Text
-                id={widget.id}
-                text={widget.content as text[]} />)
-            }
+              <Text id={widget.id} text={widget.content as text[]} />
+            )}
             {widget.type == "checklist" && (
               <CheckItem
                 currentSize={getSizeFromGrid(widget.id, grid!)}

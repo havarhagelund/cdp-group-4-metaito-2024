@@ -1,30 +1,25 @@
 "use client";
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import {
   Dialog as ShadDialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useState } from "react"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { useSplatStore } from "@/store/Splat";
 import { updateSplat } from "@/utils/update-splat";
 
@@ -32,18 +27,20 @@ const formSchema = z.object({
   name: z.string().min(2),
   title: z.string().min(1),
   image: z.string().min(1),
-})
+});
 
 interface EditMemberPopupProps {
   widgetId: number;
   dropletId: number;
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 
-const EditMemberPopup = ({ widgetId, dropletId, children }: EditMemberPopupProps) => {
+const EditMemberPopup = ({
+  widgetId,
+  dropletId,
+  children,
+}: EditMemberPopupProps) => {
   const { id, content, grid, updateStoreDroplet } = useSplatStore();
-  const [open, setOpen] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,7 +48,7 @@ const EditMemberPopup = ({ widgetId, dropletId, children }: EditMemberPopupProps
       name: "",
       title: "",
       image: "",
-    }
+    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -63,16 +60,13 @@ const EditMemberPopup = ({ widgetId, dropletId, children }: EditMemberPopupProps
       image: values.image,
       placeholder: false,
     });
-    console.log(content)
-    updateSplat(id, {grid, content});
+    updateSplat(id, { grid, content });
   }
 
   return (
     <ShadDialog>
       <DialogTrigger asChild>
-        <button>
-          {children}
-        </button>
+        <button>{children}</button>
       </DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
@@ -81,8 +75,8 @@ const EditMemberPopup = ({ widgetId, dropletId, children }: EditMemberPopupProps
             Add a new member to your widget!
           </DialogDescription>
         </DialogHeader>
-        <Form {...form} >
-          <form onSubmit={form.handleSubmit(onSubmit)} >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="relative pt-2">
               <div className="flex justify-between py-2">
                 <FormField
@@ -92,10 +86,15 @@ const EditMemberPopup = ({ widgetId, dropletId, children }: EditMemberPopupProps
                     <FormItem className="w-64">
                       <FormLabel>Name of Member</FormLabel>
                       <FormControl>
-                        <Input type="text" placeholder="Insert name here..." {...field} />
+                        <Input
+                          type="text"
+                          placeholder="Insert name here..."
+                          {...field}
+                        />
                       </FormControl>
                     </FormItem>
-                  )} />
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="title"
@@ -103,10 +102,15 @@ const EditMemberPopup = ({ widgetId, dropletId, children }: EditMemberPopupProps
                     <FormItem>
                       <FormLabel>Title of Member</FormLabel>
                       <FormControl>
-                        <Input type="text" placeholder="Insert title here..." {...field} />
+                        <Input
+                          type="text"
+                          placeholder="Insert title here..."
+                          {...field}
+                        />
                       </FormControl>
                     </FormItem>
-                  )} />
+                  )}
+                />
               </div>
             </div>
             <FormField
@@ -116,21 +120,31 @@ const EditMemberPopup = ({ widgetId, dropletId, children }: EditMemberPopupProps
                 <FormItem className="pt-4 pb-6">
                   <FormLabel>Url of Member Image</FormLabel>
                   <FormControl>
-                    <Input type="text" placeholder="Insert url here..." {...field} />
+                    <Input
+                      type="text"
+                      placeholder="Insert url here..."
+                      {...field}
+                    />
                   </FormControl>
                 </FormItem>
-              )} />
+              )}
+            />
             <DialogFooter className="py-2">
               <div className="flex w-full justify-between items-center">
                 <p className="text-error-default">{error}</p>
-                <Button type="submit" className="bg-primary-second text-md text-white">Edit Widget</Button>
+                <Button
+                  type="submit"
+                  className="bg-primary-second text-md text-white"
+                >
+                  Edit Widget
+                </Button>
               </div>
             </DialogFooter>
           </form>
         </Form>
-      </DialogContent >
-    </ShadDialog >
-  )
-}
+      </DialogContent>
+    </ShadDialog>
+  );
+};
 
 export default EditMemberPopup;
