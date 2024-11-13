@@ -1,13 +1,15 @@
 import { member } from "@/types/splat";
 import ProfileCard from "../profile/ProfileCard";
 import { size } from "@/types/layout";
+import EditMemberPopup from "./EditMemberPopup";
 
 interface MemberProps {
+  id: number;
   members: member[];
   currentSize: size;
 }
 
-const Member = ({ members, currentSize }: MemberProps) => {
+const Member = ({ id, members, currentSize }: MemberProps) => {
   return (
     <main
       style={{
@@ -17,13 +19,19 @@ const Member = ({ members, currentSize }: MemberProps) => {
       className="w-full h-fit grid gap-4"
     >
       {members.map((member: member, index: number) => (
-        <ProfileCard
-          key={index}
-          name={member.name}
-          title={member.role}
-          image={member.image}
-          border={false}
-        />
+        member.placeholder ? (
+          <EditMemberPopup key={index} widgetId={id} dropletId={member.id}>
+            <ProfileCard key={index} name={"Name"} title={"Title"} image="/assets/props/placeholder.jpg" placeholder border={true} />
+          </EditMemberPopup>
+        ) : (
+          <ProfileCard
+            key={index}
+            name={member.name}
+            title={member.role}
+            image={member.image}
+            border={false}
+          />
+        )
       ))}
     </main>
   );
