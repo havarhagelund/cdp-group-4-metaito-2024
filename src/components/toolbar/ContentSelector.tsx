@@ -78,7 +78,7 @@ const ContentSeletor = ({ children }: ContentSelectorProps) => {
     addStoreContent({
       id: getPossibleId(),
       title: value,
-      type: currentWidget,
+      type: currentWidget!,
       content: [],
     });
     updateSplat(id, {grid, content});
@@ -136,7 +136,7 @@ const ContentSeletor = ({ children }: ContentSelectorProps) => {
         </div>
         <DialogFooter className="py-2">
           <div className="flex w-full justify-between items-center">
-            <p className="text-red-600">{error}</p>
+            <p className="text-error-default">{error}</p>
             <Button className="bg-primary-second text-md text-white" onClick={() => createWidget()}>Create Widget</Button>
           </div>
         </DialogFooter>

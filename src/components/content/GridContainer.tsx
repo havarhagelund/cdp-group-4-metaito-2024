@@ -21,25 +21,16 @@ import { updateSplat } from "@/utils/update-splat";
 
 const GridContainer = () => {
   const { id, content, grid, updateStoreGrid } = useSplatStore();
-  const [oldGrid, setOldGrid] = useState<grid | null>(grid);
   const gridRef = useRef<HTMLDivElement>(null);
   const [cardIds, setCardIds] = useState<number[]>();
   const cardRefs = useRef<CardRef[]>([]);
 
   useEffect(() => {
-    if (!grid) return;
+    if (!grid || !content) return;
     setCardIds(getUniqueIds(grid));
-    console.log(grid)
-    if (grid !== oldGrid) {
-      setOldGrid(grid);
-    }
-  }, [grid]);
-
-  useEffect(() => {
-    if (!grid || !content || !oldGrid) throw new Error("Grid or content is not set");
     updateSplat(id, { grid, content });
-  }, [oldGrid])
-
+    console.log(grid)
+  }, [grid]);
 
   function setRefs(ref: CardRef) {
     if (cardRefs.current.some((el) => el.id === ref.id)) return;
@@ -147,12 +138,14 @@ const GridContainer = () => {
           >
             {widget.type == "member" && (
               <Member
+                id={widget.id}
                 currentSize={getSizeFromGrid(widget.id, grid!)}
                 members={widget.content as member[]}
               />
             )}
             {widget.type == "text" && (
               <Text
+                id={widget.id}
                 text={widget.content as text[]} />)
             }
             {widget.type == "checklist" && (
