@@ -4,16 +4,9 @@ import { size } from "@/types/layout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FiAlignLeft, FiMail, FiPhone } from "react-icons/fi";
+import EditTextPopup from "./EditTextPopup";
 
-interface TextProps {
-  text: text[];
-}
 
-interface BlurbProps {
-  url: string;
-  title: string;
-  type: "link" | "email" | "phone" | "text";
-}
 
 interface ButtonProps {
   className?: string;
@@ -31,6 +24,12 @@ const Button = ({ className, text, onClick }: ButtonProps) => {
     </button>
   );
 };
+
+interface BlurbProps {
+  url: string;
+  title: string;
+  type: "link" | "email" | "phone" | "text";
+}
 
 const Blurb = ({ url, title, type }: BlurbProps) => {
   let nUrl;
@@ -86,7 +85,12 @@ type blurbs = {
   emails: number;
 };
 
-const Text = ({ text }: TextProps) => {
+interface TextProps {
+  id: number;
+  text: text[];
+}
+
+const Text = ({ id, text }: TextProps) => {
   const [blurbCount, setBlurbCount] = useState<blurbs>({ links: 0, emails: 0 });
 
   useEffect(() => {
@@ -119,15 +123,29 @@ const Text = ({ text }: TextProps) => {
     <main className="h-full">
       <div className="w-full h-full gap-x-4 pt-4 space-y-6 items-center">
         {text?.map((content: text, index: number) => (
-          <div
-            key={index}
-            className="text-xl">
-            <Blurb
-              url={content.url}
-              title={content.title}
-              type={content.type}
-            />
-          </div>
+          content.placeholder ? (
+            <EditTextPopup widgetId={id} dropletId={content.id}>
+              <button
+                key={index}
+                className="w-full text-start h-14 text-xl border-[1px] border-error-default rounded-md text-error-default">
+                <Blurb
+                  url={""}
+                  title={"Add a new blurb"}
+                  type={"text"}
+                />
+              </button>
+            </EditTextPopup>
+          ) : (
+            <div
+              key={index}
+              className="text-xl">
+              <Blurb
+                url={content.url}
+                title={content.title}
+                type={content.type}
+              />
+            </div>
+          )
         ))}
       </div>
       <div className="relative w-full bottom-32 bg-background-widget">
@@ -145,7 +163,7 @@ const Text = ({ text }: TextProps) => {
         )}
         {largestInstance() === "email" && <Button text="Send all emails" />}
       </div>
-    </main>
+    </main >
   );
 };
 
