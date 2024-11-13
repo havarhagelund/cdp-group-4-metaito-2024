@@ -10,20 +10,23 @@ interface TextInputProps {
 const TextInput = ({ field, setAnswer }: TextInputProps) => {
     const [value, setValue] = useState<string | undefined>(field.value);
 
-    const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTextAreaInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.target.value);
         setAnswer(field.id, e.target.value);
     };
 
     return (
-        <div className="flex flex-col gap-2">
-            <input
-                type="text"
+        <div className="flex flex-col gap-2 w-full">
+            <textarea
                 id={field.label}
                 name={field.label}
+                placeholder='Skriv inn her...'
+                rows={3}
                 value={value}
-                onChange={handleTextInput}
-                className="border border-gray-300 rounded-lg p-2"
+                onChange={handleTextAreaInput}
+                className={`
+                     w-full p-3 bg-white border border-gray-300 
+                    rounded-lg cursor-pointer focus:outline-none focus:border-gray-900`}
             />
         </div>
     )

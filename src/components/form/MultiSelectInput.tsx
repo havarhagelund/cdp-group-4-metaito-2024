@@ -59,13 +59,19 @@ const MultiSelectInput = ({ field, setAnswer }: MultiSelectInputProps) => {
                 })}
             </div>
             {field.options?.includes("Annet") && (
-                <textarea
-                    value={customOption}
-                    rows={1}
-                    className={`h-16 w-60 p-3 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none ${customOption ? "border-gray-900" : ""}`}
-                    placeholder="Annet"
-                    onChange={(e) => handleCustomOption(e.target.value)}
-                />
+                <div className='flex flex-col'>
+                    <label >
+                        Hvis ingen av alternativene passer, vennligst spesifiser:
+                    </label>
+                    <input
+                        type="text"
+                        placeholder='Skriv inn her...'
+                        value={customOption}
+                        onChange={(e) => handleCustomOption(e.target.value)}
+                        className={`h-16 w-full p-3 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none ${customOption ? "border-gray-900" : ""}`}
+                    />
+
+                </div>
             )}
         </div>
     );

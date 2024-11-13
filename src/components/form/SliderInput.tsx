@@ -19,7 +19,8 @@ const SliderInput = ({ field, setAnswer }: SliderInputProps) => {
     label,
   }));
 
-  const [value, setValue] = useState<number>(marks.map((mark) => mark.label).indexOf(field.value || ""));
+  const initialValue = field.value ? marks.findIndex((mark) => mark.label === field.value) : 0;
+  const [value, setValue] = useState<number>(initialValue);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number);
@@ -27,18 +28,17 @@ const SliderInput = ({ field, setAnswer }: SliderInputProps) => {
   };
 
   return (
-    <div style={{
-      display: 'flex',
+    <div className='flex flex-col ' style={{
       padding: '0rem 0.3125rem',
       justifyContent: 'center',
       alignItems: 'center',
       alignContent: 'center',
-      gap: '1.5rem var(--Space-600, 1.5rem)',
       flex: '1 0 0',
       alignSelf: 'stretch',
       flexWrap: 'wrap',
       width: '65ch',
     }}>
+      <p className='text-2xl'>{options[value]} personer</p>
       <div style={{ width: 400, margin: '0 auto', padding: '50px 0' }}>
         <Slider
           value={value}
@@ -70,11 +70,13 @@ const SliderInput = ({ field, setAnswer }: SliderInputProps) => {
               backgroundColor: 'black',
             },
             '& .MuiSlider-markLabel': {
-              //color: 'grey',
+              fontFamily: 'inherit',
+              color: 'grey',
               fontSize: '1rem',
             },
             '& .MuiSlider-markLabelActive': {
-              color: 'grey',
+              fontFamily: 'inherit',
+              //color: 'black',
             },
             '& .MuiSlider-thumb': {
               width: 20,
