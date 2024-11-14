@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useSplatStore } from "@/store/Splat";
 import { updateSplat } from "@/utils/update-splat";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2),
@@ -40,6 +41,7 @@ const EditMemberPopup = ({
   dropletId,
   children,
 }: EditMemberPopupProps) => {
+  const [error, setError] = useState<string>("");
   const { id, content, grid, updateStoreDroplet } = useSplatStore();
 
   const form = useForm<z.infer<typeof formSchema>>({
