@@ -8,13 +8,11 @@ export async function CreateEmbedding(input: string) {
     }),
     headers: {
       "Content-type": "application/json",
-      Authorization: "Bearer " + process.env.OPEN_API_KEY,
+      Authorization: "Bearer " + process.env.OPENAI_API_KEY,
     },
   });
-
   const json = await new Response(response.body).json();
   const embedding = json.data[0].embedding;
-  console.log(embedding);
 
   return embedding;
 }

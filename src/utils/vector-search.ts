@@ -5,8 +5,8 @@ export async function vectorSearch(embedding: string) {
 
   const { error, data } = await supabase.rpc("match_documents", {
     query_embedding: embedding,
-    match_threshold: 0.78,
-    match_count: 3,
+    match_threshold: 0.1,
+    match_count: 1,
   });
 
   if (error) {
@@ -14,7 +14,5 @@ export async function vectorSearch(embedding: string) {
     return error;
   }
 
-  console.log(data);
-
-  return true;
+  return data;
 }
