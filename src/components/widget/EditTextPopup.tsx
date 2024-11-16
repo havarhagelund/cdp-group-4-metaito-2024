@@ -28,9 +28,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useSplatStore } from "@/store/Splat";
+import { useState } from "react";
+import { updateSplat } from "@/utils/update-splat";
 
 const formSchema = z.object({
-  title: z.string().min(0),
+  title: z.string().min(1),
   url: z.string().min(1),
   type: z.string().min(0),
 });
@@ -46,7 +48,8 @@ const EditTextPopup = ({
   dropletId,
   children,
 }: EditTextPopupProps) => {
-  const { updateStoreDroplet } = useSplatStore();
+  const [error, setError] = useState<string>("");
+  const { id, grid, content, removeStoreDroplet, addStoreDroplet } = useSplatStore();
   const titles = new Map([
     ["text", "Subtitle"],
     ["link", "Url"],
@@ -63,13 +66,17 @@ const EditTextPopup = ({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    updateStoreDroplet(widgetId, dropletId, {
+    if (!grid || !content) throw new Error("Grid or content is not defined");
+    removeStoreDroplet(widgetId, dropletId);
+    addStoreDroplet(widgetId, dropletId, {
       id: dropletId,
       title: values.title,
       url: values.url,
       type: values.type as "text" | "link" | "phone" | "email",
       placeholder: false,
     });
+    console.log(content);
+    updateSplat(id, { grid, content });
   }
 
   return (
