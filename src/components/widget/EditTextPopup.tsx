@@ -32,7 +32,7 @@ import { useState } from "react";
 import { updateSplat } from "@/utils/update-splat";
 
 const formSchema = z.object({
-  title: z.string().min(1),
+  title: z.string().optional(),
   url: z.string().min(1),
   type: z.string().min(0),
 });
@@ -50,6 +50,7 @@ const EditTextPopup = ({
 }: EditTextPopupProps) => {
   const [error, setError] = useState<string>("");
   const { id, grid, content, removeStoreDroplet, addStoreDroplet } = useSplatStore();
+  const [open, setOpen] = useState<boolean>(false);
   const titles = new Map([
     ["text", "Subtitle"],
     ["link", "Url"],
@@ -70,19 +71,19 @@ const EditTextPopup = ({
     removeStoreDroplet(widgetId, dropletId);
     addStoreDroplet(widgetId, dropletId, {
       id: dropletId,
-      title: values.title,
+      title: values.title ? values.title : "",
       url: values.url,
       type: values.type as "text" | "link" | "phone" | "email",
       placeholder: false,
     });
-    console.log(content);
     updateSplat(id, { grid, content });
+    setOpen(false);
   }
 
   return (
-    <ShadDialog>
+    <ShadDialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="w-full">{children}</button>
+        {children}
       </DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>

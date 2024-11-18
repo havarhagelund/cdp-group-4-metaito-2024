@@ -25,31 +25,27 @@ import { updateSplat } from "@/utils/update-splat";
 import { useState } from "react";
 
 const formSchema = z.object({
-  name: z.string().min(2),
   title: z.string().min(1),
-  image: z.string().min(1),
 });
 
-interface EditMemberPopupProps {
+interface EditChecklistPopupProps {
   widgetId: number;
   dropletId: number;
   children?: React.ReactNode;
 }
 
-const EditMemberPopup = ({
+const EditChecklistPopup = ({
   widgetId,
   dropletId,
   children,
-}: EditMemberPopupProps) => {
+}: EditChecklistPopupProps) => {
   const [error, setError] = useState<string>("");
   const { id, content, grid, addStoreDroplet, removeStoreDroplet } = useSplatStore();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
       title: "",
-      image: "",
     },
   });
 
@@ -58,9 +54,9 @@ const EditMemberPopup = ({
     removeStoreDroplet(widgetId, dropletId);
     addStoreDroplet(widgetId, dropletId, {
       id: dropletId,
-      name: values.name,
-      role: values.title,
-      image: values.image,
+      order: dropletId,
+      title: values.title,
+      checked: false,
       placeholder: false,
     });
     updateSplat(id, { grid, content });
@@ -69,69 +65,35 @@ const EditMemberPopup = ({
   return (
     <ShadDialog>
       <DialogTrigger asChild>
-        <button>{children}</button>
+        {children}
       </DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
-          <DialogTitle className="text-xl">Add Member Droplet</DialogTitle>
+          <DialogTitle className="text-xl">Add Check Item Droplet</DialogTitle>
           <DialogDescription className="text-[14px]">
-            Add a new member to your widget!
+            Add a check item to your checklist
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="relative pt-2">
-              <div className="flex justify-between py-2">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="w-64">
-                      <FormLabel>Name of Member</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Insert name here..."
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title of Member</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Insert title here..."
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
+            <div className="flex justify-between pt-2 pb-10 w-full">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Title of Check Item</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Insert title of check item..."
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
             </div>
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem className="pt-4 pb-6">
-                  <FormLabel>Url of Member Image</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Insert url here..."
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
             <DialogFooter className="py-2">
               <div className="flex w-full justify-between items-center">
                 <p className="text-error-default">{error}</p>
@@ -150,4 +112,4 @@ const EditMemberPopup = ({
   );
 };
 
-export default EditMemberPopup;
+export default EditChecklistPopup;
