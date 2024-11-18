@@ -52,9 +52,11 @@ export function gridAdd(id: number, grid: grid) {
 
 export function gridRemove(id: number, grid: grid) {
   const size = gridSize(grid);
-  const { x, y } = indexOf2D(id, grid);
-  for (let i = y; i < size.height; i++) {
-    for (let j = x; j < size.width; j++) {
+  for (let i = 0; i < size.height; i++) {
+    for (let j = 0; j < size.width; j++) {
+      if (grid[i][j] !== id) {
+        continue;
+      }
       grid[i][j] = 0;
     }
   }
@@ -71,6 +73,8 @@ export function gridPlace(
       grid[i][j] = id;
     }
   }
+
+  return grid;
 }
 
 export function amountIdRow(row: number, grid: grid): number {
