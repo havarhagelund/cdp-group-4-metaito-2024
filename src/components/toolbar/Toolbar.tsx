@@ -1,7 +1,7 @@
 "use client";
 import classNames from "classnames";
 import { FiPlus, FiUsers, FiShare2, FiShare, FiSettings } from "react-icons/fi";
-import ContentSeletor from "./ContentSelector";
+import ContentAdder from "./ContentAdder";
 
 const Toolbar = () => {
   const btnClass = classNames(
@@ -10,11 +10,11 @@ const Toolbar = () => {
 
   return (
     <main className="h-fit w-fit bg-background-toolbar border-lines-default border-[1px] text-white rounded-2xl space-y-4 py-2 px-1">
-      <ContentSeletor>
+      <ContentAdder>
         <button type="button" className={btnClass}>
           <FiPlus size={20} />
         </button>
-      </ContentSeletor>
+      </ContentAdder>
       <div className={btnClass}>
         <FiUsers size={20} />
       </div>
