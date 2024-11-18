@@ -149,8 +149,6 @@ const Card = ({
   function deleteCard() {
     if (!grid || !content) throw new Error("Grid or content is not defined");
     removeStoreContent(id);
-    console.log(grid);
-    // updateSplat(useSplatStore.getState().id, {grid: grid, content: content});
   }
 
   return (
@@ -165,7 +163,7 @@ const Card = ({
       }}
     >
       {debug && (
-        <div className="absolute text-red-50">
+        <div className="absolute text-error-default ">
           <p>
             span: {size.width}, {size.height}
           </p>
