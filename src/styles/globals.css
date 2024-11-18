@@ -65,6 +65,9 @@
   h1 {
     @apply font-medium text-5xl text-center;
   }
+  label {
+    @apply text-lg;
+  }
 }
 
 @font-face {
