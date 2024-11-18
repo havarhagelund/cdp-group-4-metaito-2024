@@ -15,7 +15,7 @@ import {
 } from "@/utils/grid";
 import Member from "../widget/Member";
 import Text from "../widget/Text";
-import CheckItem from "../widget/CheckItem";
+import Checklist from "../widget/CheckList";
 import { useSplatStore } from "@/store/Splat";
 import { updateSplat } from "@/utils/update-splat";
 
@@ -28,9 +28,16 @@ const GridContainer = () => {
   useEffect(() => {
     if (!grid || !content) return;
     setCardIds(getUniqueIds(grid));
+    console.log(grid)
     updateSplat(id, { grid, content });
-    console.log(grid);
   }, [grid]);
+
+  useEffect(() => {
+    if (!grid || !content) return;
+    console.log(content);
+    console.log("after content update:" + grid);
+    updateSplat(id, { grid, content });
+  }, [content])
 
   function setRefs(ref: CardRef) {
     if (cardRefs.current.some((el) => el.id === ref.id)) return;
@@ -122,7 +129,7 @@ const GridContainer = () => {
       ref={gridRef}
       className="px-16 pt-6 h-[75vh] w-[96vw] grid gap-2 grid-cols-4 grid-rows-3 justify-start content-start"
     >
-      {content!.map((widget: widget) => {
+      {content!.sort((f, n) => f.id - n.id).map((widget: widget) => {
         return (
           <Card
             id={widget.id}
@@ -145,7 +152,8 @@ const GridContainer = () => {
               <Text id={widget.id} text={widget.content as text[]} />
             )}
             {widget.type == "checklist" && (
-              <CheckItem
+              <Checklist
+                id={widget.id}
                 currentSize={getSizeFromGrid(widget.id, grid!)}
                 items={widget.content as checkItem[]}
               />
