@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Card, { CardRef } from "../widget/Card";
 import { size, card, grid, position } from "@/types/layout";
-import { member, text, widget, checkItem } from "@/types/splat";
+import { member, text, widget, checkItem, icon } from "@/types/splat";
 import {
   getSizeFromGrid,
   amountIdColumn,
@@ -18,6 +18,7 @@ import Text from "../widget/Text";
 import Checklist from "../widget/CheckList";
 import { useSplatStore } from "@/store/Splat";
 import { updateSplat } from "@/utils/update-splat";
+import Icon from "../widget/Icon";
 
 const GridContainer = () => {
   const { id, content, grid, updateStoreGrid } = useSplatStore();
@@ -28,14 +29,11 @@ const GridContainer = () => {
   useEffect(() => {
     if (!grid || !content) return;
     setCardIds(getUniqueIds(grid));
-    console.log(grid);
     updateSplat(id, { grid, content });
   }, [grid]);
 
   useEffect(() => {
     if (!grid || !content) return;
-    console.log(content);
-    console.log("after content update:" + grid);
     updateSplat(id, { grid, content });
   }, [content]);
 
@@ -156,10 +154,14 @@ const GridContainer = () => {
               {widget.type == "checklist" && (
                 <Checklist
                   id={widget.id}
-                  currentSize={getSizeFromGrid(widget.id, grid!)}
                   items={widget.content as checkItem[]}
                 />
               )}
+              {
+                widget.type == "icon" && (
+                  <Icon id={widget.id} icons={widget.content as icon[]} currentSize={getSizeFromGrid(widget.id, grid!)} />
+                )
+              }
             </Card>
           );
         })}
