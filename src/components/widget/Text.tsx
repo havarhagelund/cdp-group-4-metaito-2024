@@ -102,7 +102,7 @@ const Text = ({ id, text }: TextProps) => {
 
   function largestInstance(): "link" | "email" | "none" {
     const { links, emails } = blurbCount;
-    if (links < 2 && emails < 2) {
+    if (links < 3 && emails < 3) {
       return "none";
     }
     return links > emails ? "link" : "email";
@@ -119,14 +119,14 @@ const Text = ({ id, text }: TextProps) => {
   return (
     <main className="h-full">
       <div className="w-full h-full gap-x-4 pt-4 space-y-6 items-center">
-        {text?.map((content: text, index: number) =>
+        {text?.sort((f, n) => f.id - n.id).map((content: text, index: number) =>
           content.placeholder ? (
-            <EditTextPopup widgetId={id} dropletId={content.id}>
+            <EditTextPopup key={index} widgetId={id} dropletId={content.id}>
               <button
                 key={index}
-                className="w-full text-start h-14 text-xl border-[1px] border-error-default rounded-md text-error-default"
+                className="w-full text-start  text-lines-default hover:scale-[1.01] hover:text-gray-800 transition-transform"
               >
-                <Blurb url={""} title={"Add a new blurb"} type={"text"} />
+                <Blurb url={""} title={content.title === "" ? "Add your own text here" : "Add " + content.title} type={"text"} />
               </button>
             </EditTextPopup>
           ) : (
