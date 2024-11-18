@@ -33,10 +33,7 @@ export const getIconForTitle = (title: string): JSX.Element => {
   ) {
     return iconMapping["Maritime"];
   }
-  if (
-    lowerTitle.includes("helse") ||
-    lowerTitle.includes("omsorg")
-  ) {
+  if (lowerTitle.includes("helse") || lowerTitle.includes("omsorg")) {
     return iconMapping["Health"];
   }
   if (
@@ -63,27 +60,16 @@ export const getIconForTitle = (title: string): JSX.Element => {
   ) {
     return iconMapping["Home"];
   }
-  if (
-    lowerTitle.includes("transport") ||
-    lowerTitle.includes("logistikk")
-  ) {
+  if (lowerTitle.includes("transport") || lowerTitle.includes("logistikk")) {
     return iconMapping["Transport"];
   }
-  if (
-    lowerTitle.includes("utdanning") ||
-    lowerTitle.includes("forskning")
-  ) {
+  if (lowerTitle.includes("utdanning") || lowerTitle.includes("forskning")) {
     return iconMapping["School"];
   }
-  if (
-    lowerTitle.includes("personer")
-  ) {
+  if (lowerTitle.includes("personer")) {
     return iconMapping["User"];
   }
-  if (
-    lowerTitle.includes("industri") ||
-    lowerTitle.includes("produksjon")
-  ) {
+  if (lowerTitle.includes("industri") || lowerTitle.includes("produksjon")) {
     return iconMapping["Industry"];
   }
 
