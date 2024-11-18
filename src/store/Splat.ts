@@ -1,5 +1,5 @@
 import { grid } from "@/types/layout";
-import { widget } from "@/types/splat";
+import { droplet, widget } from "@/types/splat";
 import { gridAdd, gridRemove } from "@/utils/grid";
 import { create } from "zustand";
 
@@ -19,7 +19,38 @@ type SplatActions = {
   updateStoreContent: (content: widget[]) => void;
   addStoreContent: (widget: widget) => void;
   removeStoreContent: (id: number) => void;
+  updateStoreDroplets: (widgetId: number, droplet: droplet[]) => void;
+  addStoreDroplet: (widgetId: number, id: number, droplet: droplet) => void;
+  removeStoreDroplet: (widgetId: number, id: number) => void;
 };
+
+function pushWidgetDroplet(
+  widgetId: number,
+  droplet: droplet,
+  content: widget[] | null,
+) {
+  if (!content) throw new Error("Content is not defined");
+  content.map((widget) => {
+    if (widget.id === widgetId) {
+      widget.content.push(droplet);
+    }
+  });
+  return content;
+}
+
+function removeWidgetDroplet(
+  widgetId: number,
+  dropletId: number,
+  content: widget[] | null,
+) {
+  if (!content) throw new Error("Content is not defined");
+  content.map((widget) => {
+    if (widget.id === widgetId) {
+      widget.content = widget.content.filter((d) => d.id !== dropletId);
+    }
+  });
+  return content;
+}
 
 function pushContent(content: widget[] | null, widget: widget): widget[] {
   if (!content) throw new Error("Content is not defined");
@@ -30,9 +61,10 @@ function pushContent(content: widget[] | null, widget: widget): widget[] {
   return content;
 }
 
-function popContent(id: number, content: widget[] | null): widget[] {
+function removeContent(id: number, content: widget[] | null): widget[] {
   if (!content) throw new Error("Content is not defined");
-  return content.filter((widget) => widget.id !== id);
+  const newContent = content.filter((widget) => widget.id !== id);
+  return newContent;
 }
 
 function pushGrid(id: number, grid: grid | null): grid {
@@ -41,9 +73,8 @@ function pushGrid(id: number, grid: grid | null): grid {
   return [...grid];
 }
 
-function popGrid(id: number, grid: grid | null): grid {
+function removeGrid(id: number, grid: grid | null): grid {
   if (!grid) throw new Error("Grid is not defined");
-  console.log(grid);
   gridRemove(id, grid);
   return [...grid];
 }
@@ -67,7 +98,24 @@ export const useSplatStore = create<SplatState & SplatActions>((set) => ({
     })),
   removeStoreContent: (id: number) =>
     set((state) => ({
-      content: popContent(id, state.content),
-      grid: popGrid(id, state.grid),
+      content: removeContent(id, state.content),
+      grid: removeGrid(id, state.grid),
+    })),
+  updateStoreDroplets: (widgetId: number, droplets: droplet[]) =>
+    set((state) => ({
+      content: state.content?.map((widget) => {
+        if (widget.id === widgetId) {
+          widget.content = droplets;
+        }
+        return widget;
+      }),
+    })),
+  addStoreDroplet: (widgetId: number, id: number, droplet: droplet) =>
+    set((state) => ({
+      content: pushWidgetDroplet(widgetId, droplet, state.content),
+    })),
+  removeStoreDroplet: (widgetId: number, id: number) =>
+    set((state) => ({
+      content: removeWidgetDroplet(widgetId, id, state.content),
     })),
 }));

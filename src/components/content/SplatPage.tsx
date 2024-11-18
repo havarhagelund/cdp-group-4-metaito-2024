@@ -1,21 +1,27 @@
 "use client";
-import { grid } from "@/types/layout";
-import Toolbar from "../toolbar/Toolbar"
-import GridContainer from "./GridContainer"
-import { splat, widget } from "@/types/splat";
-import { create } from "zustand";
+import Toolbar from "../toolbar/Toolbar";
+import GridContainer from "./GridContainer";
+import { splat } from "@/types/splat";
 import { useEffect } from "react";
 import { useSplatStore } from "@/store/Splat";
 import Navbar from "../navbar/Navbar";
 import Spinner from "../loading/Spinner";
-
 
 interface SplatPageProps {
   splat: splat;
 }
 
 const SplatPage = ({ splat }: SplatPageProps) => {
-  const { title, subtitle, grid, content, updateStoreId, updateStoreTitle, updateStoreSubtitle, updateStoreGrid, updateStoreContent } = useSplatStore();
+  const {
+    title,
+    subtitle,
+    grid,
+    updateStoreId,
+    updateStoreTitle,
+    updateStoreSubtitle,
+    updateStoreGrid,
+    updateStoreContent,
+  } = useSplatStore();
 
   useEffect(() => {
     updateStoreId(splat.id);
@@ -23,12 +29,14 @@ const SplatPage = ({ splat }: SplatPageProps) => {
     updateStoreSubtitle(splat.subtitle);
     updateStoreGrid(splat.grid);
     updateStoreContent(splat.content);
-  }, [])
+  }, []);
 
   if (!grid) {
-    return <div className="h-screen w-full flex items-center justify-center">
-      <Spinner size="large" className="text-primary-default" />
-    </div>;
+    return (
+      <div className="h-screen w-full flex items-center justify-center">
+        <Spinner size="large" className="text-primary-default" />
+      </div>
+    );
   }
 
   return (
@@ -47,8 +55,7 @@ const SplatPage = ({ splat }: SplatPageProps) => {
         </section>
       </main>
     </>
-
-  )
-}
+  );
+};
 
 export default SplatPage;

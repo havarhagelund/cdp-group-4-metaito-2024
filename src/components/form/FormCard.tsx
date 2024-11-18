@@ -11,7 +11,10 @@ export type CardData = {
 
 const FormCard: React.FC<CardData> = ({ card, onClick }) => {
   return (
-    <Card className="w-36 h-36 m-2 overflow-hidden bg-white cursor-pointer" onClick={onClick}>
+    <Card
+      className="w-36 h-36 m-2 overflow-hidden bg-white cursor-pointer"
+      onClick={onClick}
+    >
       <CardContent className="flex flex-col items-center p-1">
         <div
           style={{

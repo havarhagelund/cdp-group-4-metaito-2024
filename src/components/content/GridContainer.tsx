@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Card, { CardRef } from "../widget/Card";
-import { size, card, grid, position } from "@/types/layout"
+import { size, card, grid, position } from "@/types/layout";
 import { member, text, widget, checkItem } from "@/types/splat";
 import {
   getSizeFromGrid,
@@ -15,31 +15,29 @@ import {
 } from "@/utils/grid";
 import Member from "../widget/Member";
 import Text from "../widget/Text";
-import CheckItem from "../widget/CheckItem";
+import Checklist from "../widget/CheckList";
 import { useSplatStore } from "@/store/Splat";
 import { updateSplat } from "@/utils/update-splat";
 
 const GridContainer = () => {
   const { id, content, grid, updateStoreGrid } = useSplatStore();
-  const [oldGrid, setOldGrid] = useState<grid | null>(grid);
   const gridRef = useRef<HTMLDivElement>(null);
   const [cardIds, setCardIds] = useState<number[]>();
   const cardRefs = useRef<CardRef[]>([]);
 
   useEffect(() => {
-    if (!grid) return;
+    if (!grid || !content) return;
     setCardIds(getUniqueIds(grid));
-    console.log(grid)
-    if (grid !== oldGrid) {
-      setOldGrid(grid);
-    }
+    console.log(grid);
+    updateSplat(id, { grid, content });
   }, [grid]);
 
   useEffect(() => {
-    if (!grid || !content || !oldGrid) throw new Error("Grid or content is not set");
+    if (!grid || !content) return;
+    console.log(content);
+    console.log("after content update:" + grid);
     updateSplat(id, { grid, content });
-  }, [oldGrid])
-
+  }, [content]);
 
   function setRefs(ref: CardRef) {
     if (cardRefs.current.some((el) => el.id === ref.id)) return;
@@ -109,9 +107,7 @@ const GridContainer = () => {
   function getCurrPossibleCardSize(id: number): size {
     if (!grid) throw new Error("Grid is not set");
     const { y } = indexOf2D(id, grid);
-    const possibleWidth = grid[y].filter(
-      (el) => el == 0 || el == id,
-    ).length;
+    const possibleWidth = grid[y].filter((el) => el == 0 || el == id).length;
     const possibleHeight =
       amountZeroColumn(id, grid) + amountIdColumn(id, grid);
     return { width: possibleWidth, height: possibleHeight };
@@ -133,37 +129,40 @@ const GridContainer = () => {
       ref={gridRef}
       className="px-16 pt-6 h-[75vh] w-[96vw] grid gap-2 grid-cols-4 grid-rows-3 justify-start content-start"
     >
-      {content!.map((widget: widget) => {
-        return (
-          <Card
-            id={widget.id}
-            key={widget.id}
-            title={widget.title}
-            getMinSize={getMinSize}
-            startSize={getSizeFromGrid(widget.id, grid!)}
-            update={updateGrid}
-            getCurrentPossibleSize={getCurrPossibleCardSize}
-            setRefs={setRefs}
-          >
-            {widget.type == "member" && (
-              <Member
-                currentSize={getSizeFromGrid(widget.id, grid!)}
-                members={widget.content as member[]}
-              />
-            )}
-            {widget.type == "text" && (
-              <Text
-                text={widget.content as text[]} />)
-            }
-            {widget.type == "checklist" && (
-              <CheckItem
-                currentSize={getSizeFromGrid(widget.id, grid!)}
-                items={widget.content as checkItem[]}
-              />
-            )}
-          </Card>
-        );
-      })}
+      {content!
+        .sort((f, n) => f.id - n.id)
+        .map((widget: widget) => {
+          return (
+            <Card
+              id={widget.id}
+              key={widget.id}
+              title={widget.title}
+              getMinSize={getMinSize}
+              startSize={getSizeFromGrid(widget.id, grid!)}
+              update={updateGrid}
+              getCurrentPossibleSize={getCurrPossibleCardSize}
+              setRefs={setRefs}
+            >
+              {widget.type == "member" && (
+                <Member
+                  id={widget.id}
+                  currentSize={getSizeFromGrid(widget.id, grid!)}
+                  members={widget.content as member[]}
+                />
+              )}
+              {widget.type == "text" && (
+                <Text id={widget.id} text={widget.content as text[]} />
+              )}
+              {widget.type == "checklist" && (
+                <Checklist
+                  id={widget.id}
+                  currentSize={getSizeFromGrid(widget.id, grid!)}
+                  items={widget.content as checkItem[]}
+                />
+              )}
+            </Card>
+          );
+        })}
     </section>
   );
 };
