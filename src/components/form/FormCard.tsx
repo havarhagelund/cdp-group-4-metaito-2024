@@ -9,6 +9,7 @@ import MultiSelectInput from "./MultiSelectInput";
 import SliderInput from "./SliderInput";
 import TextInput from "./TextInput";
 import { useRouter } from "next/navigation";
+import { set } from "zod";
 
 const FormCard = () => {
     const router = useRouter();
@@ -49,19 +50,14 @@ const FormCard = () => {
                         }),
                     };
                 }
-    
+
                 return page;
             }),
         });
     };
-    
+
     useEffect(() => {
-    if (currentPage == totalPages) {
-      console.log("form done");
-      handleSubmit();
-      return;
-    }
-    const fetchQuestions = async () => {
+        const fetchQuestions = async () => {
             const currentFormPage = formData.formPages[currentPage - 1];
 
             if (!currentFormPage.generateQuestions) {
@@ -112,25 +108,25 @@ const FormCard = () => {
         setCurrentPage(currentPage - 1);
     };
 
-  async function handleSubmit() {
-    // ta alle fileds values og mappe dem til en streng
-    // lage embedding
-    // gjøre matching
-    // lage ny splat med innhold fra match
-    // redirecte bruker til den nye splaten
-    console.log("running handle submit");
-    const answers = formData.formPages
-      .map((page) => page.fields.map((field) => field.value))
-      .toString();
-    console.log(answers);
+    async function handleSubmit() {
+        // ta alle fileds values og mappe dem til en streng
+        // lage embedding
+        // gjøre matching
+        // lage ny splat med innhold fra match
+        // redirecte bruker til den nye splaten
+        console.log("running handle submit");
+        const answers = formData.formPages
+            .map((page) => page.fields.map((field) => field.value))
+            .toString();
+        console.log(answers);
 
-    const returnSplat = await fetch("http://localhost:3000/api/get-match", {
-      method: "POST",
-      body: JSON.stringify({ str: answers }),
-    }).then((body) => body.json());
-    console.log("returnSplat", returnSplat);
-    router.push("/splat/" + returnSplat.id);
-  }
+        const returnSplat = await fetch("http://localhost:3000/api/get-match", {
+            method: "POST",
+            body: JSON.stringify({ str: answers }),
+        }).then((body) => body.json());
+        console.log("returnSplat", returnSplat);
+        router.push("/splat/" + returnSplat.id);
+    }
 
 
     const handleNextPage = () => {
@@ -138,12 +134,25 @@ const FormCard = () => {
             resetGenerateQuestionsPages();
         }
 
-        setFormPage(tempFormPage);
-        setCurrentPage(currentPage + 1);
+        const updatedFormPages = formData.formPages.map((page) =>
+            page.id === tempFormPage.id ? { ...tempFormPage } : page
+        );
+
+        setFormData({
+            ...formData,
+            formPages: updatedFormPages,
+
+        });
+
+        if (currentPage === totalPages) {
+            handleSubmit();
+        } else {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     const handleMultiSelectAnswer = (fieldId: number, answer: string[]) => {
-        const updatedFormPage = formPage.fields.map((field) => {
+        const updatedFormPage = tempFormPage.fields.map((field) => {
             if (field.id === fieldId) {
                 return {
                     ...field,
@@ -160,7 +169,7 @@ const FormCard = () => {
     };
 
     const handleSliderAnswer = (fieldId: number, value: string) => {
-        const updatedFormPage = formPage.fields.map((field) => {
+        const updatedFormPage = tempFormPage.fields.map((field) => {
             if (field.id === fieldId) {
                 return {
                     ...field,
@@ -169,7 +178,7 @@ const FormCard = () => {
             }
             return field;
         });
-        
+
         setTempFormPage({
             ...formPage,
             fields: updatedFormPage,
@@ -177,7 +186,7 @@ const FormCard = () => {
     };
 
     const handleTextAnswer = (fieldId: number, value: string) => {
-        const updatedFormPage = formPage.fields.map(field => {
+        const updatedFormPage = tempFormPage.fields.map(field => {
             if (field.id === fieldId) {
                 return {
                     ...field,
@@ -186,7 +195,7 @@ const FormCard = () => {
             }
             return field;
         });
-        
+
         setTempFormPage({
             ...formPage,
             fields: updatedFormPage
@@ -202,7 +211,7 @@ const FormCard = () => {
             for (const field of page.fields) {
                 if (field.value) {
                     return {
-                        question: field.label,
+                        label: field.label,
                         answer: field.value
                     };
                 } else {
@@ -224,15 +233,15 @@ const FormCard = () => {
 
         try {
             const response = await fetch("/api/customize-question", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                answeredQuestions,
-                questions,
-                requirements,
-              }),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    answeredQuestions,
+                    questions,
+                    requirements,
+                }),
             });
 
             if (response.ok) {
@@ -268,41 +277,41 @@ const FormCard = () => {
                 <div className="flex flex-col gap-5">
                     <div className="flex flex-col justify-center items-center gap-3">
                         <h1 className="font-medium text-5xl text-center">
-              {formPage.fields[0].label}
-            </h1>
+                            {formPage.fields[0].label}
+                        </h1>
                         {formPage.fields[0].information && (
-              <h2 className="text-3xl text-gray-500 text-center">
-                {formPage.fields[0].information}
-              </h2>
-            )}
+                            <h2 className="text-3xl text-gray-500 text-center">
+                                {formPage.fields[0].information}
+                            </h2>
+                        )}
                     </div>
                     <div className="flex flex-col gap-5">
                         {formPage.fields.map((field) => {
                             switch (field.type) {
                                 case "multiselect":
                                     return (
-                    <MultiSelectInput
-                      key={field.id}
-                      field={field}
-                      setAnswer={handleMultiSelectAnswer}
-                    />
-                  );
+                                        <MultiSelectInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleMultiSelectAnswer}
+                                        />
+                                    );
                                 case "slider":
                                     return (
-                    <SliderInput
-                      key={field.id}
-                      field={field}
-                      setAnswer={handleSliderAnswer}
-                    />
-                  );
+                                        <SliderInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleSliderAnswer}
+                                        />
+                                    );
                                 default:
                                     return (
-                    <TextInput
-                      key={field.id}
-                      field={field}
-                      setAnswer={handleTextAnswer}
-                    />
-                  );
+                                        <TextInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleTextAnswer}
+                                        />
+                                    );
                             }
                         })}
                     </div>
@@ -314,66 +323,66 @@ const FormCard = () => {
                             switch (field.type) {
                                 case "multiselect":
                                     return (
-                    <MultiSelectInput
-                      key={field.id}
-                      field={field}
-                      setAnswer={handleMultiSelectAnswer}
-                    />
-                  );
+                                        <MultiSelectInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleMultiSelectAnswer}
+                                        />
+                                    );
                                 case "slider":
                                     return (
-                    <SliderInput
-                      key={field.id}
-                      field={field}
-                      setAnswer={handleSliderAnswer}
-                    />
-                  );
+                                        <SliderInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleSliderAnswer}
+                                        />
+                                    );
                                 default:
                                     return (
-                    <TextInput
-                      key={field.id}
-                      field={field}
-                      setAnswer={handleTextAnswer}
-                    />
-                  );
+                                        <TextInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleTextAnswer}
+                                        />
+                                    );
                             }
                         };
 
                         return (
                             <div key={field.id} className="flex flex-col items-center gap-3">
                                 <h1 className="font-medium text-3xl text-center">
-                  {field.label}
-                </h1>
+                                    {field.label}
+                                </h1>
                                 {field.information && (
-                  <h2 className="text-3xl text-gray-500 text-center">
-                    {field.information}
-                  </h2>
-                )}
+                                    <h2 className="text-3xl text-gray-500 text-center">
+                                        {field.information}
+                                    </h2>
+                                )}
                                 {element()}
                             </div>
-                        );                        
+                        );
                     })}
                 </div>
             )}
 
-            
+
 
             <div className="flex flex-col gap-5">
                 <div className="flex justify-center items-center gap-5">
                     <Button
-            text="Tilbake"
-            variant="secondary"
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-            icon={<IconArrowLeft color="#303030" size="24"/>}
-            iconPosition="left"
-         />
+                        text="Tilbake"
+                        variant="secondary"
+                        onClick={handlePreviousPage}
+                        disabled={currentPage === 1}
+                        icon={<IconArrowLeft color="#303030" size="24" />}
+                        iconPosition="left"
+                    />
                     <Button
-            text="Neste"
-            onClick={handleNextPage}
-            disabled={!allowNext}
-            icon={<IconArrowRight color="#f5f5f5" size="24" />}
-         />
+                        text="Neste"
+                        onClick={handleNextPage}
+                        disabled={!allowNext}
+                        icon={<IconArrowRight color="#f5f5f5" size="24" />}
+                    />
                 </div>
                 <ProgressIndicator pageNumber={currentPage} totalPages={totalPages} />
             </div>
