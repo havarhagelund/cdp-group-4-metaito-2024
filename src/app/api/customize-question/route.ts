@@ -97,6 +97,9 @@ export async function POST(req: NextRequest) {
             if (hasPredefinedInfo && "information" in aiOutput[i]) {
                 aiOutput[i].information = question.information;
             }
+            if (question.type === "multiselect") {
+                aiOutput[i].options.push("Annet");
+            }
             aiOutput[i].id = question.id;
             generatedQuestions.push(aiOutput[i]);
         }
