@@ -1,6 +1,8 @@
 interface FormData {
+    currentFormPage: number;
     formPages: FormPage[];
 }
+
 interface FormPage {
     id: number;
     aiGenerated: boolean;
@@ -8,6 +10,7 @@ interface FormPage {
     requirements?: string;
     fields: FormField[];
 }
+
 interface FormField {
     id: number;
     requirements?: string;
@@ -17,4 +20,5 @@ interface FormField {
     value?: any;
     options?: string[];
 }
+
 export type { FormData, FormPage, FormField };

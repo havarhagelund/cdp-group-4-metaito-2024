@@ -1,6 +1,6 @@
 import { createClient } from "./supabase/server";
 
-export async function StoreSplat(
+export async function storeSplat(
   title: string,
   description: string,
   embedding: string,
@@ -12,7 +12,6 @@ export async function StoreSplat(
     .from("splat")
     .insert([{ title: title, embedding: embedding, json: json }])
     .select();
-
   if (error) {
     console.error(error);
     return false;

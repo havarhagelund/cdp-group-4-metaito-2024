@@ -121,6 +121,7 @@ const mockPages: FormPage[] = [
     }
 ];
 const mockData: FormData = {
+    currentFormPage: 1,
     formPages: mockPages,
 };
 export default mockData;

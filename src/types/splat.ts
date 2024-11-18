@@ -1,8 +1,7 @@
-import { UUID } from "crypto";
 import { grid } from "./layout";
 
 export type splat = {
-  id: UUID;
+  id: number;
   title: string;
   subtitle: string;
   content: widget[];
@@ -13,23 +12,33 @@ export type widget = {
   id: number;
   title: string;
   type: "text" | "checklist" | "member";
-  content: text[] | checkItem[] | member[];
+  content: droplet[];
 };
 
+export type droplet = text | checkItem | member;
+
+export type textTypes = "link" | "email" | "phone" | "text";
+
 export type member = {
+  id: number;
   image: string;
   name: string;
   role: string;
+  placeholder: boolean;
 };
 
 export type text = {
+  id: number;
   title: string;
   url: string;
-  type: "link" | "email" | "phone" | "text";
+  type: textTypes;
+  placeholder: boolean;
 };
 
 export type checkItem = {
+  id: number;
   title: string;
   checked: boolean;
   order: number;
+  placeholder: boolean;
 };
