@@ -6,7 +6,7 @@ export default function FormLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="eng">
+    <html lang="en">
       <body>{children}</body>
     </html>
   );

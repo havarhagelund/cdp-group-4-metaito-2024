@@ -1,14 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FormContext } from '@/context/FormContext';
-import { FormPage } from '@/types/FormData';
-import { IconArrowLeft, IconArrowRight } from '@/ui/icons/IconArrow';
-import ProgressIndicator from './ProgressIndicator';
-import MultiSelectInput from './MultiSelectInput';
-import SliderInput from './SliderInput';
-import TextInput from './TextInput';
-import Button from '../Button';
+"use client";
+import { FormContext } from "@/context/FormContext";
+import { FormPage } from "@/types/FormData";
+import React, { useContext, useEffect, useState } from "react";
+import ProgressIndicator from "./ProgressIndicator";
+import Button from "../Button";
+import { IconArrowLeft, IconArrowRight } from "@/ui/icons/IconArrow";
+import MultiSelectInput from "./MultiSelectInput";
+import SliderInput from "./SliderInput";
+import TextInput from "./TextInput";
+import { useRouter } from "next/navigation";
+import { set } from "zod";
 
 const FormCard = () => {
+    const router = useRouter();
     const { formData, setFormData } = useContext(FormContext);
     const [currentPage, setCurrentPage] = useState<number>(formData.currentFormPage);
 
@@ -33,25 +37,25 @@ const FormCard = () => {
     const resetGenerateQuestionsPages = () => {
         setFormData({
             ...formData,
-            formPages: formData.formPages.map(page => {
+            formPages: formData.formPages.map((page) => {
                 if (page.aiGenerated && page.id > formPage.id) {
                     return {
                         ...page,
                         generateQuestions: true,
-                        fields: page.fields.map(field => {
+                        fields: page.fields.map((field) => {
                             return {
                                 ...field,
-                                value: undefined
+                                value: undefined,
                             };
-                        })
+                        }),
                     };
                 }
-    
+
                 return page;
-            })
+            }),
         });
-    }
-    
+    };
+
     useEffect(() => {
         const fetchQuestions = async () => {
             const currentFormPage = formData.formPages[currentPage - 1];
@@ -73,10 +77,10 @@ const FormCard = () => {
                         return {
                             ...field,
                             label: generatedQuestions[index].question,
-                            options: generatedQuestions[index].options
+                            options: generatedQuestions[index].options,
                         };
                     }),
-                    generateQuestions: false
+                    generateQuestions: false,
                 });
                 setTempFormPage({
                     ...currentFormPage,
@@ -102,23 +106,57 @@ const FormCard = () => {
 
         setFormPage(tempFormPage);
         setCurrentPage(currentPage - 1);
+    };
+
+    async function handleSubmit() {
+        // ta alle fileds values og mappe dem til en streng
+        // lage embedding
+        // gjøre matching
+        // lage ny splat med innhold fra match
+        // redirecte bruker til den nye splaten
+        console.log("running handle submit");
+        const answers = formData.formPages
+            .map((page) => page.fields.map((field) => field.value))
+            .toString();
+        console.log(answers);
+
+        const returnSplat = await fetch("http://localhost:3000/api/get-match", {
+            method: "POST",
+            body: JSON.stringify({ str: answers }),
+        }).then((body) => body.json());
+        console.log("returnSplat", returnSplat);
+        router.push("/splat/" + returnSplat.id);
     }
+
 
     const handleNextPage = () => {
         if (!(JSON.stringify(formPage) === JSON.stringify(tempFormPage))) {
             resetGenerateQuestionsPages();
         }
 
-        setFormPage(tempFormPage);
-        setCurrentPage(currentPage + 1);
+        const updatedFormPages = formData.formPages.map((page) =>
+            page.id === tempFormPage.id ? { ...tempFormPage } : page
+        );
+
+        setFormData({
+            ...formData,
+            formPages: updatedFormPages,
+
+        });
+
+        if (currentPage === totalPages) {
+            handleSubmit();
+        } else {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     const handleMultiSelectAnswer = (fieldId: number, answer: string[]) => {
-        const updatedFormPage = formPage.fields.map(field => {
+        const updatedFormPage = tempFormPage.fields.map((field) => {
             if (field.id === fieldId) {
                 return {
                     ...field,
-                    value: answer
+                    value: answer,
                 };
             }
             return field;
@@ -126,29 +164,29 @@ const FormCard = () => {
 
         setTempFormPage({
             ...formPage,
-            fields: updatedFormPage
+            fields: updatedFormPage,
         });
-    }
+    };
 
     const handleSliderAnswer = (fieldId: number, value: string) => {
-        const updatedFormPage = formPage.fields.map(field => {
+        const updatedFormPage = tempFormPage.fields.map((field) => {
             if (field.id === fieldId) {
                 return {
                     ...field,
-                    value: value
+                    value: value,
                 };
             }
             return field;
         });
-        
+
         setTempFormPage({
             ...formPage,
-            fields: updatedFormPage
+            fields: updatedFormPage,
         });
     };
 
     const handleTextAnswer = (fieldId: number, value: string) => {
-        const updatedFormPage = formPage.fields.map(field => {
+        const updatedFormPage = tempFormPage.fields.map(field => {
             if (field.id === fieldId) {
                 return {
                     ...field,
@@ -157,7 +195,7 @@ const FormCard = () => {
             }
             return field;
         });
-        
+
         setTempFormPage({
             ...formPage,
             fields: updatedFormPage
@@ -173,7 +211,7 @@ const FormCard = () => {
             for (const field of page.fields) {
                 if (field.value) {
                     return {
-                        question: field.label,
+                        label: field.label,
                         answer: field.value
                     };
                 } else {
@@ -187,7 +225,7 @@ const FormCard = () => {
                 id: field.id,
                 question: field.label,
                 type: field.type,
-                options: field.options
+                options: field.options,
             };
         });
 
@@ -195,15 +233,15 @@ const FormCard = () => {
 
         try {
             const response = await fetch("/api/customize-question", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                answeredQuestions,
-                questions,
-                requirements,
-              }),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    answeredQuestions,
+                    questions,
+                    requirements,
+                }),
             });
 
             if (response.ok) {
@@ -215,7 +253,7 @@ const FormCard = () => {
         } catch (error) {
             console.error("Error:", error);
         }
-    }
+    };
 
     useEffect(() => {
         setAllowNext(allow);
@@ -224,12 +262,12 @@ const FormCard = () => {
     useEffect(() => {
         setFormData({
             currentFormPage: currentPage,
-            formPages: formData.formPages.map(page => {
+            formPages: formData.formPages.map((page) => {
                 if (page.id === formPage.id) {
                     return formPage;
                 }
                 return page;
-            })
+            }),
         });
     }, [formPage]);
 
@@ -238,54 +276,113 @@ const FormCard = () => {
             {formPage.fields.length === 1 ? (
                 <div className="flex flex-col gap-5">
                     <div className="flex flex-col justify-center items-center gap-3">
-                        <h1 className="font-medium text-5xl text-center">{formPage.fields[0].label}</h1>
-                        {formPage.fields[0].information && <h2 className="text-3xl text-gray-500 text-center">{formPage.fields[0].information}</h2>}
+                        <h1 className="font-medium text-5xl text-center">
+                            {formPage.fields[0].label}
+                        </h1>
+                        {formPage.fields[0].information && (
+                            <h2 className="text-3xl text-gray-500 text-center">
+                                {formPage.fields[0].information}
+                            </h2>
+                        )}
                     </div>
                     <div className="flex flex-col gap-5">
-                        {formPage.fields.map(field => {
+                        {formPage.fields.map((field) => {
                             switch (field.type) {
-                                case 'multiselect':
-                                    return <MultiSelectInput key={field.id} field={field} setAnswer={handleMultiSelectAnswer} />;
-                                case 'slider':
-                                    return <SliderInput key={field.id} field={field} setAnswer={handleSliderAnswer} />;
+                                case "multiselect":
+                                    return (
+                                        <MultiSelectInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleMultiSelectAnswer}
+                                        />
+                                    );
+                                case "slider":
+                                    return (
+                                        <SliderInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleSliderAnswer}
+                                        />
+                                    );
                                 default:
-                                    return <TextInput key={field.id} field={field} setAnswer={handleTextAnswer} />;
+                                    return (
+                                        <TextInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleTextAnswer}
+                                        />
+                                    );
                             }
                         })}
                     </div>
                 </div>
             ) : (
                 <div className="flex flex-col gap-5">
-                    {formPage.fields.map(field => {
+                    {formPage.fields.map((field) => {
                         const element = () => {
                             switch (field.type) {
-                                case 'multiselect':
-                                    return <MultiSelectInput key={field.id} field={field} setAnswer={handleMultiSelectAnswer} />;
-                                case 'slider':
-                                    return <SliderInput key={field.id} field={field} setAnswer={handleSliderAnswer} />;
+                                case "multiselect":
+                                    return (
+                                        <MultiSelectInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleMultiSelectAnswer}
+                                        />
+                                    );
+                                case "slider":
+                                    return (
+                                        <SliderInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleSliderAnswer}
+                                        />
+                                    );
                                 default:
-                                    return <TextInput key={field.id} field={field} setAnswer={handleTextAnswer} />;
+                                    return (
+                                        <TextInput
+                                            key={field.id}
+                                            field={field}
+                                            setAnswer={handleTextAnswer}
+                                        />
+                                    );
                             }
-                        }
+                        };
 
                         return (
                             <div key={field.id} className="flex flex-col items-center gap-3">
-                                <h1 className="font-medium text-3xl text-center">{field.label}</h1>
-                                {field.information && <h2 className="text-3xl text-gray-500 text-center">{field.information}</h2>}
+                                <h1 className="font-medium text-3xl text-center">
+                                    {field.label}
+                                </h1>
+                                {field.information && (
+                                    <h2 className="text-3xl text-gray-500 text-center">
+                                        {field.information}
+                                    </h2>
+                                )}
                                 {element()}
                             </div>
-                        )
-                        
+                        );
                     })}
                 </div>
             )}
 
-            
+
 
             <div className="flex flex-col gap-5">
                 <div className="flex justify-center items-center gap-5">
-                    <Button text="Tilbake" variant="secondary" onClick={handlePreviousPage} disabled={currentPage === 1} icon={<IconArrowLeft color="#303030" size="24"/>} iconPosition="left"/>
-                    <Button text="Neste" onClick={handleNextPage} disabled={!allowNext} icon={<IconArrowRight color="#f5f5f5" size="24" />}/>
+                    <Button
+                        text="Tilbake"
+                        variant="secondary"
+                        onClick={handlePreviousPage}
+                        disabled={currentPage === 1}
+                        icon={<IconArrowLeft color="#303030" size="24" />}
+                        iconPosition="left"
+                    />
+                    <Button
+                        text="Neste"
+                        onClick={handleNextPage}
+                        disabled={!allowNext}
+                        icon={<IconArrowRight color="#f5f5f5" size="24" />}
+                    />
                 </div>
                 <ProgressIndicator pageNumber={currentPage} totalPages={totalPages} />
             </div>
