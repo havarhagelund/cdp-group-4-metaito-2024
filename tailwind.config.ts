@@ -41,6 +41,9 @@ const config: Config = {
           second: "#FBECED",
         },
       },
+      fontFamily: {
+        NM: ["Neue Montreal", "sans-serif"],
+      },
     },
   },
   plugins: [],

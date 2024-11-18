@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
-import { Urbanist } from "next/font/google";
 import "../styles/globals.css";
-
-const urbanist = Urbanist({
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Fs ai assistant",
@@ -20,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={urbanist.className}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
