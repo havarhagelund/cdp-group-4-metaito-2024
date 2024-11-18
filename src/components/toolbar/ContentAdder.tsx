@@ -1,4 +1,4 @@
-import { BookText, BookUser, ListChecks } from "lucide-react";
+import { BookText, BookUser, Link, ListChecks } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog as ShadDialog,
@@ -16,7 +16,7 @@ import { useSplatStore } from "@/store/Splat";
 import { updateSplat } from "@/utils/update-splat";
 import { widget } from "@/types/splat";
 
-export type widgetType = "text" | "checklist" | "member" | null;
+export type widgetType = "text" | "checklist" | "member" | "icon" | null;
 
 interface WidgetProps {
   title: string;
@@ -35,6 +35,7 @@ const WidgetSelector = ({ title, type }: WidgetProps) => {
         {type === "text" && <BookText size={32} />}
         {type === "checklist" && <ListChecks size={32} />}
         {type === "member" && <BookUser size={32} />}
+        {type === "icon" && <Link size={32} />}
       </div>
       <div className="flex items-center justify-center w-full">
         <p className="font-medium">{title}</p>
@@ -47,7 +48,7 @@ interface ContentAdderProps {
   children?: React.ReactNode;
 }
 const ContentAdder = ({ children }: ContentAdderProps) => {
-  const widgets: widgetType[] = ["text", "checklist", "member"];
+  const widgets: widgetType[] = ["text", "checklist", "member", "icon"];
   const { currentWidget } = useWidgetSelectorStore();
   const { id, grid, content, addStoreContent } = useSplatStore();
   const [open, setOpen] = useState<boolean>(false);
@@ -56,11 +57,11 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
 
   function checkForm() {
     let error = "";
-    if (!currentWidget) {
-      error = "Please select a widget";
-    }
     if (!value) {
       error = "Please enter a title";
+    }
+    if (!currentWidget) {
+      error = "Please select a widget";
     }
     setError(error);
     return error;
@@ -105,11 +106,11 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
   return (
     <ShadDialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="bg-background-widget py-8 w-fit h-fit">
+      <DialogContent className="bg-background-widget py-8 w-fit h-fit min-w-fit">
         <DialogHeader>
           <DialogTitle className="text-xl">Choose a Widget</DialogTitle>
           <DialogDescription className="text-[14px]">
-            Select a droplet to add to the splat
+            Select a Widget to add to the splat
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-8 relative">
@@ -124,7 +125,7 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
           </div>
           <div>
             <DialogDescription className="text-[14px]">
-              Choose a title for the droplet
+              Choose a title for the Widget
             </DialogDescription>
             <div className="py-4">
               <Input
