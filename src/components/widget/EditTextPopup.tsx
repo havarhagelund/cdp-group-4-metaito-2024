@@ -48,8 +48,8 @@ const EditTextPopup = ({
   dropletId,
   children,
 }: EditTextPopupProps) => {
-  const [error, setError] = useState<string>("");
-  const { id, grid, content, removeStoreDroplet, addStoreDroplet } = useSplatStore();
+  const { id, grid, content, removeStoreDroplet, addStoreDroplet } =
+    useSplatStore();
   const [open, setOpen] = useState<boolean>(false);
   const titles = new Map([
     ["text", "Subtitle"],
@@ -82,9 +82,7 @@ const EditTextPopup = ({
 
   return (
     <ShadDialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
           <DialogTitle className="text-xl">Add Text Droplet</DialogTitle>
@@ -158,8 +156,7 @@ const EditTextPopup = ({
               )}
             />
             <DialogFooter className="py-2">
-              <div className="flex w-full justify-between items-center">
-                <p className="text-error-default">{error}</p>
+              <div className="flex w-full justify-end items-center">
                 <Button
                   type="submit"
                   className="bg-primary-second text-md text-white"

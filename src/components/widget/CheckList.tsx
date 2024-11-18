@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { checkItem } from "@/types/splat";
 import { size } from "@/types/layout";
 import { useSplatStore } from "@/store/Splat";
 import EditChecklistPopup from "./EditChecklistPopup";
-import EditTextPopup from "./EditTextPopup";
 
 interface CheckItemProps {
   item: checkItem;
@@ -28,10 +26,11 @@ const CheckItem = ({ item, index, handleCheckboxChange }: CheckItemProps) => {
       >
         <span
           className={`w-10 h-10 inline-block rounded
-                  ${item.checked && !item.placeholder
-              ? "bg-primary-default"
-              : "bg-gray-100 border-2 border-gray-300"
-            }
+                  ${
+                    item.checked && !item.placeholder
+                      ? "bg-primary-default"
+                      : "bg-gray-100 border-2 border-gray-300"
+                  }
                   transition-all duration-200 ease-in-out`}
         >
           {item.checked && !item.placeholder && (
@@ -51,22 +50,23 @@ const CheckItem = ({ item, index, handleCheckboxChange }: CheckItemProps) => {
             </svg>
           )}
         </span>
-        <p className={`${item.placeholder ? "text-lines-default hover:scale-[1.01] hover:text-gray-800 transition-transform" : "text-black"} text-lg`}>
+        <p
+          className={`${item.placeholder ? "text-lines-default hover:scale-[1.01] hover:text-gray-800 transition-transform" : "text-black"} text-lg`}
+        >
           {item.placeholder ? "Add " + item.title : item.title}
         </p>
       </label>
     </main>
   );
-}
+};
 
 interface ChecklistProps {
   id: number;
-  currentSize: size;
   items: checkItem[];
 }
 
-const Checklist = ({ id, items: initialItems, currentSize }: ChecklistProps) => {
-  const { updateStoreDroplets, addStoreDroplet, removeStoreDroplet } = useSplatStore();
+const Checklist = ({ id, items: initialItems }: ChecklistProps) => {
+  const { updateStoreDroplets } = useSplatStore();
 
   function handleCheckboxChange(index: number) {
     const newItems = [...initialItems];
@@ -75,10 +75,8 @@ const Checklist = ({ id, items: initialItems, currentSize }: ChecklistProps) => 
   }
 
   return (
-    <main
-      className="w-full h-full flex flex-col pt-4 space-y-6 items-start"
-    >
-      {initialItems.map((item: checkItem, index: number) => (
+    <main className="w-full h-full flex flex-col pt-4 space-y-6 items-start">
+      {initialItems.map((item: checkItem, index: number) =>
         item.placeholder ? (
           <EditChecklistPopup key={index} widgetId={id} dropletId={item.id}>
             <button className="text-start">
@@ -97,8 +95,8 @@ const Checklist = ({ id, items: initialItems, currentSize }: ChecklistProps) => 
             index={index}
             handleCheckboxChange={handleCheckboxChange}
           />
-        )
-      ))}
+        ),
+      )}
     </main>
   );
 };

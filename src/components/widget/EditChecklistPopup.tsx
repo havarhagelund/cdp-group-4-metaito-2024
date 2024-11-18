@@ -39,8 +39,8 @@ const EditChecklistPopup = ({
   dropletId,
   children,
 }: EditChecklistPopupProps) => {
-  const [error, setError] = useState<string>("");
-  const { id, content, grid, addStoreDroplet, removeStoreDroplet } = useSplatStore();
+  const { id, content, grid, addStoreDroplet, removeStoreDroplet } =
+    useSplatStore();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,9 +64,7 @@ const EditChecklistPopup = ({
 
   return (
     <ShadDialog>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
           <DialogTitle className="text-xl">Add Check Item Droplet</DialogTitle>
@@ -95,8 +93,7 @@ const EditChecklistPopup = ({
               />
             </div>
             <DialogFooter className="py-2">
-              <div className="flex w-full justify-between items-center">
-                <p className="text-error-default">{error}</p>
+              <div className="flex w-full justify-end items-center">
                 <Button
                   type="submit"
                   className="bg-primary-second text-md text-white"

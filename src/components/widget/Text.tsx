@@ -119,26 +119,36 @@ const Text = ({ id, text }: TextProps) => {
   return (
     <main className="h-full">
       <div className="w-full h-full gap-x-4 pt-4 space-y-6 items-center">
-        {text?.sort((f, n) => f.id - n.id).map((content: text, index: number) =>
-          content.placeholder ? (
-            <EditTextPopup key={index} widgetId={id} dropletId={content.id}>
-              <button
-                key={index}
-                className="w-full text-start  text-lines-default hover:scale-[1.01] hover:text-gray-800 transition-transform"
-              >
-                <Blurb url={""} title={content.title === "" ? "Add your own text here" : "Add " + content.title} type={"text"} />
-              </button>
-            </EditTextPopup>
-          ) : (
-            <div key={index} className="text-xl">
-              <Blurb
-                url={content.url}
-                title={content.title}
-                type={content.type}
-              />
-            </div>
-          ),
-        )}
+        {text
+          ?.sort((f, n) => f.id - n.id)
+          .map((content: text, index: number) =>
+            content.placeholder ? (
+              <EditTextPopup key={index} widgetId={id} dropletId={content.id}>
+                <button
+                  key={index}
+                  className="w-full text-start  text-lines-default hover:scale-[1.01] hover:text-gray-800 transition-transform"
+                >
+                  <Blurb
+                    url={""}
+                    title={
+                      content.title === ""
+                        ? "Add your own text here"
+                        : "Add " + content.title
+                    }
+                    type={"text"}
+                  />
+                </button>
+              </EditTextPopup>
+            ) : (
+              <div key={index} className="text-xl">
+                <Blurb
+                  url={content.url}
+                  title={content.title}
+                  type={content.type}
+                />
+              </div>
+            ),
+          )}
       </div>
       <div className="relative w-full bottom-32 bg-background-widget">
         {largestInstance() === "link" && (

@@ -28,7 +28,7 @@ const GridContainer = () => {
   useEffect(() => {
     if (!grid || !content) return;
     setCardIds(getUniqueIds(grid));
-    console.log(grid)
+    console.log(grid);
     updateSplat(id, { grid, content });
   }, [grid]);
 
@@ -37,7 +37,7 @@ const GridContainer = () => {
     console.log(content);
     console.log("after content update:" + grid);
     updateSplat(id, { grid, content });
-  }, [content])
+  }, [content]);
 
   function setRefs(ref: CardRef) {
     if (cardRefs.current.some((el) => el.id === ref.id)) return;
@@ -129,38 +129,40 @@ const GridContainer = () => {
       ref={gridRef}
       className="px-16 pt-6 h-[75vh] w-[96vw] grid gap-2 grid-cols-4 grid-rows-3 justify-start content-start"
     >
-      {content!.sort((f, n) => f.id - n.id).map((widget: widget) => {
-        return (
-          <Card
-            id={widget.id}
-            key={widget.id}
-            title={widget.title}
-            getMinSize={getMinSize}
-            startSize={getSizeFromGrid(widget.id, grid!)}
-            update={updateGrid}
-            getCurrentPossibleSize={getCurrPossibleCardSize}
-            setRefs={setRefs}
-          >
-            {widget.type == "member" && (
-              <Member
-                id={widget.id}
-                currentSize={getSizeFromGrid(widget.id, grid!)}
-                members={widget.content as member[]}
-              />
-            )}
-            {widget.type == "text" && (
-              <Text id={widget.id} text={widget.content as text[]} />
-            )}
-            {widget.type == "checklist" && (
-              <Checklist
-                id={widget.id}
-                currentSize={getSizeFromGrid(widget.id, grid!)}
-                items={widget.content as checkItem[]}
-              />
-            )}
-          </Card>
-        );
-      })}
+      {content!
+        .sort((f, n) => f.id - n.id)
+        .map((widget: widget) => {
+          return (
+            <Card
+              id={widget.id}
+              key={widget.id}
+              title={widget.title}
+              getMinSize={getMinSize}
+              startSize={getSizeFromGrid(widget.id, grid!)}
+              update={updateGrid}
+              getCurrentPossibleSize={getCurrPossibleCardSize}
+              setRefs={setRefs}
+            >
+              {widget.type == "member" && (
+                <Member
+                  id={widget.id}
+                  currentSize={getSizeFromGrid(widget.id, grid!)}
+                  members={widget.content as member[]}
+                />
+              )}
+              {widget.type == "text" && (
+                <Text id={widget.id} text={widget.content as text[]} />
+              )}
+              {widget.type == "checklist" && (
+                <Checklist
+                  id={widget.id}
+                  currentSize={getSizeFromGrid(widget.id, grid!)}
+                  items={widget.content as checkItem[]}
+                />
+              )}
+            </Card>
+          );
+        })}
     </section>
   );
 };
