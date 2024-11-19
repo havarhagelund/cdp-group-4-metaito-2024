@@ -85,7 +85,7 @@ const EditTextPopup = ({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
-          <DialogTitle className="text-xl">Add Text Droplet</DialogTitle>
+          <DialogTitle className="text-xl font-medium">Add Text Droplet</DialogTitle>
           <DialogDescription className="text-[14px]">
             Add the content of your choice
           </DialogDescription>
