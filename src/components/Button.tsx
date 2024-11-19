@@ -7,9 +7,10 @@ interface ButtonProps {
     icon?: ReactNode,
     iconPosition?: "left" | "right",
     variant?: "primary" | "secondary",
+    invisible?: boolean,
 }
 
-const Button = ({ text, onClick, disabled, icon, iconPosition = "right", variant = "primary" }: ButtonProps) => {
+const Button = ({ text, onClick, disabled, icon, iconPosition = "right", variant = "primary", invisible=false }: ButtonProps) => {
     return (
         <>
             {variant === "primary" && (
@@ -56,6 +57,7 @@ const Button = ({ text, onClick, disabled, icon, iconPosition = "right", variant
                         alignItems: 'center',
                         gap: '.5rem',
                         borderRadius: '.5rem',
+                        visibility: invisible ? 'hidden' : 'visible',
                     }}
                 >
                     {icon && iconPosition === "left" && icon}

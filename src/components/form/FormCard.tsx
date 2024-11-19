@@ -9,7 +9,7 @@ import MultiSelectInput from "./MultiSelectInput";
 import SliderInput from "./SliderInput";
 import TextInput from "./TextInput";
 import { useRouter } from "next/navigation";
-import { set } from "zod";
+import { Skeleton } from "@mui/material";
 
 const FormCard = () => {
     const router = useRouter();
@@ -19,6 +19,8 @@ const FormCard = () => {
     const [formPage, setFormPage] = useState<FormPage>(formData.formPages.find(page => page.id === currentPage) as FormPage);
     const [tempFormPage, setTempFormPage] = useState<FormPage>(formData.formPages.find(page => page.id === currentPage) as FormPage);
     const totalPages = formData.formPages.length;
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const allow = () => {
         return tempFormPage.fields.every((field) => {
@@ -67,8 +69,9 @@ const FormCard = () => {
                 return;
             }
 
+            setLoading(true);
             const generatedQuestions = await fetchQuestionsForPage(currentFormPage);
-
+            setLoading(false);
             if (generatedQuestions) {
                 console.log("Generated questions for page", currentFormPage.id);
                 setFormPage({
@@ -271,22 +274,34 @@ const FormCard = () => {
         });
     }, [formPage]);
 
+
     return (
         <div className="w-4/5 h-4/5 bg-white p-8 rounded-3xl shadow-lg bg-opacity-25 flex flex-col justify-between items-center gap-5">
+
             {formPage.fields.length === 1 ? (
-                <div className="flex flex-col gap-5">
-                    <div className="flex flex-col justify-center items-center gap-3">
-                        <h1 className="font-medium text-5xl text-center">
-                            {formPage.fields[0].label}
-                        </h1>
-                        {formPage.fields[0].information && (
-                            <h2 className="text-3xl text-gray-500 text-center">
-                                {formPage.fields[0].information}
-                            </h2>
-                        )}
-                    </div>
-                    <div className="flex flex-col gap-5">
-                        {formPage.fields.map((field) => {
+                <div className="flex flex-col gap-5 w-11/12 flex-grow">
+                    {loading ? (
+                        <Skeleton sx={{ bgcolor: 'rgba(0,0,0,0.20)' }} variant="rectangular" height={'5.5rem'} width={'100%'} className="rounded-md" />
+                    ) : (
+                        <div className="flex flex-col justify-center items-center gap-3 ">
+
+                            <h1 className="font-medium text-5xl text-center">
+                                {formPage.fields[0].label}
+                            </h1>
+                            {formPage.fields[0].information && (
+                                <h2 className="text-3xl text-gray-500 text-center">
+                                    {formPage.fields[0].information}
+                                </h2>
+                            )}
+
+
+                        </div>
+                    )}
+                    < div className="flex flex-col gap-5 items-center justify-center flex-grow">
+                    {loading ? (
+                        <Skeleton sx={{ bgcolor: 'rgba(0,0,0,0.20)' }} variant="rectangular" height={'100%'} width={'100%'} className="rounded-md" />
+                    ) : (
+                        formPage.fields.map((field) => {
                             switch (field.type) {
                                 case "multiselect":
                                     return (
@@ -313,80 +328,92 @@ const FormCard = () => {
                                         />
                                     );
                             }
-                        })}
-                    </div>
+                        })
+                    )}
                 </div>
+                </div>
+    ) : (
+        <div className="flex flex-col gap-5 w-11/12 flex-grow">
+            {loading ? (
+                <>
+                <Skeleton sx={{ bgcolor: 'rgba(0,0,0,0.20)' }} variant="rectangular" height={'5.5rem'} width={'100%'} className="rounded-md" />
+                < div className="flex flex-col gap-5 items-center justify-center flex-grow">
+                <Skeleton sx={{ bgcolor: 'rgba(0,0,0,0.20)' }} variant="rectangular" height={'100%'} width={'100%'} className="rounded-md" />
+                </div>
+                </>
             ) : (
-                <div className="flex flex-col gap-5">
-                    {formPage.fields.map((field) => {
-                        const element = () => {
-                            switch (field.type) {
-                                case "multiselect":
-                                    return (
-                                        <MultiSelectInput
-                                            key={field.id}
-                                            field={field}
-                                            setAnswer={handleMultiSelectAnswer}
-                                        />
-                                    );
-                                case "slider":
-                                    return (
-                                        <SliderInput
-                                            key={field.id}
-                                            field={field}
-                                            setAnswer={handleSliderAnswer}
-                                        />
-                                    );
-                                default:
-                                    return (
-                                        <TextInput
-                                            key={field.id}
-                                            field={field}
-                                            setAnswer={handleTextAnswer}
-                                        />
-                                    );
-                            }
-                        };
+                formPage.fields.map((field) => {
+                    const element = () => {
+                        switch (field.type) {
+                            case "multiselect":
+                                return (
+                                    <MultiSelectInput
+                                        key={field.id}
+                                        field={field}
+                                        setAnswer={handleMultiSelectAnswer}
+                                    />
+                                );
+                            case "slider":
+                                return (
+                                    <SliderInput
+                                        key={field.id}
+                                        field={field}
+                                        setAnswer={handleSliderAnswer}
+                                    />
+                                );
+                            default:
+                                return (
+                                    <TextInput
+                                        key={field.id}
+                                        field={field}
+                                        setAnswer={handleTextAnswer}
+                                    />
+                                );
+                        }
+                    };
 
-                        return (
-                            <div key={field.id} className="flex flex-col items-center gap-3">
-                                <h1 className="font-medium text-3xl text-center">
-                                    {field.label}
-                                </h1>
-                                {field.information && (
-                                    <h2 className="text-3xl text-gray-500 text-center">
-                                        {field.information}
-                                    </h2>
-                                )}
-                                {element()}
-                            </div>
-                        );
-                    })}
-                </div>
-            )}
+                    return (
 
-
-
-            <div className="flex flex-col gap-5">
-                <div className="flex justify-center items-center gap-5">
-                    <Button
-                        text="Tilbake"
-                        variant="secondary"
-                        onClick={handlePreviousPage}
-                        disabled={currentPage === 1}
-                        icon={<IconArrowLeft color="#303030" size="24" />}
-                        iconPosition="left"
-                    />
-                    <Button
-                        text="Neste"
-                        onClick={handleNextPage}
-                        disabled={!allowNext}
-                        icon={<IconArrowRight color="#f5f5f5" size="24" />}
-                    />
-                </div>
-                <ProgressIndicator pageNumber={currentPage} totalPages={totalPages} />
-            </div>
+                        <div key={field.id} className="flex flex-col items-center gap-3">
+                            <h1 className="font-medium text-3xl text-center">
+                                {field.label}
+                            </h1>
+                            {field.information && (
+                                <h2 className="text-3xl text-gray-500 text-center">
+                                    {field.information}
+                                </h2>
+                            )}
+                            {element()}
+                        </div>
+                    );
+                }))}
         </div>
+    )
+}
+
+
+
+<div className="flex flex-col gap-5">
+    <div className="flex justify-center items-center gap-5">
+        <Button
+            text="Tilbake"
+            variant="secondary"
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            icon={<IconArrowLeft color="#303030" size="24" />}
+            iconPosition="left"
+            invisible={currentPage === 1}
+        />
+        <Button
+            text="Neste"
+            onClick={handleNextPage}
+            disabled={!allowNext || loading}
+            icon={<IconArrowRight color="#f5f5f5" size="24" />}
+        />
+    </div>
+    <ProgressIndicator pageNumber={currentPage} totalPages={totalPages} />
+</div>
+        </div >
     );
 };
 export default FormCard;
