@@ -66,7 +66,7 @@ const EditIconPopup = ({
       <DialogTrigger asChild><button>{children}</button></DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
-          <DialogTitle className="text-xl">Add Icon Droplet</DialogTitle>
+          <DialogTitle className="text-xl font-medium">Add Icon Droplet</DialogTitle>
           <DialogDescription className="text-[14px]">
             Add an icon to your widget
           </DialogDescription>

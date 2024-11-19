@@ -177,7 +177,6 @@ const Card = ({
             {title}
           </p>
           <div className="group-hover:flex hidden gap-2">
-            <PlusIcon className="w-8 h-8 text-black hover:scale-110 transition-transform cursor-pointer" />
             <XIcon
               className="w-8 h-8 text-black hover:scale-110 transition-transform cursor-pointer"
               onClick={() => deleteCard()}
