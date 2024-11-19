@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useSplatStore } from "@/store/Splat";
 import { updateSplat } from "@/utils/update-splat";
 import { widget } from "@/types/splat";
+import { amountZeroGrid } from "@/utils/grid";
 
 export type widgetType = "text" | "checklist" | "member" | "icon" | null;
 
@@ -57,6 +58,9 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
 
   function checkForm() {
     let error = "";
+    if (amountZeroGrid(grid!) === 0) {
+      error = "The grid is full";
+    }
     if (!value) {
       error = "Please enter a title";
     }
@@ -108,7 +112,7 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-fit h-fit min-w-fit">
         <DialogHeader>
-          <DialogTitle className="text-xl">Choose a Widget</DialogTitle>
+          <DialogTitle className="text-xl font-medium">Choose a Widget</DialogTitle>
           <DialogDescription className="text-[14px]">
             Select a Widget to add to the splat
           </DialogDescription>
