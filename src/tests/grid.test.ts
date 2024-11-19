@@ -8,6 +8,7 @@ import {
   gridSize,
   gridRemove,
   indexOf2D,
+  amountZeroGrid,
 } from "../utils/grid";
 
 test("get size of grid", () => {
@@ -112,4 +113,20 @@ test("check place in grid", () => {
     [0, 0, 0, 0],
   ];
   expect(gridPlace(id, size, position, grid)).toStrictEqual(newGrid);
+});
+
+test("check if there are any 0 in grid", () => {
+  let grid;
+  grid: grid = [
+    [1, 5, 2, 2],
+    [3, 3, 4, 4],
+    [3, 3, 4, 4],
+  ];
+  expect(amountZeroGrid(grid)).toStrictEqual(0);
+  grid: grid = [
+    [1, 5, 0, 0],
+    [3, 3, 4, 4],
+    [3, 3, 4, 4],
+  ];
+  expect(amountZeroGrid(grid)).toStrictEqual(2);
 });

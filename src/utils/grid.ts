@@ -77,6 +77,10 @@ export function gridPlace(
   return grid;
 }
 
+export function amountZeroGrid(grid: grid): number {
+  return grid.flat().filter((value) => value === 0).length;
+}
+
 export function amountIdRow(row: number, grid: grid): number {
   return grid[row].filter((value) => value === 0).length;
 }
