@@ -28,13 +28,10 @@ const SliderInput = ({ field, setAnswer }: SliderInputProps) => {
   };
 
   return (
-    <div className='flex flex-col ' style={{
+    <div className='flex flex-col justify-center items-center ' style={{
       padding: '0rem 0.3125rem',
-      justifyContent: 'center',
-      alignItems: 'center',
       alignContent: 'center',
       flex: '1 0 0',
-      alignSelf: 'stretch',
       flexWrap: 'wrap',
       width: '65ch',
     }}>
