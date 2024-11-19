@@ -11,11 +11,11 @@ export type splat = {
 export type widget = {
   id: number;
   title: string;
-  type: "text" | "checklist" | "member";
+  type: "text" | "checklist" | "member" | "icon";
   content: droplet[];
 };
 
-export type droplet = text | checkItem | member;
+export type droplet = text | checkItem | member | icon;
 
 export type textTypes = "link" | "email" | "phone" | "text";
 
@@ -41,4 +41,10 @@ export type checkItem = {
   checked: boolean;
   order: number;
   placeholder: boolean;
+};
+
+export type icon = {
+  id: number;
+  url: string;
+  placeholder: false;
 };
