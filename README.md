@@ -19,18 +19,17 @@
 <a href="https://nextjs.org/">NextJS</a><br/>
 <a href="https://tailwindcss.com/">TailwindCSS</a><br/>
 
-<h3>env Variables</h3>
+<h3>Env Variables</h3>
 To run this project you will need the API keys for OpenAI and Supabase. If you are a sensor of the project, you should've been provided this beforehand. If not, please contact the project owner.
 
 <h2 id="description">Description</h2>
-The Factsplat AI Assistant is a project made under the Customer Driven Project at NTNU (TDT4290)[https://www.ntnu.no/studier/emner/TDT4290#tab=omEmnet]. The main goal of the project was to create an AI assistant that could help the customers of Factsplat getting started and easily acheive a "goal oriented approach". This means less clutter and more fun when sorting out your day, hobbies or work. The app consists of three main parts:
+The Factsplat AI Assistant is a project made under the Customer Driven Project at NTNU [TDT4290](https://www.ntnu.no/studier/emner/TDT4290#tab=omEmnet). The main goal of the project was to create an AI assistant that could help the customers of Factsplat getting started and easily acheive a "goal oriented approach". This means less clutter and more fun when sorting out your day, hobbies or work. The app consists of three main parts:
  - A landing page to show off other splats
  - A AI integrated form to ask more specific questions related to the splats use case
  - A newly designed functional mock of Factsplat, designed with users in mind
 
  To read more about how the project works, please go to the [More documentation](#more-docs) section.
 
-```bash
 <h2 id="started">🚀 Getting started</h2>
 To get started running the Factsplat AI Assistant, follow the steps below.
 
@@ -80,6 +79,7 @@ The project consists of two main types of testing, E2E and Unit testing.
 To run the different tests, run the following command:
 
 Unit Testing:
+
 ```bash
 npm run test
 ```
@@ -95,7 +95,8 @@ npm run cypress:open
 <h2 id="more-docs">More documentation</h2>
 The project consists of quite a lot of documentation, both internal and external. To read some of the internal documentation, we recommend reading the grid.ts file, as this includes a lot of functionality for the mock.
 As of external documentation, we have split them into four main sections in the docs folder:
-- [How does the Splat Mock work?]()
-- [How does the AI Form work?]()
-- [Packages & Dependencies]()
-- [Project Structure]()
+
+- [How does the Splat Mock work?](docs/SplatMock.md)
+- [How does the AI Form work?](docs/Form.md)
+- [Packages & Dependencies](docs/Dependencies.md)
+- [Project Structure](docs/Structure.md)
