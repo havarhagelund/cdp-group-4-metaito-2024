@@ -11,7 +11,7 @@
     <img src="docs/misc/ai_assistant.png" alt="AI Assistant" />
     <b>Try it out here: <a href="https://cdp-group-4-metaito-2024.vercel.app/">Vercel</a></b>
  ---
-    <b>The Factsplat AI Assistant is a RAG model to help you get started!
+    <b>The Factsplat AI Assistant is a RAG model to help you get started!</b>
 </p>
 
 <h2 id="pre">Prerequisites</h2>
