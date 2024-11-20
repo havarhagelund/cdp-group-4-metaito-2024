@@ -8,9 +8,10 @@
 </p>
 
 <p align="center">
-    <b>The Factsplat AI Assistant is a RAG model specializing in getting you started with Factsplat</b>
     <img src="docs/misc/ai_assistant.png" alt="AI Assistant" />
-    <b>Check it out here: <a href="https://cdp-group-4-metaito-2024.vercel.app/">Vercel</a></b>
+    <b>Try it out here: <a href="https://cdp-group-4-metaito-2024.vercel.app/">Vercel</a></b>
+ ---
+    <b>The Factsplat AI Assistant is a RAG model to help you get started!
 </p>
 
 <h2 id="pre">Prerequisites</h2>
@@ -23,7 +24,8 @@
 To run this project you will need the API keys for OpenAI and Supabase. If you are a sensor of the project, you should've been provided this beforehand. If not, please contact the project owner.
 
 <h2 id="description">Description</h2>
-The Factsplat AI Assistant is a project made under the Customer Driven Project at NTNU [TDT4290](https://www.ntnu.no/studier/emner/TDT4290#tab=omEmnet). The main goal of the project was to create an AI assistant that could help the customers of Factsplat getting started and easily acheive a "goal oriented approach". This means less clutter and more fun when sorting out your day, hobbies or work. The app consists of three main parts:
+
+The Factsplat AI Assistant is a project made under the Customer Driven Project at NTNU [TDT4290](https://www.ntnu.no/studier/emner/TDT4290#tab=omEmnet/). The main goal of the project was to create an AI assistant that could help the customers of Factsplat getting started and easily acheive a "goal oriented approach". This means less clutter and more fun when sorting out your day, hobbies or work. The app consists of three main parts:
  - A landing page to show off other splats
  - A AI integrated form to ask more specific questions related to the splats use case
  - A newly designed functional mock of Factsplat, designed with users in mind
