@@ -22,7 +22,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useSplatStore } from "@/store/Splat";
 import { updateSplat } from "@/utils/update-splat";
-import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2),

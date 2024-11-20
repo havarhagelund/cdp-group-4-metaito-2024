@@ -1,4 +1,4 @@
-import { widgetType } from "@/components/toolbar/ContentSelector";
+import { widgetType } from "@/components/toolbar/ContentAdder";
 import { create } from "zustand";
 
 type WidgetState = {

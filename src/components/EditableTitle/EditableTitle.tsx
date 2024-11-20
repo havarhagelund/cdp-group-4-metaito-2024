@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { CheckIcon } from "lucide-react";
-import { updateSplat } from "@/utils/update-splat";
-import { useSplatStore } from "@/store/Splat";
 
 interface EditableTitleProps {
   className?: string;
@@ -11,7 +9,6 @@ interface EditableTitleProps {
 }
 
 const EditableTitle = ({ className, title, updateTitle }: EditableTitleProps) => {
-  const { id } = useSplatStore();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [value, setValue] = useState<string>(title);
 
@@ -22,7 +19,7 @@ const EditableTitle = ({ className, title, updateTitle }: EditableTitleProps) =>
   ) {
     const newValue = event.target.value;
     setValue(newValue);
-  };
+  }
 
   function saveTitle() {
     setIsEditing(false);

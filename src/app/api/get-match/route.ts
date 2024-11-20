@@ -16,8 +16,6 @@ export async function POST(req: Request) {
   const match = await vectorSearch(embedding);
   const template = match[0];
 
-  //TODO: la AI lage subtitle og title
-
   const payload = {
     model: "gpt-3.5-turbo",
     messages: [

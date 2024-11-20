@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, RefObject } from "react";
 import { size, position, direction } from "@/types/layout";
-import { XIcon, PlusIcon } from "lucide-react";
+import { XIcon } from "lucide-react";
 import { useSplatStore } from "@/store/Splat";
 
 export type CardRef = { id: number; ref: RefObject<HTMLDivElement> };

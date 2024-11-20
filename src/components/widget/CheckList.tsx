@@ -1,5 +1,4 @@
 import { checkItem } from "@/types/splat";
-import { size } from "@/types/layout";
 import { useSplatStore } from "@/store/Splat";
 import EditChecklistPopup from "./EditChecklistPopup";
 

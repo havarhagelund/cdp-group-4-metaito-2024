@@ -1,6 +1,5 @@
 import { size } from "@/types/layout";
 import { icon } from "@/types/splat";
-import Link from "next/link";
 import EditIconPopup from "./EditIconPopup";
 import { useRouter } from "next/navigation";
 

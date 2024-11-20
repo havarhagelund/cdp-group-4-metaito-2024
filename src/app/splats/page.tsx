@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Splats = async () => {
   const supabase = createClient();
-  const { data, error } = await supabase.from("splat").select("*");
+  const { data } = await supabase.from("splat").select("*");
   return (
     <>
       <Navbar className="fixed" profilecard={false} />

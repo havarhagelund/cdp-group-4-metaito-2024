@@ -12,7 +12,7 @@ const ProgressIndicator = ({ pageNumber, totalPages }: ProgressIndicatorProps) =
             gap: '0.625rem',
             alignSelf: 'stretch',
         }}>
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map((page, index) => (
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
                 <div key={page} style={{
                     width: '0.625rem',
                     height: '0.625rem'

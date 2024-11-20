@@ -25,7 +25,7 @@ const TextInput = ({ field, setAnswer }: TextInputProps) => {
                 value={value}
                 onChange={handleTextAreaInput}
                 className={`
-                     w-full p-3 bg-white border border-gray-300 
+                     w-full p-3 bg-white border border-gray-300
                     rounded-lg cursor-pointer focus:outline-none focus:border-gray-900`}
             />
         </div>

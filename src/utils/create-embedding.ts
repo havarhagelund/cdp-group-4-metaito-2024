@@ -1,5 +1,5 @@
 export async function CreateEmbedding(input: string) {
-  let response = await fetch("https://api.openai.com/v1/embeddings", {
+  const response = await fetch("https://api.openai.com/v1/embeddings", {
     method: "POST",
     body: JSON.stringify({
       input: input,

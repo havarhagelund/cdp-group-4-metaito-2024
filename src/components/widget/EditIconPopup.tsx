@@ -22,8 +22,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useSplatStore } from "@/store/Splat";
 import { updateSplat } from "@/utils/update-splat";
-import { useState } from "react";
-import { EditIcon } from "lucide-react";
 
 const formSchema = z.object({
   url: z.string().min(1),
