@@ -19,7 +19,7 @@ It has a few key features:
 
 Let's explore the internal workings of the system from a left-to-right perspective, examining each component step by step.
 
-![Splat Structure](/misc/splat_structure.png)
+![Splat Structure](/docs/misc/splat_structure.png)
 
 Here’s an image to help visualize the structure. Let’s break it down:
 
