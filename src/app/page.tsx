@@ -107,4 +107,4 @@ const LandingPage = () => {
   );
 };
 
-export default Home;
+export default LandingPage;
