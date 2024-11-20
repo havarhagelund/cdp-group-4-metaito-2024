@@ -2,10 +2,10 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/navbar/Navbar";
 import Image from "next/image";
-import { MeshGradientRenderer } from '@johnn-e/react-mesh-gradient';
+import { MeshGradientRenderer } from "@johnn-e/react-mesh-gradient";
 import { useRouter } from "next/navigation";
 
-const Home = () => {
+const LandingPage = () => {
   const router = useRouter();
 
   // Variants for animations
@@ -22,12 +22,20 @@ const Home = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
   };
 
   const imageVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
   };
 
   return (
@@ -36,13 +44,7 @@ const Home = () => {
       <main className="w-screen h-screen flex justify-center items-center overflow-hidden">
         <MeshGradientRenderer
           className="gradient fixed w-screen h-screen "
-          colors={[
-            "#E0FFFF",
-            "#E1FFFF",
-            "#BBDEE3",
-            "#E9F9FB",
-            "#E9F9FB",
-          ]}
+          colors={["#E0FFFF", "#E1FFFF", "#BBDEE3", "#E9F9FB", "#E9F9FB"]}
           wireframe={false}
         />
         <motion.div
@@ -67,7 +69,8 @@ const Home = () => {
             className="text-2xl w-4/6 text-center leading-[3rem] tracking-wide font-regular"
             variants={itemVariants}
           >
-            With the help of AI, we generate you a Splat to help you structure your day, work, or hobbies.
+            With the help of AI, we generate you a Splat to help you structure
+            your day, work, or hobbies.
           </motion.p>
           <motion.div className="flex gap-x-4" variants={itemVariants}>
             <motion.button
