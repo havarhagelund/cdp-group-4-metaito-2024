@@ -1,4 +1,4 @@
-import { formField, formData } from "@/types/FormData";
+import { formField, formData, formPage } from "@/types/FormData";
 const mockFields: formField[] = [
   {
     id: 0,
@@ -66,7 +66,7 @@ const mockFields: formField[] = [
     type: "multiselect",
   },
 ];
-const mockPages: FormPage[] = [
+const mockPages: formPage[] = [
   {
     id: 0,
     aiGenerated: false,
