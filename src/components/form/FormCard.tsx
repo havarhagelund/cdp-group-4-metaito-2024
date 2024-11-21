@@ -10,6 +10,7 @@ import SliderInput from "./SliderInput";
 import TextInput from "./TextInput";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@mui/material";
+import { usePathname } from "next/navigation";
 
 const FormCard = () => {
   const router = useRouter();
@@ -124,7 +125,7 @@ const FormCard = () => {
     const answers = formData.formPages
       .map((page) => page.fields.map((field) => field.value))
       .toString();
-    const returnSplat = await fetch("http://localhost:3000/api/get-match", {
+    const returnSplat = await fetch(`http://${window.origin}/api/get-match`, {
       method: "POST",
       body: JSON.stringify({ str: answers }),
     }).then((body) => body.json());
