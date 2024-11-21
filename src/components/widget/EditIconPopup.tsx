@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useSplatStore } from "@/store/Splat";
-import { updateSplat } from "@/utils/update-splat";
+import { updateSplat } from "@/utils/UpdateSplat";
 
 const formSchema = z.object({
   url: z.string().min(1),
@@ -61,10 +61,14 @@ const EditIconPopup = ({
 
   return (
     <ShadDialog>
-      <DialogTrigger asChild><button>{children}</button></DialogTrigger>
+      <DialogTrigger asChild>
+        <button>{children}</button>
+      </DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
-          <DialogTitle className="text-xl font-medium">Add Icon Droplet</DialogTitle>
+          <DialogTitle className="text-xl font-medium">
+            Add Icon Droplet
+          </DialogTitle>
           <DialogDescription className="text-[14px]">
             Add an icon to your widget
           </DialogDescription>

@@ -1,3 +1,9 @@
+/**
+ * CreateEmbedding - Generates a text embedding for the given input using the OpenAI API.
+ *
+ * @param {string} input - The input string for which the embedding needs to be generated.
+ * @returns {Promise<number[]>} - A promise that resolves to an array of numbers representing the embedding.
+ */
 export async function CreateEmbedding(input: string) {
   const response = await fetch("https://api.openai.com/v1/embeddings", {
     method: "POST",

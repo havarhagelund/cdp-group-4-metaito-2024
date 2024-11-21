@@ -1,4 +1,5 @@
-# Factsplat AI Assistant
+
+<h1 align="center">Factsplat AI Assistant</h1>
 
 <p align="center">
  <a href="#pre">Technologies</a> •
@@ -21,7 +22,8 @@
 <a href="https://tailwindcss.com/">TailwindCSS</a><br/>
 
 <h3>Env Variables</h3>
-To run this project you will need the API keys for OpenAI and Supabase. If you are a sensor of the project, you should've been provided this beforehand. If not, please contact the project owner.
+
+To run this project you will need the API keys for OpenAI and Supabase. If you are a sensor of the project, you should've been provided this beforehand. If not, please contact the project owner. You will find more information about this in the environmental variables section under the [Getting Started](#started) section.
 
 <h2 id="description">Description</h2>
 
@@ -43,8 +45,8 @@ Write this in your terminal:
 git clone https://github.com/havarhagelund/cdp-group-4-metaito-2024.git
 ```
 
-<h3>Setting up the environment</h3>
-Now we have to set up the environment variables.
+<h3 id="env-variables">Setting up the environment</h3>
+Now we have to set up the environment variables. If you are a sensor of the project you will find these in the Appendix.
 Create a .env file in the root of the project and add the following:
 
 ```bash
@@ -96,9 +98,10 @@ npm run cypress:open
 
 <h2 id="more-docs">More documentation</h2>
 The project consists of quite a lot of documentation, both internal and external. To read some of the internal documentation, we recommend reading the grid.ts file, as this includes a lot of functionality for the mock.
-As of external documentation, we have split them into four main sections in the docs folder:
+As of external documentation, we have split them into five main sections in the docs folder:
 
 - [How does the Splat Mock work?](docs/SplatMock.md)
 - [How does the AI Form work?](docs/Form.md)
 - [Packages & Dependencies](docs/Dependencies.md)
 - [Project Structure](docs/Structure.md)
+- [How to test](docs/Testing.md)

@@ -12,12 +12,12 @@ import {
   amountColumns,
   amountRows,
   getUniqueIds,
-} from "@/utils/grid";
+} from "@/utils/Grid";
 import Member from "../widget/Member";
 import Text from "../widget/Text";
 import Checklist from "../widget/CheckList";
 import { useSplatStore } from "@/store/Splat";
-import { updateSplat } from "@/utils/update-splat";
+import { updateSplat } from "@/utils/UpdateSplat";
 import Icon from "../widget/Icon";
 
 const GridContainer = () => {
@@ -157,11 +157,13 @@ const GridContainer = () => {
                   items={widget.content as checkItem[]}
                 />
               )}
-              {
-                widget.type == "icon" && (
-                  <Icon id={widget.id} icons={widget.content as icon[]} currentSize={getSizeFromGrid(widget.id, grid!)} />
-                )
-              }
+              {widget.type == "icon" && (
+                <Icon
+                  id={widget.id}
+                  icons={widget.content as icon[]}
+                  currentSize={getSizeFromGrid(widget.id, grid!)}
+                />
+              )}
             </Card>
           );
         })}

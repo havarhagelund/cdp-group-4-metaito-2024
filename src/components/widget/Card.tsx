@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, RefObject } from "react";
-import { size, position, direction } from "@/types/layout";
+import { position, size, direction } from "@/types/layout";
 import { XIcon } from "lucide-react";
 import { useSplatStore } from "@/store/Splat";
 
@@ -44,6 +44,15 @@ const Card = ({
     setRefs({ id, ref: cardRef });
   }, [cardRef]);
 
+  /**
+   * getBorderPosition - Determines if a given (x, y) coordinate is on the right or bottom border of a card element.
+   *
+   * @param {number} x - The x-coordinate to check against the card's borders.
+   * @param {number} y - The y-coordinate to check against the card's borders.
+   * @returns {BorderPos|null} - Returns `BorderPos.Right` if the coordinate is on the right border,
+   *                              `BorderPos.Bottom` if on the bottom border, or `null` if neither.
+   * @throws {TypeError} Throws an error if `x` or `y` is not a number.
+   */
   function getBorderPosition(x: number, y: number): BorderPos | null {
     const card = cardRef.current;
     if (!card) return null;
@@ -55,6 +64,7 @@ const Card = ({
     if (isOnBottom) return BorderPos.Bottom;
     return null;
   }
+
 
   function handleMouseDown(e: React.MouseEvent) {
     const border = getBorderPosition(e.clientX, e.clientY);
@@ -79,7 +89,7 @@ const Card = ({
           const width = Math.max(
             Math.min(
               Math.sign(dx) * Math.floor(Math.abs(dx) / minSize.width) +
-                prevSize.width,
+              prevSize.width,
               getCurrentPossibleSize(id).width,
             ),
             min,
@@ -96,7 +106,7 @@ const Card = ({
           const height = Math.max(
             Math.min(
               Math.sign(dy) * Math.floor(Math.abs(dy) / minSize.height) +
-                prevSize.height,
+              prevSize.height,
               getCurrentPossibleSize(id).height,
             ),
             min,

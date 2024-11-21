@@ -1,7 +1,7 @@
-import { CreateEmbedding } from "@/utils/create-embedding";
+import { CreateEmbedding } from "@/utils/CreateEmbedding";
 import { NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server";
-import { vectorSearch } from "@/utils/vector-search";
+import { createClient } from "@/utils/supabase/Server";
+import { vectorSearch } from "@/utils/VectorSearch";
 import { OpenAI } from "openai";
 
 const openai = new OpenAI({

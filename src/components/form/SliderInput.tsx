@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import Slider from '@mui/material/Slider';
-import { FormField } from '@/types/FormData';
-
+import { useState } from "react";
+import Slider from "@mui/material/Slider";
+import { FormField } from "@/types/FormData";
 
 interface SliderInputProps {
   field: FormField;
@@ -19,7 +18,9 @@ const SliderInput = ({ field, setAnswer }: SliderInputProps) => {
     label,
   }));
 
-  const initialValue = field.value ? marks.findIndex((mark) => mark.label === field.value) : 0;
+  const initialValue = field.value
+    ? marks.findIndex((mark) => mark.label === field.value)
+    : 0;
   const [value, setValue] = useState<number>(initialValue);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
@@ -28,15 +29,9 @@ const SliderInput = ({ field, setAnswer }: SliderInputProps) => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center ' style={{
-      padding: '0rem 0.3125rem',
-      alignContent: 'center',
-      flex: '1 0 0',
-      flexWrap: 'wrap',
-      width: '65ch',
-    }}>
-      <p className='text-2xl'>{options[value]} personer</p>
-      <div style={{ width: 400, margin: '0 auto', padding: '50px 0' }}>
+    <div className="flex flex-col items-center justify-center px-2 flex-1 flex-wrap w-[65ch]">
+      <p className="text-2xl">{options[value]} personer</p>
+      <div className="w-[400px] mx-auto py-12">
         <Slider
           value={value}
           onChange={handleChange}
@@ -46,56 +41,20 @@ const SliderInput = ({ field, setAnswer }: SliderInputProps) => {
           max={marks.length - 1}
           valueLabelDisplay="off"
           aria-labelledby="discrete-slider"
-          sx={{
-            '& .MuiSlider-track': {
-              color: 'black',
-              height: 4,
-            },
-            '& .MuiSlider-rail': {
-              color: 'white',
-              height: 4,
-              opacity: 1,
-            },
-            '& .MuiSlider-mark': {
-              backgroundColor: 'white',
-              height: '12px',
-              width: '12px',
-              borderRadius: '50%',
-              marginLeft: '-6px',
-            },
-            '& .MuiSlider-markActive': {
-              backgroundColor: 'black',
-            },
-            '& .MuiSlider-markLabel': {
-              fontFamily: 'inherit',
-              color: 'grey',
-              fontSize: '1rem',
-            },
-            '& .MuiSlider-markLabelActive': {
-              fontFamily: 'inherit',
-              //color: 'black',
-            },
-            '& .MuiSlider-thumb': {
-              width: 20,
-              height: 20,
-              backgroundColor: 'black',
-              boxShadow: 'none',
-              '&:hover': {
-                width: 22,
-                height: 22,
-                boxShadow: 'none',
-              },
-              '&.Mui-active': {
-                width: 22,
-                height: 22,
-                boxShadow: 'none',
-              },
-            },
-          }}
+          className="
+            [&_.MuiSlider-track]:bg-black [&_.MuiSlider-track]:h-1
+            [&_.MuiSlider-rail]:bg-white [&_.MuiSlider-rail]:h-1 [&_.MuiSlider-rail]:opacity-100
+            [&_.MuiSlider-mark]:bg-white [&_.MuiSlider-mark]:h-3 [&_.MuiSlider-mark]:w-3 [&_.MuiSlider-mark]:rounded-full [&_.MuiSlider-mark]:-ml-[6px]
+            [&_.MuiSlider-markActive]:bg-black
+            [&_.MuiSlider-markLabel]:text-gray-500 [&_.MuiSlider-markLabel]:text-base [&_.MuiSlider-markLabel]:font-inherit
+            [&_.MuiSlider-thumb]:w-5 [&_.MuiSlider-thumb]:h-5 [&_.MuiSlider-thumb]:bg-black [&_.MuiSlider-thumb]:shadow-none
+            [&_.MuiSlider-thumb:hover]:w-[22px] [&_.MuiSlider-thumb:hover]:h-[22px] [&_.MuiSlider-thumb:hover]:shadow-none
+            [&_.MuiSlider-thumb.Mui-active]:w-[22px] [&_.MuiSlider-thumb.Mui-active]:h-[22px] [&_.MuiSlider-thumb.Mui-active]:shadow-none
+          "
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SliderInput;

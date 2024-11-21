@@ -1,5 +1,5 @@
 import SplatPage from "@/components/content/SplatPage";
-import { getSplat } from "@/utils/get-splat";
+import { getSplat } from "@/utils/GetSplat";
 
 export default async function Splat({ params }: { params: { id: string } }) {
   const splat = await getSplat(Number(params.id));

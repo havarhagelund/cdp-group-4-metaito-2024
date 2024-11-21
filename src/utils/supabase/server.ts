@@ -1,6 +1,11 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+/**
+ * createClient - Creates a new Supabase client using the environment variables.
+ *
+ * @returns {SupabaseClient} - The new Supabase server client.
+ */
 export function createClient() {
   const cookieStore = cookies();
 

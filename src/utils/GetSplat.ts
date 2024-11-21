@@ -1,6 +1,14 @@
-import { createClient } from "./supabase/server";
+import { createClient } from "./supabase/Server";
 import type { splat } from "@/types/splat";
 
+/**
+ * getSplat - Retrieves a splat record from the Supabase database by ID.
+ *
+ * @param {number} id - The ID of the splat record to retrieve.
+ * @returns {Promise<Object|string>} - A promise that resolves to a splat object if successful, or an error message string if an error occurs.
+ *
+ * @throws {Error} Throws an error if the Supabase query fails.
+ */
 export async function getSplat(id: number) {
   const supabase = createClient();
 

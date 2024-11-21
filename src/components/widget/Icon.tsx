@@ -19,7 +19,10 @@ const IconLink = ({ url, placeholder = false }: IconLinkProps) => {
   }
 
   return (
-    <div onClick={() => pushToUrl()} className={`${placeholder && "opacity-20 hover:scale-105 transition-transform"} w-full h-full items-center flex justify-center cursor-pointer `}>
+    <div
+      onClick={() => pushToUrl()}
+      className={`${placeholder && "opacity-20 hover:scale-105 transition-transform"} w-full h-full items-center flex justify-center cursor-pointer `}
+    >
       <div className="h-[5vw] w-[5vw] bg-white rounded-md">
         <img
           loading="eager"
@@ -31,7 +34,7 @@ const IconLink = ({ url, placeholder = false }: IconLinkProps) => {
       </div>
     </div>
   );
-}
+};
 
 interface IconProps {
   id: number;
@@ -53,15 +56,18 @@ const Icon = ({ id, icons, currentSize }: IconProps) => {
         .map((icon: icon, index: number) =>
           icon.placeholder ? (
             <EditIconPopup key={index} widgetId={id} dropletId={icon.id}>
-              <IconLink key={index} url={icon.url} placeholder={icon.placeholder} />
+              <IconLink
+                key={index}
+                url={icon.url}
+                placeholder={icon.placeholder}
+              />
             </EditIconPopup>
           ) : (
             <IconLink key={index} url={icon.url} />
           ),
         )}
     </main>
-  )
-
+  );
 };
 
 export default Icon;

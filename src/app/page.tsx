@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 const LandingPage = () => {
   const router = useRouter();
 
-  // Variants for animations
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -73,20 +72,20 @@ const LandingPage = () => {
             your day, work, or hobbies.
           </motion.p>
           <motion.div className="flex gap-x-4" variants={itemVariants}>
-            <motion.button
+            <button
               className="transition-colors bg-primary-default hover:bg-primary-second text-white font-medium py-4 px-10 rounded-md text-xl"
-              whileHover="hover"
               onClick={() => router.push("/form")}
+              id="get-started"
             >
               Get Started - for free
-            </motion.button>
-            <motion.button
+            </button>
+            <button
               className="transition-colors bg-primary-default hover:bg-primary-second text-white font-medium py-4 px-10 rounded-md text-xl"
-              whileHover="hover"
               onClick={() => router.push("/splats")}
+              id="look-at-splats"
             >
               Look at other Splats
-            </motion.button>
+            </button>
           </motion.div>
           <motion.div
             className="w-3/6 relative drop-shadow-md pt-14"

@@ -1,81 +1,56 @@
 import { ReactNode } from "react";
 
 interface ButtonProps {
-    text: string,
-    onClick: () => void,
-    disabled: boolean,
-    icon?: ReactNode,
-    iconPosition?: "left" | "right",
-    variant?: "primary" | "secondary",
-    invisible?: boolean,
+  text: string;
+  onClick: () => void;
+  disabled: boolean;
+  icon?: ReactNode;
+  iconPosition?: "left" | "right";
+  variant?: "primary" | "secondary";
+  invisible?: boolean;
 }
 
-const Button = ({ text, onClick, disabled, icon, iconPosition = "right", variant = "primary", invisible=false }: ButtonProps) => {
-    return (
-        <>
-            {variant === "primary" && (
-
-
-                <button
-                    className={`${disabled ? "cursor-not-allowed bg-[#A0A0A0]" : "cursor-pointer bg-[#2c2c2c]"} `}
-                    onClick={onClick}
-                    disabled={disabled}
-                    style={{
-                        display: 'flex',
-                        padding: '.75rem',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: '.5rem',
-                        borderRadius: '.5rem',
-                        //border: '.06rem solid #2c2c2c',
-                        //backgroundColor: disabled ? '#909090': '#2c2c2c',
-                    }}
-                >
-                    {icon && iconPosition === "left" && icon}
-                    <p
-                        className="text-xl font-medium"
-                        style={{
-                            fontSize: '1.25rem',
-                            fontWeight: '500',
-                            color: '#f5f5f5',
-                        }}
-                    >
-                        {text}
-                    </p>
-                    {icon && iconPosition === "right" && icon}
-                </button>
-            )}
-            {variant === "secondary" && (
-                <button
-                    className={`${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
-                    onClick={onClick}
-                    disabled={disabled}
-                    style={{
-                        display: 'flex',
-                        padding: '.75rem',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: '.5rem',
-                        borderRadius: '.5rem',
-                        visibility: invisible ? 'hidden' : 'visible',
-                    }}
-                >
-                    {icon && iconPosition === "left" && icon}
-                    <p
-                        className="text-xl font-medium"
-                        style={{
-                            fontSize: '1.25rem',
-                            fontWeight: '500',
-                            color: '#303030',
-                        }}
-                    >
-                        {text}
-                    </p>
-                    {icon && iconPosition === "right" && icon}
-                </button>
-            )}
-        </>
-    )
-}
+const Button = ({
+  text,
+  onClick,
+  disabled,
+  icon,
+  iconPosition = "right",
+  variant = "primary",
+  invisible = false,
+}: ButtonProps) => {
+  return (
+    <>
+      {variant === "primary" && (
+        <button
+          className={`flex items-center justify-center gap-2 p-3 rounded-md ${
+            disabled
+              ? "cursor-not-allowed bg-gray-400"
+              : "cursor-pointer bg-gray-800"
+          }`}
+          onClick={onClick}
+          disabled={disabled}
+        >
+          {icon && iconPosition === "left" && icon}
+          <p className="text-xl font-medium text-gray-100">{text}</p>
+          {icon && iconPosition === "right" && icon}
+        </button>
+      )}
+      {variant === "secondary" && (
+        <button
+          className={`flex items-center justify-center gap-2 p-3 rounded-md ${
+            disabled ? "cursor-not-allowed" : "cursor-pointer"
+          } ${invisible ? "invisible" : "visible"}`}
+          onClick={onClick}
+          disabled={disabled}
+        >
+          {icon && iconPosition === "left" && icon}
+          <p className="text-xl font-medium text-gray-800">{text}</p>
+          {icon && iconPosition === "right" && icon}
+        </button>
+      )}
+    </>
+  );
+};
 
 export default Button;
