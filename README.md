@@ -23,7 +23,10 @@
 
 <h3>Env Variables</h3>
 
-To run this project you will need the API keys for OpenAI and Supabase. If you are a sensor of the project, you should've been provided this beforehand. If not, please contact the project owner. You will find more information about this in the environmental variables section under the [Getting Started](#started) section.
+To run this project you will need the API keys for OpenAI and Supabase. If you are a sensor of the project, you should've been provided this beforehand. You will find more information about this in the environmental variables section under the [Getting Started](#started) section.
+
+If you are not a sensor of the project, you can create your own OpenAI API key [here](https://openai.com/index/openai-api/),
+and Supabase instance [here](https://database.new). You can follow the schema in the [Splat data file](https://github.com/havarhagelund/cdp-group-4-metaito-2024/blob/main/src/data/Splat.ts).
 
 <h2 id="description">Description</h2>
 
