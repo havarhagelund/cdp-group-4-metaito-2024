@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar/Navbar";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/Server";
 import Link from "next/link";
 
 const Splats = async () => {

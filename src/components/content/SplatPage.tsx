@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useSplatStore } from "@/store/Splat";
 import Navbar from "../navbar/Navbar";
 import Spinner from "../loading/Spinner";
-import EditableTitle from "../editableTitle/EditableTitle";
+import EditableTitle from "../EditableTitle/EditableTitle";
 import { updateSplat } from "@/utils/UpdateSplat";
 
 interface SplatPageProps {
