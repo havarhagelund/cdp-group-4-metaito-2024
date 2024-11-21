@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SplatMock.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="how-does-the-splat-mock-work">How does the Splat Mock work?</h2>
+<p>This is a summary of how the Splat Mock works, and its implementation details.</p>
+<h3 id="what-is-the-splat-mock">What is the Splat Mock?</h3>
+<p>The Splat Mock is a 4x3 grid to mock of the Factsplat user interface. It is designed to be even more simple and goal oriented, as the dashboard only takes up one screen of space. The idea is to mimick most of the functionality of the original Factsplat interface, while experimenting with new features like placeholders to fit our applications needs. The splat is stored in a database as a JSON object, with the grid being a 2D array or matrix, and content having widgets being objects with their own properties. These objects can be looked at in the splat.ts file under the types/ folder. The grid types are under layout.ts in the same folder.</p>
+<p>It has a few key features:</p>
+<ul>
+<li>As earlier mentioned, a 4x3 grid.</li>
+<li>Renamable title and subtitle at the top</li>
+<li>A toolbar to add new widgets</li>
+<li>Each widget on the grid can be resized as you wish in a grid fashion</li>
+<li>Each widget can be removed from the grid</li>
+<li>Each widget has placeholders that can be filled with data</li>
+<li>There are four types of widgets: Text widget, Icon widget, Member widget and Checklist widget.</li>
+</ul>
+<h3 id="how-does-it-work-internally">How Does It Work Internally?</h3>
+<p>Let's explore the internal workings of the system from a left-to-right perspective, examining each component step by step.</p>
+<p><img src="/docs/misc/splat_structure.png" alt="Splat Structure"></p>
+<p>Here’s an image to help visualize the structure. Let’s break it down:</p>
+<hr>
+<h3 id="overview">Overview</h3>
+<ol>
+<li>
+<p><strong>Server-Side Rendering</strong>:</p>
+<ul>
+<li>The journey starts with a server-side rendered page that uses a Supabase API endpoint to fetch a &quot;Splat&quot; by its ID. This logic resides in the <code>[id].tsx</code> file under the <code>/pages/splat</code> directory.</li>
+<li>Once fetched, the Splat data is passed to the <strong>Splat Page Component</strong> for client-side rendering.</li>
+</ul>
+</li>
+<li>
+<p><strong>Global State Management</strong>:</p>
+<ul>
+<li>On the client side, the Splat Page component populates the global state using Zustand. Zustand serves as the main mechanism for different components in the project to &quot;communicate&quot; with each other.</li>
+<li>The Splat state includes the grid, content, title, subtitle, etc., all of which are managed in the <code>/store</code> folder.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="rendering-the-grid">Rendering the Grid</h3>
+<p>With the Splat state populated, the grid rendering process begins, as outlined in the diagram. The steps are as follows:</p>
+<ol>
+<li>
+<p><strong>GridContainer Component</strong>:</p>
+<ul>
+<li>This component handles the primary calculations for the grid. It is responsible for managing the layout and ensuring the grid logic is functional.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cards/Widgets</strong>:</p>
+<ul>
+<li>The grid content consists of cards or widgets, each packed with logic for resizing, moving, and updating the grid.</li>
+<li>Widgets are rendered within the GridContainer and displayed to the user.</li>
+</ul>
+</li>
+<li>
+<p><strong>Card Content</strong>:</p>
+<ul>
+<li>Each card can host children (in the React sense), making it straightforward to populate with any required content.</li>
+<li>This design makes it simple to add new widgets—just create a new card with the desired content.</li>
+<li>Additionally, all cards reuse the resizing logic and include a cross button for deletion.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="toolbar-dialogs-and-additional-logic">Toolbar, Dialogs, and Additional Logic</h3>
+<ul>
+<li>Beyond the grid, other aspects of the Splat, such as the toolbar or dialogs (popup elements), are used for adding new widgets, editing placeholders, and more.</li>
+<li>These components are located in the <code>/components</code> folder.</li>
+<li>Placeholder logic is implemented using a simple boolean flag in the JSON object of the widget content (referred to as a droplet).</li>
+</ul>
+<hr>
+<h3 id="implementation-details">Implementation Details</h3>
+<h4 id="the-grid">The Grid</h4>
+<p>The grid is a 2D array (or matrix) of IDs. For example:</p>
+<pre class="hljs"><code><div>[
+  [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>],
+  [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>],
+  [<span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">0</span>]
+]
+</div></code></pre>
+<p>Here we have a 4x3 grid with 8 widgets and one empty space.</p>
+<h4 id="the-content">The Content</h4>
+<p>Here is an example of the content object with only one widget, id: 1.</p>
+<pre class="hljs"><code><div>
+  content: [
+    {
+      id: <span class="hljs-number">1</span>,
+      title: <span class="hljs-string">"Customer"</span>,
+      type: <span class="hljs-string">"text"</span>,
+      content: [
+        {
+          id: <span class="hljs-number">1</span>,
+          title: <span class="hljs-string">"Sticos om Factsplat"</span>,
+          url: <span class="hljs-string">"https://www.youtube.com/watch?v=yBpGR4K-1Xo"</span>,
+          type: <span class="hljs-string">"link"</span>,
+          placeholder: <span class="hljs-literal">false</span>,
+        },
+        {
+          id: <span class="hljs-number">2</span>,
+          title: <span class="hljs-string">"vatne@metaito.com"</span>,
+          url: <span class="hljs-string">"mailto:vatne@metaito.com"</span>,
+          type: <span class="hljs-string">"email"</span>,
+          placeholder: <span class="hljs-literal">false</span>,
+        },
+        {
+          id: <span class="hljs-number">3</span>,
+          title: <span class="hljs-string">"+47 472 85 528"</span>,
+          url: <span class="hljs-string">""</span>,
+          type: <span class="hljs-string">"phone"</span>,
+          placeholder: <span class="hljs-literal">false</span>,
+        },
+        {
+          id: <span class="hljs-number">4</span>,
+          title: <span class="hljs-string">"SSID: Brygga"</span>,
+          url: <span class="hljs-string">"K59@TrondheimNO"</span>,
+          type: <span class="hljs-string">"text"</span>,
+          placeholder: <span class="hljs-literal">false</span>,
+        },
+        {
+          id: <span class="hljs-number">0</span>,
+          title: <span class="hljs-string">""</span>,
+          url: <span class="hljs-string">""</span>,
+          type: <span class="hljs-string">"text"</span>,
+          placeholder: <span class="hljs-literal">true</span>,
+        },
+      ],
+    },
+]
+</div></code></pre>
+<p>This is only an example of the text widget.</p>
+
+</body>
+</html>
