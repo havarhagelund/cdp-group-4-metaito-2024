@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FormField } from "@/types/FormData";
+import { formField } from "@/types/FormData";
 
 interface MultiSelectInputProps {
-  field: FormField;
+  field: formField;
   setAnswer: (fieldId: number, answer: string[]) => void;
 }
 

@@ -1,8 +1,8 @@
-import { FormField } from "@/types/FormData";
+import { formField } from "@/types/FormData";
 import { useState } from "react";
 
 interface TextInputProps {
-  field: FormField;
+  field: formField;
   setAnswer: (questionId: number, answer: any) => void;
 }
 

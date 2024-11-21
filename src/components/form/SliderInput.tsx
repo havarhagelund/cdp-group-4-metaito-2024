@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Slider from "@mui/material/Slider";
-import { FormField } from "@/types/FormData";
+import { formField } from "@/types/FormData";
 
 interface SliderInputProps {
-  field: FormField;
+  field: formField;
   setAnswer: (fieldId: number, answer: string) => void;
 }
 
