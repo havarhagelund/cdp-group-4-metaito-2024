@@ -1,4 +1,4 @@
-<h1 align="center" style="font-weight: bold; font-family: Lato; ">Factsplat AI Assistant</h1>
+# Factsplat AI Assistant
 
 <p align="center">
  <a href="#pre">Technologies</a> •
