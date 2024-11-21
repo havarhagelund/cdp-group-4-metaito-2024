@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
@@ -10,7 +7,7 @@
   },
   "overrides": [
     {
-      "files": ["grid.test.ts"],
+      "files": ["Grid.test.ts"],
       "rules": {
         "no-unused-labels": "off"
       }
