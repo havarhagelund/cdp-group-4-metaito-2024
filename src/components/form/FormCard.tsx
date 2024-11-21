@@ -121,10 +121,13 @@ const FormCard = () => {
    * 5. Redirecting the user to the newly created splat's page.
    */
   async function handleSubmit() {
+    const getUrl = window.location;
+    const baseUrl = getUrl.protocol + "//" + getUrl.host;
+
     const answers = formData.formPages
       .map((page) => page.fields.map((field) => field.value))
       .toString();
-    const returnSplat = await fetch(`http://${window.origin}/api/get-match`, {
+    const returnSplat = await fetch(`${baseUrl}/api/get-match`, {
       method: "POST",
       body: JSON.stringify({ str: answers }),
     }).then((body) => body.json());
