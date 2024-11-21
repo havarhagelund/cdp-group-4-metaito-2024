@@ -21,7 +21,8 @@
 <a href="https://tailwindcss.com/">TailwindCSS</a><br/>
 
 <h3>Env Variables</h3>
-To run this project you will need the API keys for OpenAI and Supabase. If you are a sensor of the project, you should've been provided this beforehand. If not, please contact the project owner.
+
+To run this project you will need the API keys for OpenAI and Supabase. If you are a sensor of the project, you should've been provided this beforehand. If not, please contact the project owner. You will find more information about this in the environmental variables section under the [Getting Started](#started) section.
 
 <h2 id="description">Description</h2>
 
@@ -43,8 +44,8 @@ Write this in your terminal:
 git clone https://github.com/havarhagelund/cdp-group-4-metaito-2024.git
 ```
 
-<h3>Setting up the environment</h3>
-Now we have to set up the environment variables.
+<h3 id="env-variables">Setting up the environment</h3>
+Now we have to set up the environment variables. If you are a sensor of the project you will find these in the Appendix.
 Create a .env file in the root of the project and add the following:
 
 ```bash
