@@ -14,5 +14,4 @@ It has a few key features:
 ### How Does It Work Internally?
 The implementation is pretty straight forward. We use OpenAI's API twice, once for the generated questions based on prompt engineering, and for creating embeddings to match with our templates of Splats in the Supabase database.
 
-#### Generated Questions
 

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 align="center">Factsplat AI Assistant</h1>
+<p align="center">
+ <a href="#pre">Technologies</a> •
+ <a href="#description">Description</a> •
+ <a href="#started">Getting Started</a> •
+ <a href="#more-docs">More documentation</a>
+</p>
+<h2 id="p-align%22center%22img-src%22docsmiscaiassistantpng%22-alt%22ai-assistant%22-btry-it-out-here-a-href%22httpscdp-group-4-metaito-2024vercelapp%22vercelab"><p align="center">
+<img src="docs/misc/ai_assistant.png" alt="AI Assistant" />
+<b>Try it out here: <a href="https://cdp-group-4-metaito-2024.vercel.app/">Vercel</a></b></h2>
+<pre><code>&lt;b&gt;The Factsplat AI Assistant is a RAG model to help you get started!&lt;/b&gt;
+</code></pre>
+</p>
+<h2 id="pre">Prerequisites</h2>
+<h3>App</h3>
+<p><a href="https://nextjs.org/">NextJS</a><br/>
+<a href="https://tailwindcss.com/">TailwindCSS</a><br/></p>
+<h3>Env Variables</h3>
+<p>To run this project you will need the API keys for OpenAI and Supabase. If you are a sensor of the project, you should've been provided this beforehand. You will find more information about this in the environmental variables section under the <a href="#started">Getting Started</a> section.</p>
+<p>If you are not a sensor of the project, you can create your own OpenAI API key <a href="https://openai.com/index/openai-api/">here</a>,
+and Supabase instance <a href="https://database.new">here</a>. You can follow the schema in the <a href="https://github.com/havarhagelund/cdp-group-4-metaito-2024/blob/main/src/data/Splat.ts">Splat data file</a>.</p>
+<h2 id="description">Description</h2>
+<p>The Factsplat AI Assistant is a project made under the Customer Driven Project at NTNU <a href="https://www.ntnu.no/studier/emner/TDT4290#tab=omEmnet/">TDT4290</a>. The main goal of the project was to create an AI assistant that could help the customers of Factsplat getting started and easily acheive a &quot;goal oriented approach&quot;. This means less clutter and more fun when sorting out your day, hobbies or work. The app consists of three main parts:</p>
+<ul>
+<li>A landing page to show off other splats</li>
+<li>A AI integrated form to ask more specific questions related to the splats use case</li>
+<li>A newly designed functional mock of Factsplat, designed with users in mind</li>
+</ul>
+<p>To read more about how the project works, please go to the <a href="#more-docs">More documentation</a> section.</p>
+<h2 id="started">🚀 Getting started</h2>
+To get started running the Factsplat AI Assistant, follow the steps below.
+<h3>Cloning</h3>
+First we have to clone the project.
+Write this in your terminal:
+<pre class="hljs"><code><div>git <span class="hljs-built_in">clone</span> https://github.com/havarhagelund/cdp-group-4-metaito-2024.git
+</div></code></pre>
+<h3 id="env-variables">Setting up the environment</h3>
+Now we have to set up the environment variables. If you are a sensor of the project you will find these in the Appendix.
+Create a .env file in the root of the project and add the following:
+<pre class="hljs"><code><div>OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+</div></code></pre>
+<h3>Starting</h3>
+Now we have to start the project itself.
+Run the following commands:
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> fs-ai-assistant-frontend
+npm install
+npm run dev
+</div></code></pre>
+<p>Now the application should be running at localhost:3000</p>
+<h3>Building</h3>
+Before pushing changes, make sure to run the following commands:
+<pre class="hljs"><code><div>npm run lint
+npm run prettier
+npm run build
+</div></code></pre>
+<p>This will ensure that the code is properly formatted and that the build is successful.</p>
+<h3>Testing</h3>
+The project consists of two main types of testing, E2E and Unit testing.
+To run the different tests, run the following command:
+<p>Unit Testing:</p>
+<pre class="hljs"><code><div>npm run <span class="hljs-built_in">test</span>
+</div></code></pre>
+<p>For the E2E testing you will need to have two terminals open, one for running the application and one for running the tests.</p>
+<p>E2E Testing:</p>
+<pre class="hljs"><code><div>npm run dev
+npm run cypress:open
+</div></code></pre>
+<h2 id="more-docs">More documentation</h2>
+The project consists of quite a lot of documentation, both internal and external. To read some of the internal documentation, we recommend reading the grid.ts file, as this includes a lot of functionality for the mock.
+As of external documentation, we have split them into five main sections in the docs folder:
+<ul>
+<li><a href="docs/SplatMock.md">How does the Splat Mock work?</a></li>
+<li><a href="docs/Form.md">How does the AI Form work?</a></li>
+<li><a href="docs/Dependencies.md">Packages &amp; Dependencies</a></li>
+<li><a href="docs/Structure.md">Project Structure</a></li>
+<li><a href="docs/Testing.md">How to test</a></li>
+</ul>
+
+</body>
+</html>
