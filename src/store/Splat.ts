@@ -1,6 +1,6 @@
 import { grid } from "@/types/layout";
 import { droplet, widget } from "@/types/splat";
-import { gridAdd, gridRemove } from "@/utils/grid";
+import { gridAdd, gridRemove } from "@/utils/Grid";
 import { create } from "zustand";
 
 type SplatState = {

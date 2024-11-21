@@ -1,24 +1,27 @@
-interface FormData {
-    currentFormPage: number;
-    formPages: FormPage[];
-}
+export type form = {
+  title: string;
+  icon: JSX.Element;
+};
 
-interface FormPage {
-    id: number;
-    aiGenerated: boolean;
-    generateQuestions?: boolean;
-    requirements?: string;
-    fields: FormField[];
-}
+export type formData = {
+  currentFormPage: number;
+  formPages: formPage[];
+};
 
-interface FormField {
-    id: number;
-    requirements?: string;
-    label: string;
-    information?: string;
-    type: "multiselect" | "slider" | "text";
-    value?: any;
-    options?: string[];
-}
+export type formPage = {
+  id: number;
+  aiGenerated: boolean;
+  generateQuestions?: boolean;
+  requirements?: string;
+  fields: formField[];
+};
 
-export type { FormData, FormPage, FormField };
+export type formField = {
+  id: number;
+  requirements?: string;
+  label: string;
+  information?: string;
+  type: "multiselect" | "slider" | "text";
+  value?: any;
+  options?: string[];
+};

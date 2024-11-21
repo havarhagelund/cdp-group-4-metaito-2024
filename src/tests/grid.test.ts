@@ -9,7 +9,7 @@ import {
   gridRemove,
   indexOf2D,
   amountZeroGrid,
-} from "../utils/grid";
+} from "../utils/Grid";
 
 test("get size of grid", () => {
   const grid: grid = [

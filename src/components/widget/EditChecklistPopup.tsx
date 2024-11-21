@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useSplatStore } from "@/store/Splat";
-import { updateSplat } from "@/utils/update-splat";
+import { updateSplat } from "@/utils/UpdateSplat";
 
 const formSchema = z.object({
   title: z.string().min(1),
@@ -66,7 +66,9 @@ const EditChecklistPopup = ({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
-          <DialogTitle className="text-xl font-medium">Add Check Item Droplet</DialogTitle>
+          <DialogTitle className="text-xl font-medium">
+            Add Check Item Droplet
+          </DialogTitle>
           <DialogDescription className="text-[14px]">
             Add a check item to your checklist
           </DialogDescription>

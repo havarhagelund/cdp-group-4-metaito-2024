@@ -9,7 +9,9 @@ interface NavbarProps {
 
 const Navbar = ({ className, profilecard = true }: NavbarProps) => {
   return (
-    <nav className={`${className} flex justify-between h-32 w-full px-16 pt-4 items-center`}>
+    <nav
+      className={`${className} flex justify-between h-32 w-full px-16 pt-4 items-center`}
+    >
       <Link href="/" className="h-22 w-22">
         <Image
           src="/logo.svg"
@@ -19,14 +21,13 @@ const Navbar = ({ className, profilecard = true }: NavbarProps) => {
           className="object-cover w-full h-full"
         />
       </Link>
-      {
-        profilecard &&
+      {profilecard && (
         <ProfileCard
           name="John Doe"
           title="Software Engineer"
           image="/assets/props/sandviklee.jpg"
         />
-      }
+      )}
     </nav>
   );
 };

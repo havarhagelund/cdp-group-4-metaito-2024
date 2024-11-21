@@ -8,7 +8,11 @@ interface EditableTitleProps {
   updateTitle: (title: string) => void;
 }
 
-const EditableTitle = ({ className, title, updateTitle }: EditableTitleProps) => {
+const EditableTitle = ({
+  className,
+  title,
+  updateTitle,
+}: EditableTitleProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [value, setValue] = useState<string>(title);
 
@@ -28,32 +32,35 @@ const EditableTitle = ({ className, title, updateTitle }: EditableTitleProps) =>
 
   return (
     <div className={`${className} `}>
-      {
-        !isEditing ?
-          (
-            <p onClick={() => setIsEditing(true)} className="cursor-text hover:scale-105 transition-transform origin-left">{title}</p>
-          )
-          :
-          (
-            <div className="flex gap-4">
-              <Input
-                value={value}
-                onChange={handleChange}
-                type="text"
-                placeholder="Insert title here..."
-                className="w-96"
-                autoFocus={true}
-              />
-              <div>
-                <button className="bg-primary-default w-10 h-full flex justify-center items-center rounded-md" onClick={() => saveTitle()}>
-                  <CheckIcon className="text-white" />
-                </button>
-              </div>
-            </div>
-          )
-      }
+      {!isEditing ? (
+        <p
+          onClick={() => setIsEditing(true)}
+          className="cursor-text hover:scale-105 transition-transform origin-left"
+        >
+          {title}
+        </p>
+      ) : (
+        <div className="flex gap-4">
+          <Input
+            value={value}
+            onChange={handleChange}
+            type="text"
+            placeholder="Insert title here..."
+            className="w-96"
+            autoFocus={true}
+          />
+          <div>
+            <button
+              className="bg-primary-default w-10 h-full flex justify-center items-center rounded-md"
+              onClick={() => saveTitle()}
+            >
+              <CheckIcon className="text-white" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default EditableTitle;

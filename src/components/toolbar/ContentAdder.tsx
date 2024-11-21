@@ -13,9 +13,9 @@ import { Input } from "@/components/ui/input";
 import { useWidgetSelectorStore } from "@/store/WidgetSelector";
 import { useState } from "react";
 import { useSplatStore } from "@/store/Splat";
-import { updateSplat } from "@/utils/update-splat";
+import { updateSplat } from "@/utils/UpdateSplat";
 import { widget } from "@/types/splat";
-import { amountZeroGrid } from "@/utils/grid";
+import { amountZeroGrid } from "@/utils/Grid";
 
 export type widgetType = "text" | "checklist" | "member" | "icon" | null;
 
@@ -112,7 +112,9 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-background-widget py-8 w-fit h-fit min-w-fit">
         <DialogHeader>
-          <DialogTitle className="text-xl font-medium">Choose a Widget</DialogTitle>
+          <DialogTitle className="text-xl font-medium">
+            Choose a Widget
+          </DialogTitle>
           <DialogDescription className="text-[14px]">
             Select a Widget to add to the splat
           </DialogDescription>

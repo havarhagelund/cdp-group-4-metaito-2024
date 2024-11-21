@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import { useSplatStore } from "@/store/Splat";
 import Navbar from "../navbar/Navbar";
 import Spinner from "../loading/Spinner";
-import EditableTitle from "../EditableTitle/EditableTitle";
-import { updateSplat } from "@/utils/update-splat";
+import EditableTitle from "../editableTitle/EditableTitle";
+import { updateSplat } from "@/utils/UpdateSplat";
 
 interface SplatPageProps {
   splat: splat;
@@ -45,13 +45,13 @@ const SplatPage = ({ splat }: SplatPageProps) => {
   function updateSubtitle(newSubTitle: string) {
     if (!grid || !content) throw new Error("Grid or content is not defined");
     updateStoreSubtitle(newSubTitle);
-    updateSplat(splat.id, {grid, content}, title, newSubTitle);
+    updateSplat(splat.id, { grid, content }, title, newSubTitle);
   }
 
   function updateTitle(newTitle: string) {
     if (!grid || !content) throw new Error("Grid or content is not defined");
     updateStoreTitle(newTitle);
-    updateSplat(splat.id, {grid, content}, newTitle, subtitle);
+    updateSplat(splat.id, { grid, content }, newTitle, subtitle);
   }
 
   return (
@@ -62,8 +62,16 @@ const SplatPage = ({ splat }: SplatPageProps) => {
           <Toolbar />
         </div>
         <section className="px-16 font-medium tracking-wide space-y-2 cursor-default">
-          <EditableTitle className="text-text-subheader text-xl" title={subtitle} updateTitle={updateSubtitle}/>
-          <EditableTitle className="text-text-header text-4xl" title={title} updateTitle={updateTitle}/>
+          <EditableTitle
+            className="text-text-subheader text-xl"
+            title={subtitle}
+            updateTitle={updateSubtitle}
+          />
+          <EditableTitle
+            className="text-text-header text-4xl"
+            title={title}
+            updateTitle={updateTitle}
+          />
         </section>
         <section className="flex h-fit w-full">
           <GridContainer />

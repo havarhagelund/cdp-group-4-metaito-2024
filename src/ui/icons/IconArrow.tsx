@@ -21,10 +21,32 @@ export function Icon({ size = "16", children, className }: IconProps) {
     </svg>
   );
 }
-export const IconArrowRight = ({ color = "currentColor", ...props }: IconProps) => (
-  <Icon {...props}><path d="M3.83334 8.00004H13.1667M13.1667 8.00004L8.50001 3.33337M13.1667 8.00004L8.50001 12.6667" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></Icon>
+export const IconArrowRight = ({
+  color = "currentColor",
+  ...props
+}: IconProps) => (
+  <Icon {...props}>
+    <path
+      d="M3.83334 8.00004H13.1667M13.1667 8.00004L8.50001 3.33337M13.1667 8.00004L8.50001 12.6667"
+      stroke={color}
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Icon>
 );
 
-export const IconArrowLeft = ({ color = "currentColor", ...props }: IconProps) => (
-    <Icon {...props}><path d="M12.1667 8H2.83334M2.83334 8L7.5 12.6667M2.83334 8L7.5 3.33337" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></Icon>
+export const IconArrowLeft = ({
+  color = "currentColor",
+  ...props
+}: IconProps) => (
+  <Icon {...props}>
+    <path
+      d="M12.1667 8H2.83334M2.83334 8L7.5 12.6667M2.83334 8L7.5 3.33337"
+      stroke={color}
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Icon>
 );
