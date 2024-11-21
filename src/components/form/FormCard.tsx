@@ -10,7 +10,6 @@ import SliderInput from "./SliderInput";
 import TextInput from "./TextInput";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@mui/material";
-import { usePathname } from "next/navigation";
 
 const FormCard = () => {
   const router = useRouter();
