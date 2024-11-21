@@ -1,5 +1,5 @@
-import { FormField, FormPage, FormData } from "@/types/FormData";
-const mockFields: FormField[] = [
+import { formField, formPage, formData } from "@/types/FormData";
+const mockFields: formField[] = [
   {
     id: 0,
     label: "Hvilken bransje tilhører organisasjonen?",
@@ -118,7 +118,7 @@ const mockPages: FormPage[] = [
     fields: [mockFields[8]],
   },
 ];
-const mockData: FormData = {
+const mockData: formData = {
   currentFormPage: 1,
   formPages: mockPages,
 };
