@@ -10,10 +10,10 @@ const Splats = async () => {
       <Navbar className="fixed" profilecard={false} />
       <main className="px-16 pt-24 tracking-wide space-y-2 cursor-default">
         <p className="text-text-subheader text-2xl tracking-wide font-regular mt-8">
-          Examples of other Splats
+          Eksempel på Splats
         </p>
         <p className="text-lg">
-          Here are some other splats that have been made by other users
+          Her er noen andre Splats som har blitt laget av andre brukere
         </p>
         <div className="flex flex-col p-4">
           {data?.map((splat) => (
