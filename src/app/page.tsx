@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/navbar/Navbar";
 import Image from "next/image";
+import { SparklesIcon } from "lucide-react";
 import { MeshGradientRenderer } from "@johnn-e/react-mesh-gradient";
 import { useRouter } from "next/navigation";
 
@@ -73,14 +74,19 @@ const LandingPage = () => {
           </motion.p>
           <motion.div className="flex gap-x-4" variants={itemVariants}>
             <button
-              className="transition-colors bg-primary-default hover:bg-primary-second text-white font-medium py-4 px-10 rounded-md text-xl"
+              className="flex justify-center items-center gap-2
+              transition-colors bg-primary-default hover:bg-primary-second
+              text-white py-4 px-10 rounded-full"
               onClick={() => router.push("/form")}
               id="get-started"
             >
-              Kom i gang - gratis
+              <SparklesIcon size={24} />
+              <p className="text-xl">Kom i gang - Gratis</p>
             </button>
             <button
-              className="transition-colors bg-primary-default hover:bg-primary-second text-white font-medium py-4 px-10 rounded-md text-xl"
+              className="flex justify-center items-center gap-2
+              transition-colors bg-primary-default hover:bg-primary-second
+              text-white py-4 px-10 rounded-full text-xl"
               onClick={() => router.push("/splats")}
               id="look-at-splats"
             >
