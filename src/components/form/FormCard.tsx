@@ -3,13 +3,14 @@ import { FormContext } from "@/context/FormContext";
 import { formPage } from "@/types/FormData";
 import { useContext, useEffect, useState } from "react";
 import ProgressIndicator from "./ProgressIndicator";
-import Button from "../Button";
+import Button from "../button/Button";
 import { IconArrowLeft, IconArrowRight } from "@/ui/icons/IconArrow";
 import MultiSelectInput from "./MultiSelectInput";
 import SliderInput from "./SliderInput";
 import TextInput from "./TextInput";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "@mui/material";
+import { SparklesIcon } from "lucide-react";
 
 const FormCard = () => {
   const router = useRouter();
@@ -276,7 +277,7 @@ const FormCard = () => {
   }, [formPage]);
 
   return (
-    <div className="w-4/5 h-4/5 bg-white p-8 rounded-3xl shadow-lg bg-opacity-25 flex flex-col justify-between items-center gap-5">
+    <div className="w-4/5 h-4/5 bg-white p-8 pt-12 rounded-3xl shadow-lg bg-opacity-50 flex flex-col justify-between items-center gap-5">
       {formPage.fields.length === 1 ? (
         <div className="flex flex-col gap-5 w-11/12 flex-grow">
           {loading ? (
@@ -288,7 +289,7 @@ const FormCard = () => {
               className="rounded-md"
             />
           ) : (
-            <div className="flex flex-col justify-center items-center gap-3 ">
+            <div className="flex flex-col justify-center items-center gap-y-4">
               <h1 className="font-medium text-5xl text-center">
                 {formPage.fields[0].label}
               </h1>
@@ -395,7 +396,7 @@ const FormCard = () => {
               return (
                 <div
                   key={field.id}
-                  className="flex flex-col items-center gap-3"
+                  className="flex flex-col items-center gap-6"
                 >
                   <h1 className="font-medium text-3xl text-center">
                     {field.label}
@@ -413,7 +414,7 @@ const FormCard = () => {
         </div>
       )}
       <div className="flex flex-col gap-5">
-        <div className="flex justify-center items-center gap-5">
+        <div className="flex justify-center items-center gap-5 pb-4">
           <Button
             text="Tilbake"
             variant="secondary"
@@ -424,10 +425,10 @@ const FormCard = () => {
             invisible={currentPage === 1}
           />
           <Button
-            text="Neste"
+            text={currentPage === totalPages ? "Lag forslag" : "Neste"}
             onClick={handleNextPage}
             disabled={!allowNext || loading}
-            icon={<IconArrowRight color="#f5f5f5" size="24" />}
+            icon={currentPage === totalPages ? <SparklesIcon size="24" color="white" /> : <IconArrowRight color="#f5f5f5" size="24" />}
           />
         </div>
         <ProgressIndicator pageNumber={currentPage} totalPages={totalPages} />
