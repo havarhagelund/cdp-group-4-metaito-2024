@@ -67,10 +67,10 @@ const EditChecklistPopup = ({
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
           <DialogTitle className="text-xl font-medium">
-            Add Check Item Droplet
+            Legg til check item
           </DialogTitle>
           <DialogDescription className="text-[14px]">
-            Add a check item to your checklist
+            Legg til et nytt check item til listen
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -81,11 +81,11 @@ const EditChecklistPopup = ({
                 name="title"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Title of Check Item</FormLabel>
+                    <FormLabel>Tittel av check item</FormLabel>
                     <FormControl>
                       <Input
                         type="text"
-                        placeholder="Insert title of check item..."
+                        placeholder="Legg inn tittel..."
                         {...field}
                       />
                     </FormControl>
@@ -99,7 +99,7 @@ const EditChecklistPopup = ({
                   type="submit"
                   className="bg-primary-second text-md text-white"
                 >
-                  Edit Widget
+                  Endre widget
                 </Button>
               </div>
             </DialogFooter>

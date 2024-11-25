@@ -67,10 +67,10 @@ const EditIconPopup = ({
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
           <DialogTitle className="text-xl font-medium">
-            Add Icon Droplet
+            Legg til ikon
           </DialogTitle>
           <DialogDescription className="text-[14px]">
-            Add an icon to your widget
+            Legg til en ikon droplet til din Splat
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -81,11 +81,11 @@ const EditIconPopup = ({
                 name="url"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Url of icon link</FormLabel>
+                    <FormLabel>Url av ikon lenke</FormLabel>
                     <FormControl>
                       <Input
                         type="text"
-                        placeholder="Insert the url of the icon..."
+                        placeholder="Legg til url av ikonet..."
                         {...field}
                       />
                     </FormControl>
@@ -99,7 +99,7 @@ const EditIconPopup = ({
                   type="submit"
                   className="bg-primary-second text-md text-white"
                 >
-                  Edit Widget
+                  Endre widget
                 </Button>
               </div>
             </DialogFooter>

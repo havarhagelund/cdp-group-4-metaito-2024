@@ -52,10 +52,10 @@ const EditTextPopup = ({
     useSplatStore();
   const [open, setOpen] = useState<boolean>(false);
   const titles = new Map([
-    ["text", "Subtitle"],
+    ["text", "Underskrift"],
     ["link", "Url"],
-    ["phone", "Phone Number"],
-    ["email", "Email Address"],
+    ["phone", "Telefon nummer"],
+    ["email", "Epost adresse"],
   ]);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,10 +86,10 @@ const EditTextPopup = ({
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
           <DialogTitle className="text-xl font-medium">
-            Add Text Droplet
+            Legg til tekst
           </DialogTitle>
           <DialogDescription className="text-[14px]">
-            Add the content of your choice
+            Legg til teksten du har lyst på
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -101,11 +101,11 @@ const EditTextPopup = ({
                   name="title"
                   render={({ field }) => (
                     <FormItem className="w-64">
-                      <FormLabel>Title (optional if link)</FormLabel>
+                      <FormLabel>Tittel (valgbar hvis lenke)</FormLabel>
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="Insert title here..."
+                          placeholder="Legg til tittel..."
                           {...field}
                         />
                       </FormControl>
@@ -117,21 +117,21 @@ const EditTextPopup = ({
                   name="type"
                   render={({ field }) => (
                     <FormItem className="w-32">
-                      <FormLabel>Type of Droplet</FormLabel>
+                      <FormLabel>Type Droplet</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
                         <FormControl className="bg-white">
                           <SelectTrigger>
-                            <SelectValue placeholder="Select your preferred type" />
+                            <SelectValue placeholder="Velg hva du har lyst på" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent className="bg-white cursor-pointer">
-                          <SelectItem value="text">Text</SelectItem>
-                          <SelectItem value="link">Link</SelectItem>
-                          <SelectItem value="phone">Phone</SelectItem>
-                          <SelectItem value="email">Email</SelectItem>
+                          <SelectItem value="text">Tekst</SelectItem>
+                          <SelectItem value="link">Lenke</SelectItem>
+                          <SelectItem value="phone">Telefon</SelectItem>
+                          <SelectItem value="email">Epost</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormItem>
@@ -145,12 +145,12 @@ const EditTextPopup = ({
               render={({ field }) => (
                 <FormItem className="pt-4 pb-6">
                   <FormLabel>
-                    Insert {titles.get(form.getValues().type)}
+                    Legg til {titles.get(form.getValues().type)}
                   </FormLabel>
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Insert here..."
+                      placeholder="Legg til her..."
                       {...field}
                     />
                   </FormControl>
@@ -163,7 +163,7 @@ const EditTextPopup = ({
                   type="submit"
                   className="bg-primary-second text-md text-white"
                 >
-                  Edit Widget
+                  Endre widget
                 </Button>
               </div>
             </DialogFooter>
