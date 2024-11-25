@@ -56,20 +56,20 @@ const LandingPage = () => {
             className="text-6xl tracking-wider text-center pt-[25rem] font-light"
             variants={itemVariants}
           >
-            Welcome to the Factsplat
+            Velkommen til Factsplat
           </motion.p>
           <motion.p
             className="text-8xl tracking-wide text-center"
             variants={itemVariants}
           >
-            AI Assistant Experience
+            KI assistert onboarding
           </motion.p>
           <motion.p
             className="text-2xl w-4/6 text-center leading-[3rem] tracking-wide font-regular"
             variants={itemVariants}
           >
-            With the help of AI, we generate you a Splat to help you structure
-            your day, work, or hobbies.
+            Assistert av kunstig intelligens, genererer vi en Splat spesifikt for deg for å hjelpe deg å strukturere
+            dagen din, arbeidet ditt eller hobbyene dine.
           </motion.p>
           <motion.div className="flex gap-x-4" variants={itemVariants}>
             <button
@@ -77,14 +77,14 @@ const LandingPage = () => {
               onClick={() => router.push("/form")}
               id="get-started"
             >
-              Get Started - for free
+              Kom i gang - gratis
             </button>
             <button
               className="transition-colors bg-primary-default hover:bg-primary-second text-white font-medium py-4 px-10 rounded-md text-xl"
               onClick={() => router.push("/splats")}
               id="look-at-splats"
             >
-              Look at other Splats
+              Se på andre Splats
             </button>
           </motion.div>
           <motion.div
