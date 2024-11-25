@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky",
     "prettier": "npx prettier --write .",
     "test": "jest",
     "cypress:open": "cypress open"
