@@ -277,7 +277,7 @@ const FormCard = () => {
   }, [formPage]);
 
   return (
-    <div className="w-4/5 h-4/5 bg-white p-8 pt-12 rounded-3xl shadow-lg bg-opacity-50 flex flex-col justify-between items-center gap-5">
+    <div className="w-4/5 h-4/5 bg-white p-8 pt-12 rounded-3xl shadow-md bg-opacity-50 flex flex-col justify-between items-center gap-5">
       {formPage.fields.length === 1 ? (
         <div className="flex flex-col gap-5 w-11/12 flex-grow">
           {loading ? (

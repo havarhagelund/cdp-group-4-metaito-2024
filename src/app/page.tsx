@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/navbar/Navbar";
 import Image from "next/image";
 import { SparklesIcon } from "lucide-react";
-import { MeshGradientRenderer } from "@johnn-e/react-mesh-gradient";
+import MeshGradientBackground from "@/components/gradient/MeshGradientBackground";
 import { useRouter } from "next/navigation";
 
 const LandingPage = () => {
@@ -42,11 +42,7 @@ const LandingPage = () => {
     <>
       <Navbar className="fixed" profilecard={false} />
       <main className="w-screen h-screen flex justify-center items-center overflow-hidden">
-        <MeshGradientRenderer
-          className="gradient fixed w-screen h-screen "
-          colors={["#E0FFFF", "#E1FFFF", "#BBDEE3", "#E9F9FB", "#E9F9FB"]}
-          wireframe={false}
-        />
+        <MeshGradientBackground />
         <motion.div
           className="flex flex-col items-center justify-center gap-y-8 w-screen h-screen bg-gradient-to-b from-white from-40% to-transparent to-60% overflow-hidden"
           variants={containerVariants}
