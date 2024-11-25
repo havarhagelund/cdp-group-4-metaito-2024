@@ -25,7 +25,7 @@ const Button = ({
         <button
           className={`flex items-center justify-center gap-2 p-3 rounded-md ${
             disabled
-              ? "cursor-not-allowed bg-gray-400"
+              ? "cursor-default bg-gray-400"
               : "cursor-pointer bg-gray-800"
           }`}
           onClick={onClick}

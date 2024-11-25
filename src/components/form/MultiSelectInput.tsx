@@ -46,8 +46,8 @@ const MultiSelectInput = ({ field, setAnswer }: MultiSelectInputProps) => {
   }, [selectedOptions]);
 
   return (
-    <div className="w-full flex flex-col justify-center items-center gap-5">
-      <div className="w-full flex flex-wrap gap-3">
+    <div className="w-full h-full flex flex-col justify-evenly items-center gap-5">
+      <div className={`grid grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))] gap-3 ${(field.options?.length ?? 0) > 10 ? 'w-4/5' : 'w-4/6'}`}>
         {field.options?.map((option) => {
           if (option === "Annet") {
             return;
@@ -55,30 +55,31 @@ const MultiSelectInput = ({ field, setAnswer }: MultiSelectInputProps) => {
           const selected = selectedOptions.includes(option);
           return (
             <div
-              className={`h-16 w-fit p-3 bg-white border border-gray-300 rounded-lg cursor-pointer flex items-center ${selected ? "border-gray-900" : ""}`}
-              key={option}
-              onClick={() => handleOptionSelect(option)}
+              className={`h-16 w-full p-3 bg-white border border-gray-300 rounded-lg cursor-pointer flex items-center justify-center text-center ${selected ? "border-gray-900" : ""}`}
+              key={option} onClick={() => handleOptionSelect(option)}
             >
               {option}
             </div>
           );
         })}
       </div>
-      {field.options?.includes("Annet") && (
-        <div className="flex flex-col">
-          <label>
-            Hvis ingen av alternativene passer, vennligst spesifiser:
-          </label>
-          <input
-            type="text"
-            placeholder="Skriv inn her..."
-            value={customOption}
-            onChange={(e) => handleCustomOption(e.target.value)}
-            className={`h-16 w-full p-3 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none ${customOption ? "border-gray-900" : ""}`}
-          />
-        </div>
-      )}
-    </div>
+      {
+        field.options?.includes("Annet") && (
+          <div className='flex flex-col gap-y-2'>
+            <label>
+              Hvis ingen av alternativene passer, vennligst spesifiser:
+            </label>
+            <input
+              type="text"
+              placeholder='Skriv inn her...'
+              value={customOption}
+              onChange={(e) => handleCustomOption(e.target.value)}
+              className={`h-16 w-full p-3 bg-white border border-gray-300 rounded-lg cursor-text focus:outline-none ${customOption ? "border-gray-900" : ""}`}
+            />
+          </div>
+        )
+      }
+    </div >
   );
 };
 
