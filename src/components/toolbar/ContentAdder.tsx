@@ -50,6 +50,12 @@ interface ContentAdderProps {
 }
 const ContentAdder = ({ children }: ContentAdderProps) => {
   const widgets: widgetType[] = ["text", "checklist", "member", "icon"];
+  const norwegianTitles = new Map([
+    ["text", "Tekst"],
+    ["checklist", "Sjekkliste"],
+    ["member", "Medlem"],
+    ["icon", "Ikon"],
+  ]);
   const { currentWidget } = useWidgetSelectorStore();
   const { id, grid, content, addStoreContent } = useSplatStore();
   const [open, setOpen] = useState<boolean>(false);
@@ -59,13 +65,13 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
   function checkForm() {
     let error = "";
     if (amountZeroGrid(grid!) === 0) {
-      error = "The grid is full";
+      error = "Griden er full!";
     }
     if (!value) {
-      error = "Please enter a title";
+      error = "Legg til en tittel";
     }
     if (!currentWidget) {
-      error = "Please select a widget";
+      error = "Velg en widget";
     }
     setError(error);
     return error;
@@ -113,10 +119,10 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
       <DialogContent className="bg-background-widget py-8 w-fit h-fit min-w-fit">
         <DialogHeader>
           <DialogTitle className="text-xl font-medium">
-            Choose a Widget
+            Velg en widget
           </DialogTitle>
           <DialogDescription className="text-[14px]">
-            Select a Widget to add to the splat
+            Velg en widget å legge til Splaten
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-8 relative">
@@ -124,21 +130,21 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
             {widgets.map((widget: widgetType) => (
               <WidgetSelector
                 key={widget}
-                title={widget?.charAt(0).toUpperCase() + widget!.slice(1)}
+                title={norwegianTitles.get(widget!) || ""}
                 type={widget}
               />
             ))}
           </div>
           <div>
             <DialogDescription className="text-[14px]">
-              Choose a title for the Widget
+              Velg en tittel for din widget
             </DialogDescription>
             <div className="py-4">
               <Input
                 value={value}
                 onChange={handleChange}
                 type="text"
-                placeholder="Insert title here..."
+                placeholder="Legg til tittel..."
               />
             </div>
           </div>
@@ -150,7 +156,7 @@ const ContentAdder = ({ children }: ContentAdderProps) => {
               className="bg-primary-second text-md text-white"
               onClick={() => createWidget()}
             >
-              Create Widget
+              Lag widget
             </Button>
           </div>
         </DialogFooter>

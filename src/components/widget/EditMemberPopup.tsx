@@ -73,10 +73,10 @@ const EditMemberPopup = ({
       <DialogContent className="bg-background-widget py-8 w-5/6 h-fit">
         <DialogHeader>
           <DialogTitle className="text-xl font-medium">
-            Add Member Droplet
+            Legg til medlem
           </DialogTitle>
           <DialogDescription className="text-[14px]">
-            Add a new member to your widget!
+            Legg til et nytt medlem i widget!
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -88,11 +88,11 @@ const EditMemberPopup = ({
                   name="name"
                   render={({ field }) => (
                     <FormItem className="w-64">
-                      <FormLabel>Name of Member</FormLabel>
+                      <FormLabel>Legg til navn</FormLabel>
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="Insert name here..."
+                          placeholder="Legg til navn..."
                           {...field}
                         />
                       </FormControl>
@@ -104,11 +104,11 @@ const EditMemberPopup = ({
                   name="title"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Title of Member</FormLabel>
+                      <FormLabel>Legg til tittel</FormLabel>
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="Insert title here..."
+                          placeholder="Legg til tittel..."
                           {...field}
                         />
                       </FormControl>
@@ -122,11 +122,11 @@ const EditMemberPopup = ({
               name="image"
               render={({ field }) => (
                 <FormItem className="pt-4 pb-6">
-                  <FormLabel>Url of Member Image</FormLabel>
+                  <FormLabel>Url av medlemsbilde</FormLabel>
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Insert url here..."
+                      placeholder="Legg til url av medlemsbilde..."
                       {...field}
                     />
                   </FormControl>
@@ -139,7 +139,7 @@ const EditMemberPopup = ({
                   type="submit"
                   className="bg-primary-second text-md text-white"
                 >
-                  Edit Widget
+                  Endre widget
                 </Button>
               </div>
             </DialogFooter>
